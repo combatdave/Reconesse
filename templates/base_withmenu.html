@@ -1,0 +1,22 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <title>{% block title %}Reconesse{% endblock %}</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}" />
+
+    {% block head %}{% endblock %}
+</head>
+
+<body style="background-color:#6DC0AE">
+    <center><div style="width:auto; top:0; height:30; background-color:#F1F3CE; margin:0; auto; vertical-align:middle; text-align:center; position:relative">
+    	<h1><a href="/past/">Past</a> <a href="/present/">Present</a> <a href="/future/">Future</a> <a href="/about/">About</a> <a href="http://www.bigcartel.com/reconesse">Shop</a></h1>
+    </div></center>
+
+    {% block body %}{% endblock %}
+</body>
+</html>
+
+{% block javascript %}{% endblock%}
