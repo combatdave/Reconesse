@@ -9,10 +9,28 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' type='text/css'>
+
+    <script type="text/javascript" src="{% static 'past/jquery-ui-slider-pips.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'past/jquery-ui-slider-pips.css' %}">
+    <link rel="stylesheet" href="{% static 'past/slider.css' %}">
 {% endblock %}
 
 
 {% block body %}
+    <center>
+        <div id="mapdiv" style="width: 80%; height: 80%;"></div>
+    </center>
+
+    <div style="width: 60%; height:80; position: relative; margin: auto">
+        <div id="modern"></div>
+    </div>
+    <div id="yearDisplay">All years</div>
+
+    <a href="#" onclick="loadData('mapdata.json');">Refresh data</a>
+
     <script type="text/javascript">
         var map;
         // add all your code to this method, as this will ensure that page is loaded
@@ -75,7 +93,14 @@
 
 
         function setData(data){
-        	map.dataProvider = JSON.parse(data);
+            var jsonData = JSON.parse(data);
+
+            if (jsonData.minYear != null)
+            {
+                $("#yearDisplay").text(jsonData.minYear + " - " + jsonData.maxYear);
+            }
+
+        	map.dataProvider = jsonData;
             map.dataProvider.zoomLongitude = 0;
             map.dataProvider.zoomLatitude = 10;
         	map.validateNow();
@@ -92,11 +117,36 @@
         	    setData(request.responseText);
             }
         }
+
+
+        var $modern = $("#modern").slider({
+            range: true, 
+            min: -3000, 
+            max: 2014, 
+            values: [ -3000 , 2014 ]
+        });
+
+        $modern.slider("pips", { 
+            rest: "label", 
+            suffix: "", 
+            step: 100,
+            formatLabel: function(value) {
+                var label = "AD";
+                if (value < 0) {
+                    label = "BC";
+                }
+                return Math.abs(value) + "<b class=\"heart\">"+label+"</b>";
+            }
+        });
+
+        $modern.on({
+            slidechange: function(event, ui){
+                var range = ui.values;
+                var fileToLoad = "mapdata.json?";
+                fileToLoad += "minYear=" + parseInt(range[0]).toString();
+                fileToLoad += "&maxYear=" + parseInt(range[1]).toString();
+                loadData(fileToLoad);
+            }
+        });
     </script>
-
-	<center>
-		<div id="mapdiv" style="width: 80%; height: 80%;"></div>
-
-		<a href="#" onclick="loadData('mapdata.json');">Refresh data</a>
-	</center>
 {% endblock %}

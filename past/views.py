@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
+from django.db.models import Q
 import json
 
 from django_countries import countries
@@ -8,7 +9,10 @@ from past.models import Article
 
 # Create your views here.
 def index(request):
-	context = {'somedata': None}
+	context = {}
+	context["minYear"] = -100
+	context["maxYear"] = 2014
+
 	return render(request, 'past/map.html', context)
 
 
@@ -24,7 +28,26 @@ def ViewArticle(request, articleID):
 
 
 def GetMapData(request):
-	allArticles = Article.objects.all()
+	minYear = request.GET.get('minYear')
+	if minYear is not None:
+		minYear = int(minYear)
+	maxYear = request.GET.get('maxYear')
+	if maxYear is not None:
+		maxYear = int(maxYear)
+
+	if maxYear is None and minYear is None:
+		allArticles = Article.objects.all()
+	else:
+		query = """
+		SELECT * FROM past_article
+		WHERE
+		(birthYear >= {minYear} AND birthYear <= {maxYear})
+		OR
+		(deathYear >= {minYear} AND deathYear <= {maxYear})
+		OR
+		(birthYear < {minYear} AND deathYear > {maxYear})
+		""".format(minYear = minYear, maxYear = maxYear)
+		allArticles = Article.objects.raw(query)
 
 	numByCountryCode = {}
 	for article in allArticles:
@@ -42,6 +65,8 @@ def GetMapData(request):
 		areas.append(countryData)
 
 	jsonResponse = {}
+	jsonResponse["minYear"] = minYear
+	jsonResponse["maxYear"] = maxYear
 	jsonResponse["map"] = "worldLow"
 	jsonResponse["getAreasFromMap"] = True
 	jsonResponse["areas"] = areas

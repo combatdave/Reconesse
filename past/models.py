@@ -8,7 +8,10 @@ from taggit.models import Tag
 
 class Article(models.Model):
 	title = models.CharField(max_length=200)
-	content = models.CharField(max_length=10000)
+	content = models.TextField()
+
+	birthYear = models.IntegerField(default=0);
+	deathYear = models.IntegerField(null=True, blank=True);
 
 	country = CountryField()
 	tags = TaggableManager()
