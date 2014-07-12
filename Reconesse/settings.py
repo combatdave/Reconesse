@@ -26,6 +26,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+
+ZINNIA_MAIL_COMMENT_AUTHORS = False
 
 # Application definition
 
@@ -33,6 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
+    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -40,6 +49,16 @@ INSTALLED_APPS = (
     "south",
     "taggit",
     "past",
+    "zinnia",
+    "tagging",
+    "mptt",
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.contrib.auth.context_processors.auth',
+  'django.core.context_processors.i18n',
+  'django.core.context_processors.request',
+  'zinnia.context_processors.version',  # Optional
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,6 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ATOMIC_REQUESTS': True
     }
 }
 
