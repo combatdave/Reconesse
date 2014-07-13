@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}" />
+
+{% if article %}
+    <ul>
+        <h1>{{article.title}} (from {{article.country}})</h1>
+
+        {{article.content}}
+    </ul>
+{% else %}
+    <p>No article found.</p>
+{% endif %}

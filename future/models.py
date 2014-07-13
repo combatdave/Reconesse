@@ -10,11 +10,8 @@ class Article(models.Model):
 	title = models.CharField(max_length=200)
 	content = models.TextField()
 
-	birthYear = models.IntegerField(default=0);
-	deathYear = models.IntegerField(null=True, blank=True);
-
 	country = CountryField()
-	tags = TaggableManager(related_name="past_tags")
+	tags = TaggableManager(related_name="future_tags")
 
 	def __unicode__(self):
 		return self.title

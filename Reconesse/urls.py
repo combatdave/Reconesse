@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
 	url(r'^article/', include('past.urls')),
 	url(r'^past/', include('past.urls')),
+	url(r'^future/', include('future.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 
 	url(r'^present/', include('zinnia.urls')),
