@@ -1,0 +1,22 @@
+{% extends "base_withmenu.html" %}
+
+{% load staticfiles %}
+
+
+{% block head %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+{% endblock %}
+
+
+{% block body %}
+    <center>
+        {% for entry in entries %}
+            <h1>{{ entry.title }}</h1>
+            {{ entry.content }}
+            </br>
+            <small>Submitted by {{ entry.submittedBy }} on {{ entry.submittedTime }}</small>
+            </br>
+        {% endfor %}
+    </center>
+{% endblock %}

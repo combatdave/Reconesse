@@ -26,8 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-SITE_ID = 1
-
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
@@ -40,26 +38,16 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sites',
-    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_extensions",
     "taggit",
     "past",
+    "present",
     "future",
-    "zinnia",
-    "tagging",
-    "mptt",
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-  'django.contrib.auth.context_processors.auth',
-  'django.core.context_processors.i18n',
-  'django.core.context_processors.request',
-  'zinnia.context_processors.version',  # Optional
-)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
