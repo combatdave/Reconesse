@@ -1,0 +1,83 @@
+@import url("../css/style.css");
+
+body {
+    min-width: 200px;
+    max-width: 500px;
+    height: 100%;
+}
+
+.linktable{
+    width: 100%;
+    border-collapse:collapse; 
+}
+
+.linktable th {
+    background: #ffffa4;
+    color: #4d4d4d;
+    font-size: 30px;
+    text-align: left;
+    padding: 7px;
+}
+
+.linktable td{ 
+    padding:7px;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.linktable tr{
+    background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+.linktable tr:nth-child(odd){ 
+    background: #ffffcc;
+}
+/*  Define the background color for all the EVEN background rows  */
+.linktable tr:nth-child(even){
+    background: #ffffff;
+}
+
+.linktable td a {
+    display: inline-block;
+    height:100%;
+    width:100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.articleinfo {
+    float: left;
+    width: 80%;
+}
+
+.articlename {
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.articledates {
+    float: left;
+    margin-left: 20px;
+}
+
+.articletagcontainer {
+    clear: both;
+    font-weight: bold;
+    color: #00abff;
+}
+
+.articlehover {
+    float: right;
+    height: 40px;
+}
+
+.linktable td a .articlehover {
+    display: none;
+}
+
+.linktable td a:hover .articlehover {
+    display: block;
+}

@@ -1,13 +1,132 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}" />
+<!DOCTYPE html>
 
-{% if article %}
-    <ul>
-        <h1>{{article.title}} (from {{article.country}})</h1>
+<html lang="en">
+	
+	<head>
+		<title>Reconesse Database - {{ article.title }}</title>
+		
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-        {{article.content}}
-    </ul>
-{% else %}
-    <p>No article found.</p>
-{% endif %}
+        <link rel="stylesheet" type="text/css" href="{% static 'past/articlestyle.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+        <link rel="stylesheet" type="test/css" href="{% static 'css/screen.css' %}" />
+		<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
+	</head>
+	
+	<body>
+        <div id="header">
+            
+        </div>
+        
+        <div class="colmask threecol">
+            <div class="colmid">
+                <div class="colleft">
+                    <div class="col1">
+                        <div class="articleheader" id="mainheader">
+                            <h1>{{ article.title }}</h1>
+                            
+                            <div id="datesandshare">
+                                <h3>
+                                    {% if article.deathYear %}
+                                        {{ article.birthYear }}-{{ article.deathYear }}
+                                    {% else %}
+                                        {{ article.birthYear }}-present
+                                    {% endif %}
+                                </h3>
+                                
+                                <div id="sharecontainer">
+                                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
+                                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
+                                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="country">{{ article.country.name }}</div>
+                            
+                            {% for tag in article.getTagNames %}
+                                <div class="hashtag-container">
+                                    <div class="hashtag">
+                                        {{ tag }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <hr class="green" />
+                        
+                        <div class="articlecontent">
+                            <p>
+                                {{ article.content|linebreaks }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div class="articleheader">
+<!--                            left-->
+                        </div>
+                        <hr class="green" />
+                        <div class="related">
+                            <div id="title">You might also be interested in:</div>
+                            <span>something</span>
+                            <span>another thing</span>
+                            <span>a third thing</span>
+                            
+                        </div>
+                    </div>
+                    <div class="col3">
+                        <div class="profilepictures">
+                            {% for image in images %}
+                                {% if forloop.first %}
+                                    <img src={{ image.imageField.url }} class="mainimage"></img>
+                                {% else %}
+                                    <img src={{ image.imageField.url }} class="thumbnail"></img>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+        
+                        <hr class="blue" />
+        
+                        <div class="profiletext">
+                            <ul>
+                                {% for summaryLine in summary %}
+                                    <li>{{ summaryLine }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+        
+                        <hr class="blue" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer">
+            
+        </div>
+
+		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+		<script type="text/javascript">
+			function UpdateSizes() {
+                var headerHeight = $("#mainheader").height();
+                
+                //alert(headerHeight);
+                
+                $(".articleheader").height(headerHeight);
+			};
+            
+            $(window).load(UpdateSizes);
+            $(window).resize(UpdateSizes);
+
+            $(document).ready(function() {
+                
+            });
+		</script>
+	</body>
+</html>

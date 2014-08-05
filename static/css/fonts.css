@@ -1,0 +1,47 @@
+/* Ultralight */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 100;
+  src: url(../fonts/Geogrotesque/Geogtq-Ul.otf);
+}
+
+/* Light */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../fonts/Geogrotesque/Geogtq-Lg.otf);
+}
+
+/* Regular */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Geogrotesque/Geogtq-Rg.otf);
+}
+
+/* Medium */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 600;
+  src: url(../fonts/Geogrotesque/Geogtq-Md.otf);
+}
+
+/* Semibold */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../fonts/Geogrotesque/Geogtq-Sb.otf);
+}
+
+/* Bold */
+@font-face {
+  font-family: 'Geogrotesque';
+  font-style: normal;
+  font-weight: 800;
+  src: url(../fonts/Geogrotesque/Geogtq-Bd.otf);
+}

@@ -9,6 +9,7 @@ from taggit.models import Tag
 class Article(models.Model):
 	title = models.CharField(max_length=200)
 	content = models.TextField()
+	summaryLines = models.TextField()
 
 	birthYear = models.IntegerField(default=0);
 	deathYear = models.IntegerField(null=True, blank=True);
@@ -21,3 +22,11 @@ class Article(models.Model):
 
 	def getTagNames(self):
 		return self.tags.all()
+
+
+class PastImage(models.Model):
+	imageField = models.ImageField(upload_to="images")
+	article = models.ForeignKey(Article)
+
+	def __unicode__(self):
+		return "Article: '" + self.article.title + "' - Image: " + self.imageField.url

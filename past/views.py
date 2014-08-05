@@ -5,7 +5,7 @@ from django.db.models import Q
 import json
 
 from django_countries import countries
-from past.models import Article
+from past.models import Article, PastImage
 
 # Create your views here.
 def index(request):
@@ -23,7 +23,14 @@ def ViewArticle(request, articleID):
 	except Article.DoesNotExist:
 		raise Http404
 
-	context = {'article': article}
+	images = PastImage.objects.filter(article=article)
+	for i in images:
+		print "Image!", i.imageField.url
+
+	context = {}
+	context['article'] = article
+	context["images"] = images
+	context["summary"] = article.summaryLines.split("\n")
 	return render(request, 'past/article.html', context)
 
 
@@ -85,6 +92,7 @@ def GetCountryArticles(request, countryCode):
 	articlesByCountry = Article.objects.filter(country__exact=countryCode)
 	if len(articlesByCountry) == 0:
 		articlesByCountry = None
+		raise Http404
 
 	context = {}
 	context["countryName"] = countryName

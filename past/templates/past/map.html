@@ -16,6 +16,9 @@
     <script type="text/javascript" src="{% static 'past/jquery-ui-slider-pips.js' %}"></script>
     <link rel="stylesheet" href="{% static 'past/jquery-ui-slider-pips.css' %}">
     <link rel="stylesheet" href="{% static 'past/slider.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tooltipster.css' %}" />
+    <script type="text/javascript" src="{% static 'js/jquery.tooltipster.min.js' %}"></script>
 {% endblock %}
 
 
@@ -65,7 +68,6 @@
                 color: "#F1F3CE",
                 colorSolid: "#FFFFFF",
                 outlineColor: "#6DC0AE",
-                //selectedColor: "#CC0000"
             };
 
             map.colorSteps = 5;
@@ -77,12 +79,8 @@
             map.allowClickOnSelectedObject = true;
             map.addListener("clickMapObject", function (event) {
             	map.selectObject(null);
-                $.fancybox({
-                    type: 'iframe',
-                    href: '/past/country/'+event.mapObject.id,
-                    "width": "30%",
-                    closeClick: true,
-                });
+
+                ShowMenu(event);
             });
 
             loadData("mapdata.json");
@@ -126,6 +124,7 @@
             values: [ -3000 , 2014 ]
         });
 
+
         $modern.slider("pips", { 
             rest: "label", 
             suffix: "", 
@@ -139,6 +138,7 @@
             }
         });
 
+
         $modern.on({
             slidechange: function(event, ui){
                 var range = ui.values;
@@ -148,5 +148,64 @@
                 loadData(fileToLoad);
             }
         });
+
+        var lastCountryCode = null;
+        var lastArticleID = null;
+
+
+        function ShowMenu(event) {
+            lastCountryCode = event.mapObject.id;
+            lastArticleID = null;
+            OpenCountryListFancybox();
+        }
+
+
+        function OpenCountryListFancybox()
+        {
+            $.fancybox.open({
+                type: 'iframe',
+                href: '/past/country/'+lastCountryCode,
+                width: "400px",
+                height: "400px",
+                padding: "0px",
+                closeClick: true,
+                afterShow: ScrollToLastPos,
+            });
+        }
+
+
+        function ScrollToLastPos()
+        {
+            //if (lastArticleID != null)
+            //{
+            //    var linkID = "#articlelink-" + lastArticleID.toString();
+            //    var scrollPos = $('.fancybox-iframe').contents().find(linkID).offset().top;
+
+                //$('.fancybox-iframe').contents().find('body').scrollTop(500);
+                $('.fancybox-iframe').contents().find('body').scrollTop(500);
+            //}
+        }
+
+
+
+        function OpenArticle(url, articleID)
+        {
+            lastArticleID = articleID;
+
+            $.fancybox.open({
+                href: url,
+                type: "iframe",
+                padding: "0px",
+                afterClose: function() {
+                    ReOpenList();
+                },
+            });
+        }
+
+
+        function ReOpenList()
+        {
+            OpenCountryListFancybox();
+        }
     </script>
 {% endblock %}

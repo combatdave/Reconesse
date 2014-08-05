@@ -1,21 +1,74 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}" />
+<!DOCTYPE html>
 
-<body>
-	<h1>{{ countryName }}</h1>
+<html lang="en">
+	
+	<head>
+		<meta charset=utf-8>
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-	{% if articles %}
-		{% for article in articles %}
-			<h2>{{ article.title }}</h2>
-		    <p>{{ article.content }}</p>
-		    <small> Tags: 
-		    {% for tag in article.getTagNames %}
-		    	#{{ tag }}
-		    {% endfor %}
-			</small>
-		{% endfor %}
-	{% else %}
-		There are no articles available for this country. Contribute <a href="#">here!</a>
-	{% endif %}
-</body>
+		<link rel="stylesheet" type="text/css" href="{% static 'past/articleliststyle.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
+		<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+
+	    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
+	</head>
+        
+    <body>
+        <table class="linktable">
+            <tr><th>{{ countryName }}</th></tr>
+            {% for article in articles %}
+            <tr><td>
+                <a href="/past/{{ article.id }}" class="fancyboxlink" id="articlelink-{{ article.id }}", articleid="{{ article.id }}">
+                	<div class="articleinfo">
+	                    <div class="articlename">
+	                        {{ article.title }}
+	                    </div>
+	                    <div class="articledates">
+	                    	{% if article.deathYear %}
+	                        	{{ article.birthYear }}-{{ article.deathYear }}
+	                        {% else %}
+	                        	{{ article.birthYear }}-present
+	                        {% endif %}
+	                    </div>
+	                    <div class="articletagcontainer">
+	                        <div class="articletag">
+	                            {% for tag in article.getTagNames %}
+	                            	{{ tag }}{% if not forloop.last %}, {% endif %}
+	                            {% endfor %}
+	                        </div>
+	                    </div>
+	                </div>
+	                <img src="{% static 'images/rightarrow.png' %}" class="articlehover"></img>
+                </a>
+            </td></tr>
+            {% endfor %}
+        </table>
+        
+		<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript">
+			$("a").click( function(event) {
+				if (typeof parent.OpenArticle == 'function')
+				{
+					event.preventDefault();
+					parent.OpenArticle($(this).attr("href"), $(this).attr("articleid"));
+				}
+			});
+
+
+			function Test123()
+			{
+				alert("arse");
+			}
+
+
+			$(document).ready(function() {
+			});
+		</script>
+	</body>
+</html>

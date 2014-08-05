@@ -1,0 +1,107 @@
+html, body {
+	width: 800px;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	background-color: white;
+	font-family: 'Geogrotesque', sans-serif;
+	font-weight: 400;
+}
+
+img.mainimage {
+    padding-top: 40px;
+    width: 100%;
+    height: auto;
+}
+
+img.thumbnail {
+    width: 48%;
+    height: auto;
+    max-width: 100px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+}
+
+hr.blue {
+    background:#0000FF;
+}
+
+hr.green {
+    background:#00FFAA;
+}
+
+.articleheader {
+    margin-top: 10px;
+}
+
+.articleheader h1 {
+    margin: 0 auto;
+    padding: 0px;
+}
+
+#datesandshare {
+    padding: 0 auto;
+    height:45px;
+}
+
+#datesandshare h3 {
+    float: left;
+}
+
+#sharecontainer {
+    float: right;
+    //width: 100px;
+    
+    padding-top: 14px;
+    margin: 0 auto;
+}
+
+.country {
+    clear: both;
+    background-color: #00FFAA;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #666666;
+    
+    padding: 5px;
+}
+
+.hashtag-container {
+    width: auto;
+    height: auto;
+    background-color: #CCCCCC;
+    color: #FFFFFF;
+    
+    margin: 3px;
+    display: inline-block;
+}
+
+.hashtag {
+    margin: 3px;
+    padding: 0px;
+    width: auto;
+}
+
+.related #title {
+    color: #888888;
+    text-transform: uppercase;
+}
+
+.related span {
+    display: block;
+    text-transform: capitalize;
+}
+
+.profiletext ul {
+    list-style: square;
+    color: #666666;
+}
