@@ -1,17 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
-from django.db.models import Q
+from django.db.models import Q, Avg, Max, Min
 import json
+import datetime
 
 from django_countries import countries
-from past.models import Article, PastImage
+from past.models import Article, PastImage, Category
 
 # Create your views here.
 def index(request):
+	yearData = GetArticleYearRanges()
+
+	categories = Category.objects.GetTree()
+	print categories
+
 	context = {}
-	context["minYear"] = -100
-	context["maxYear"] = 2014
+	context["minYear"] = yearData[0]
+	context["maxYear"] = yearData[1]
+	context["categories"] = categories
 
 	return render(request, 'past/map.html', context)
 
@@ -34,26 +41,63 @@ def ViewArticle(request, articleID):
 	return render(request, 'past/article.html', context)
 
 
-def GetMapData(request):
-	minYear = request.GET.get('minYear')
-	if minYear is not None:
-		minYear = int(minYear)
-	maxYear = request.GET.get('maxYear')
-	if maxYear is not None:
-		maxYear = int(maxYear)
+def GetArticleYearRanges():
+	queryResult = Article.objects.aggregate(Min("birthYear"))
 
-	if maxYear is None and minYear is None:
+	earliest = queryResult["birthYear__min"]
+	now = datetime.datetime.now().year
+
+	return earliest, now
+
+
+def GetMapData(request):
+	earliestYear, latestYear = GetArticleYearRanges()
+
+	minYear = request.GET.get('minYear')
+	if minYear is not None and minYear != "":
+		minYear = int(minYear)
+	else:
+		minYear = earliestYear
+	maxYear = request.GET.get('maxYear')
+	if maxYear is not None and maxYear != "":
+		maxYear = int(maxYear)
+	else:
+		maxYear = latestYear
+
+	showAll = request.GET.get("showAll")
+
+	allCategories = Category.objects.all()
+	categoryFilter = allCategories;
+	if showAll != "true":
+		filterListParam = request.GET.getlist("filterCategories[]")
+		print "not showAll, filterListParam =", filterListParam
+		categoryFilter = allCategories.filter(name__in=filterListParam)
+
+	categoryIDs = [category.id for category in categoryFilter]
+	categoryIDsString = str(tuple(categoryIDs))
+	if len(categoryIDs) == 1:
+		categoryIDsString = categoryIDsString.replace(",", "")
+
+	if maxYear >= latestYear and minYear <= earliestYear and len(allCategories) == len(categoryFilter):
 		allArticles = Article.objects.all()
 	else:
 		query = """
 		SELECT * FROM past_article
+
 		WHERE
-		(birthYear >= {minYear} AND birthYear <= {maxYear})
-		OR
-		(deathYear >= {minYear} AND deathYear <= {maxYear})
-		OR
-		(birthYear < {minYear} AND deathYear > {maxYear})
-		""".format(minYear = minYear, maxYear = maxYear)
+		(
+			(birthYear >= {minYear} AND birthYear <= {maxYear})
+			OR
+			(deathYear >= {minYear} AND deathYear <= {maxYear})
+			OR
+			(birthYear < {minYear} AND deathYear > {maxYear})
+		)	
+		AND
+		(
+			category_id IN {categoryIDs}
+		)
+		""".format(minYear = minYear, maxYear = maxYear, categoryIDs = categoryIDsString)
+
 		allArticles = Article.objects.raw(query)
 
 	numByCountryCode = {}
@@ -65,7 +109,6 @@ def GetMapData(request):
 
 	areas = []
 	for country, num in numByCountryCode.iteritems():
-		print country, num
 		countryData = {}
 		countryData["id"] = country
 		countryData["value"] = num
@@ -74,8 +117,8 @@ def GetMapData(request):
 	jsonResponse = {}
 	jsonResponse["minYear"] = minYear
 	jsonResponse["maxYear"] = maxYear
-	jsonResponse["map"] = "worldLow"
-	jsonResponse["getAreasFromMap"] = True
+	#jsonResponse["map"] = "worldLow"
+	#jsonResponse["getAreasFromMap"] = False
 	jsonResponse["areas"] = areas
 
 	return HttpResponse(json.dumps(jsonResponse), content_type="application/json")

@@ -3,7 +3,44 @@ from django_countries.fields import CountryField
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
-# Create your models here.
+
+class CategoryManager(models.Manager):
+	def GetRoots(self):
+		topLevel = self.filter(parent__isnull=True)
+		return topLevel
+
+
+	def GetTree(self):
+		roots = self.GetRoots()
+
+		tree = []
+
+		for root in roots:
+			children = self.filter(parent__id=root.id)
+			branch = [root, children]
+			tree.append(branch)
+
+		return tree
+
+
+	def GetOrdered(self):
+		tree = self.GetTree()
+		ordered = []
+		for branch in tree:
+			ordered.append(branch[0])
+			ordered += branch[1]
+
+		return ordered
+
+
+class Category(models.Model):
+	name = models.CharField(max_length=200)
+	parent = models.ForeignKey("self", null=True, blank=True, related_name="parentcategory")
+
+	objects = CategoryManager()
+
+	def __unicode__(self):
+		return self.name
 
 
 class Article(models.Model):
@@ -15,6 +52,8 @@ class Article(models.Model):
 	deathYear = models.IntegerField(null=True, blank=True);
 
 	country = CountryField()
+
+	category = models.ForeignKey(Category, related_name="category")
 	tags = TaggableManager(related_name="past_tags")
 
 	def __unicode__(self):
