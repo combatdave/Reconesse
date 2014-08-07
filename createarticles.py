@@ -90,7 +90,7 @@ def CreateRandomEntry():
 	birthYear = random.randint(-1000, 2014)
 	deathYear = birthYear + random.randint(20, 90)
 	if deathYear > 2014:
-		deathYear = null
+		deathYear = None
 
 	randomCountry = random.choice(list(countries))[0]
 
