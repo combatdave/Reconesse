@@ -67,7 +67,7 @@
 
     <!--        Map js-->
         <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
-        <script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}"></script>
+    <!--<script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}"></script> -->
         
     <!--        fancybox-->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
@@ -94,10 +94,10 @@
                 // create AmMap object
                 map = new AmCharts.AmMap();
                 // set path to images
-                map.pathToImages = "http://www.ammap.com/lib/images/"; //"ammap/images/";
+                map.pathToImages = "{% static 'ammap/images/' %}"; //"http://www.ammap.com/lib/images/";
 
                 var dataProvider = {
-                    map: "worldLow",
+                    mapURL: "{% static 'ammap/worldHigh.svg' %}",
                     getAreasFromMap: true,          
                 }; 
                 // pass data provider to the map object
