@@ -104,6 +104,10 @@ def CreateRandomEntry():
 	for i in range(1, random.randint(2, 5)):
 		a.tags.add(random.choice(tagsList))
 
+	allArticles = Article.objects.all()
+	for i in range(0, random.randint(0, 3)):
+		a.relatedArticles.add(random.choice(allArticles))
+
 	print "Inserted ", a
 
 
