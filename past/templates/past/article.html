@@ -73,22 +73,33 @@
                         </div>
                         <hr class="green" />
                         <div class="related">
-                            <div id="title">You might also be interested in:</div>
-                            <span>something</span>
-                            <span>another thing</span>
-                            <span>a third thing</span>
-                            
+                            {% if relatedArticles %}
+                                <div id="title">You might also be interested in:</div>
+                                {% for relatedArticle in relatedArticles %}
+                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                                {% endfor %}
+                                </br>
+                            {% endif %}
+
+                            <div id="title">Also in "{{ article.category }}":</div>
+                            {% for sameCategoryArticle in sameCategoryArticles %}
+                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col3">
                         <div class="profilepictures">
-                            {% for image in images %}
-                                {% if forloop.first %}
-                                    <img src={{ image.imageField.url }} class="mainimage"></img>
-                                {% else %}
-                                    <img src={{ image.imageField.url }} class="thumbnail"></img>
-                                {% endif %}
-                            {% endfor %}
+                            {% if images|length_is:"0" %}
+                                <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
+                            {% else %}
+                                {% for image in images %}
+                                    {% if forloop.first %}
+                                        <img src={{ image.imageField.url }} class="mainimage"></img>
+                                    {% else %}
+                                        <img src={{ image.imageField.url }} class="thumbnail"></img>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         </div>
         
                         <hr class="blue" />

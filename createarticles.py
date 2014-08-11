@@ -83,6 +83,9 @@ tagsList = tags.split()
 categories = Category.objects.all()	
 
 
+if len(categories) == 0:
+	raise Exception("No categories! Go make some.")
+
 def CreateRandomEntry():
 	articleName = random.choice(firstNames) + " " + random.choice(lastNames)
 	articleText = loremIpsum * random.randint(1, 10)
@@ -104,7 +107,7 @@ def CreateRandomEntry():
 	print "Inserted ", a
 
 
-for i in xrange(100):
+for i in xrange(10):
 	CreateRandomEntry()
 
 print "Done"

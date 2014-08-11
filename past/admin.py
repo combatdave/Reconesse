@@ -56,15 +56,16 @@ class CategoryToCategoryInline(admin.TabularInline):
 	model = Category
 
 
+class RelatedArticlesInline(admin.TabularInline):
+	fk_name = "from_article"
+	model = Article.relatedArticles.through
+
+
 class ArticleAdmin(admin.ModelAdmin):
 	form = ArticleAdminForm
 
-
-
-	#fieldsets = [
-    #    (None,               {'fields': ['title', 'content']})
-    #]
-	inlines = [PastImageToArticleInline]
+	inlines = [PastImageToArticleInline, RelatedArticlesInline,]
+	exclude = ("relatedArticles", )
 
 
 class PastImageAdmin(admin.ModelAdmin):

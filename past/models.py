@@ -53,6 +53,8 @@ class Article(models.Model):
 
 	country = CountryField()
 
+	relatedArticles = models.ManyToManyField("self", related_name="relatedby")
+
 	category = models.ForeignKey(Category, related_name="category")
 	tags = TaggableManager(related_name="past_tags")
 

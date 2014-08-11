@@ -38,6 +38,13 @@ def ViewArticle(request, articleID):
 	context['article'] = article
 	context["images"] = images
 	context["summary"] = article.summaryLines.split("\n")
+
+	relatedArticles = article.relatedArticles.all()
+	if len(relatedArticles) != 0:
+		context["relatedArticles"] = relatedArticles
+
+	context["sameCategoryArticles"] = Article.objects.filter(Q(category__id=article.category.id), ~Q(id=article.id))
+
 	return render(request, 'past/article.html', context)
 
 
