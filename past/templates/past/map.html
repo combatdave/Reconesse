@@ -11,32 +11,49 @@
         <meta charset=utf-8>
         <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="{% static 'past/mapstyle.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
-
-        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
         <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
-
+        
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
         <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
         <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
-
         <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
     </head>
 
-
     <body>
+   
         <div id="mapdiv"></div>
 
         <div class="barfloat">
-            <div class="barcontainer">
-                <div class="barcontent yearcontainer" id="minYear"></div>
-                <div class="barcontent" id="slidercontainer"><div id="sliderbar"></div></div>
-                <div class="barcontent yearcontainer" id="maxYear"></div>
-                <div class="barcontent barbuttoncontainer"><div class="barbutton" id="present">PRESENT</div></div>
-                <div class="barcontent barbuttoncontainer"><div class="barbutton" id="future">FUTURE</div></div>
+            <div class="container" style="position: relative;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="barcontent yearcontainer" id="minYear"></div>
+                        <div class="barcontent" id="slidercontainer"><div id="sliderbar"></div></div>
+                        <div class="barcontent yearcontainer" id="maxYear"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
+                            <div class="barcontent barbuttoncontainer">
+                                <div class="barbutton" id="present">
+                                    PRESENT
+                                </div>
+                            </div>
+                            <div class="barcontent barbuttoncontainer">
+                                <div class="barbutton" id="future">
+                                    FUTURE
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <center><div id="yearDisplay" title="jsdjsdjds">All years</div></center>
+            <!-- <center><div id="yearDisplay">All years</div></center> -->
         </div>
 
 
@@ -61,278 +78,37 @@
         </div>
 
 
-    <!--        jquery-->
-        <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <!-- jquery-->
+        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+        <script src="../static/bootstrap/js/bootstrap.min.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-    <!--        Map js-->
+    <!-- Map js-->
         <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
-    <!--<script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}"></script> -->
         
-    <!--        fancybox-->
+    <!-- fancybox-->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
         
-    <!--        pips for the year slider-->
+    <!-- pips for the year slider-->
         <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
-    <!--        slideout box-->
-        <script type="text/javascript" src="{% static 'js/jquery.tabSlideOut.v1.3.js' %}"></script>
+    <!-- slideout box-->
+        <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
         
-    <!--        checkboxes-->
+    <!-- checkboxes-->
         <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
         <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
-        <script type="text/javascript">
 
-            $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
-            $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
+    <!-- Custom JS -->
+        <script type="text/javascript" src="{% static 'past/map.js' %}"></script>
 
-            var map;
-            var showAllCategories = true;
+        <script>
+            $(document).ready(function() {
+                // page setup
+                $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
+                $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
 
-            // add all your code to this method, as this will ensure that page is loaded
-            AmCharts.ready(function() {
-                // create AmMap object
-                map = new AmCharts.AmMap();
-                // set path to images
-                map.pathToImages = "{% static 'ammap/images/' %}"; //"http://www.ammap.com/lib/images/";
-
-                var dataProvider = {
-                    mapURL: "{% static 'ammap/worldLow.svg' %}",
-                    getAreasFromMap: true,          
-                }; 
-                // pass data provider to the map object
-                map.dataProvider = dataProvider;
-
-                map.areasSettings = {
-                    autoZoom: false,
-                    selectable: true,
-                    color: "#FFCC33",
-                    colorSolid: "#FFFFCC",
-                    outlineColor: "#33bcff",
-                    rollOverOutlineColor: "#FFFFFF",
-                };
-
-                var zoomColor = "#FFFF00";
-                map.zoomControl.buttonColor = zoomColor;
-                map.zoomControl.buttonFillColor = zoomColor;
-                map.zoomControl.buttonIconColor = "#000000";
-                map.zoomControl.gridColor = "#000000";
-                map.zoomControl.homeIconColor = "#000000";
-                map.zoomControl.zoomControlEnabled = false;
-                map.zoomControl.panControlEnabled = false;
-
-                map.colorSteps = 3;
-                map.height = "100%";
-                map.mouseWheelZoomEnabled = true;
-
-                map.balloon.color = "#000000";
-
-                map.allowClickOnSelectedObject = true;
-                map.addListener("clickMapObject", function (event) {
-                    map.selectObject(null);
-                    ShowMenu(event);
-                });
-                
-                showAllCategories = true;
-                loadData();
-
-                map.dataProvider.zoomLongitude = 0;
-                map.dataProvider.zoomLatitude = 24;
-                map.dataProvider.zoomLevel = 1.2;
-                
-                // write the map to container div
-                map.write("mapdiv");
-            });
-            
-            
-            function ShowMenu(e) {
-                $.fancybox({
-                    type: 'iframe',
-                    href: '/past/country/'+event.mapObject.id,
-                    width: "400",
-                    height: "400",
-                    closeClick: true,
-                    autoDimensions: false,
-                });
-            }
-
-
-            function setData(data) {
-                var parsedData = JSON.parse(data);
-
-                SetYearDisplayText(parsedData.minYear, parsedData.maxYear);
-
-                map.dataProvider.areas = parsedData.areas;
-                map.validateData();
-
-                $("#searchloadingtext").text("");
-            }
-
-
-            function SetYearDisplayText(minYear, maxYear)
-            {
-                $("#yearDisplay").text(GetLabelForYear(minYear) + " - " + GetLabelForYear(maxYear));
-            }
-
-
-            var searchMinYear = null;
-            var searchMaxYear = null;
-            var selectedCategories = []
-
-
-            function loadData(){
-                file = "mapdata.json";
-
-                var queryParams = {
-                    minYear: searchMinYear,
-                    maxYear: searchMaxYear,
-                    filterCategories: selectedCategories,
-                    showAll: showAllCategories,
-                };
-
-                file = file + "?" + $.param(queryParams);
-
-                var request;
-                if (window.XMLHttpRequest) {
-                    request = new XMLHttpRequest();
-                    // load
-                    request.open('GET', file, false);
-                    request.send();
-                    setData(request.responseText);
-                }
-            }
-
-
-            var lastCountryCode = null;
-            var lastArticleID = null;
-
-
-            function ShowMenu(event) {
-                lastCountryCode = event.mapObject.id;
-                lastArticleID = null;
-                OpenCountryListFancybox();
-            }
-
-
-            function OpenCountryListFancybox()
-            {
-                $.fancybox.open({
-                    type: 'iframe',
-                    href: '/past/country/'+lastCountryCode,
-                    width: "400px",
-                    height: "400px",
-                    padding: "0px",
-                    closeClick: true,
-                });
-            }
-
-
-            function OpenArticle(url, articleID)
-            {
-                lastArticleID = articleID;
-
-                $.fancybox.open({
-                    href: url,
-                    type: "iframe",
-                    padding: "0px",
-                    afterClose: function() {
-                        ReOpenList();
-                    },
-                });
-            }
-
-
-            function ReOpenList()
-            {
-                OpenCountryListFancybox();
-            }
-
-
-            function GetLabelForYear(year) {
-                var label = "AD";
-                if (year < 0) {
-                    label = "BC";
-                }
-                return Math.abs(year).toString() + " " + label
-            }
-
-    //  SETUP SHIT
-
-            var $sliderbar = $("#sliderbar").slider({
-                range: true, 
-                min: {{ minYear }}, 
-                max: {{ maxYear }}, 
-                values: [ {{ minYear }}, {{ maxYear }}],
-                step: 100,
-            });
-
-
-            $('.ui-slider .ui-slider-handle').eq(0).append("<img src='{% static "images/sliderhandleleft.png" %}' class='ui-slider-handle-left'/>");
-            $('.ui-slider .ui-slider-handle').eq(1).append("<img src='{% static "images/sliderhandleright.png" %}' class='ui-slider-handle-right'/>");
-
-            $sliderbar.on({
-                slidechange: function(event, ui){
-                    var range = ui.values;
-
-                    searchMinYear = parseInt(range[0]).toString();
-                    searchMaxYear = parseInt(range[1]).toString();
-
-                    loadData();
-                }
-            });
-
-
-            $(function(){
-                $('.slide-out-div').tabSlideOut({
-                    tabHandle: '.handle',                     
-                    pathToTabImage: '{% static "images/search.png" %}',
-                    imageHeight: '122px',                     
-                    imageWidth: '40px',                       
-                    tabLocation: 'right',
-                    speed: 300,
-                    action: 'click',
-                    topPos: '200px',
-                    leftPos: '20px',
-                    fixedPosition: false
-                });
-
-            });
-
-
-            var searchTimeout = null;
-
-
-            function AutoSearch()
-            {
-                searchTimeout = null;
-                loadData();
-            }
-
-
-            $('#auto-checkboxes').bonsai({
-                expandAll: true,
-                checkboxes: true,
-                createCheckboxes: true,
-            });
-
-            $("#auto-checkboxes :checkbox").change( function(event) {
-                showAllCategories = false;
-                newSelectedCategories = []
-                $("input:checkbox").each( function(event) {
-                    var categoryName = $(this).attr("value");
-                    var checked = $(this).is(":checked");
-                    if (checked) {
-                        newSelectedCategories.push(categoryName);
-                    }
-                });
-                selectedCategories = newSelectedCategories;
-
-                if (searchTimeout != null)
-                {
-                    window.clearTimeout(searchTimeout);
-                }
-                searchTimeout = window.setTimeout(AutoSearch, 500);
-                $("#searchloadingtext").text("Please wait...");
+                SetupSliderBar({{minYear}}, {{maxYear}});
             });
         </script>
     </body>

@@ -1,147 +1,109 @@
-{% extends "base_withmenu.html" %}
-
 {% load staticfiles %}
 
+<!DOCTYPE html>
 
-{% block head %}
-    <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}"></script>
+<html lang="en">
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+    <head>
+        <title>Reconesse Database</title>
 
-    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-    <link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' type='text/css'>
+        <meta charset=utf-8>
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-    <script type="text/javascript" src="{% static 'past/jquery-ui-slider-pips.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'past/jquery-ui-slider-pips.css' %}">
-    <link rel="stylesheet" href="{% static 'past/slider.css' %}">
-{% endblock %}
+        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
+        
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+        <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
+        <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
+    </head>
+
+    <body>
+   
+        <div id="mapdiv"></div>
+
+        <div class="barfloat">
+            <div class="container" style="position: relative;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
+                            <div class="barcontent barbuttoncontainer">
+                                <div class="barbutton" id="present">
+                                    PAST
+                                </div>
+                            </div>
+                            <div class="barcontent barbuttoncontainer">
+                                <div class="barbutton" id="future">
+                                    PRESENT
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <center><div id="yearDisplay">All years</div></center> -->
+        </div>
 
 
-{% block body %}
-    <center>
-        <div id="mapdiv" style="width: 80%; height: 80%;"></div>
-    </center>
+        <div class="slide-out-div">
+            <a class="handle">Search</a>
+            <ol id='auto-checkboxes'>
+                <li data-value="all" data-name="search" data-checked="1"> All
+                    <ol>
+                        {% for branch in categories %}
+                            <li data-value='{{ branch.0 }}'>{{ branch.0 }}
+                                <ol>
+                                {% for child in branch.1 %}
+                                    <li data-value='{{ child }}'>{{ child }}</li>
+                                {% endfor %}
+                                </ol>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </li>
+            </ol>
+            <div id="searchloadingtext"></div>
+        </div>
 
-    <a href="#" onclick="loadData('mapdata.json');">Refresh data</a>
 
-    <script type="text/javascript">
-        var map;
-        // add all your code to this method, as this will ensure that page is loaded
-        AmCharts.ready(function() {
-            // create AmMap object
-            map = new AmCharts.AmMap();
-            // set path to images
-            map.pathToImages = "http://www.ammap.com/lib/images/"; //"ammap/images/";
+    <!-- jquery-->
+        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+        <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-            /* create data provider object
-             map property is usually the same as the name of the map file.
+    <!-- Map js-->
+        <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
+        
+    <!-- fancybox-->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+        
+    <!-- pips for the year slider-->
+        <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
-             getAreasFromMap indicates that amMap should read all the areas available
-             in the map data and treat them as they are included in your data provider.
-             in case you don't set it to true, all the areas except listed in data
-             provider will be treated as unlisted.
-            */
-            var dataProvider = {
-                map: "worldLow",
-                getAreasFromMap:true          
-            }; 
-            // pass data provider to the map object
-            map.dataProvider = dataProvider;
+    <!-- slideout box-->
+        <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+        
+    <!-- checkboxes-->
+        <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
 
-            /* create areas settings
-             * autoZoom set to true means that the map will zoom-in when clicked on the area
-             * selectedColor indicates color of the clicked area.
-             */
-            map.areasSettings = {
-                autoZoom: false,
-                selectable: true,
-                color: "#F1F3CE",
-                colorSolid: "#FFFFFF",
-                outlineColor: "#6DC0AE",
-                //selectedColor: "#CC0000"
-            };
+    <!-- Custom JS -->
+        <script type="text/javascript" src="{% static 'future/map.js' %}"></script>
 
-            map.colorSteps = 5;
-            map.height = "100%";
-            map.mouseWheelZoomEnabled = true;
+        <script>
+            $(document).ready(function() {
+                // page setup
+                // $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
+                // $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
 
-            map.balloon.color = "#000000";
-
-            map.allowClickOnSelectedObject = true;
-            map.addListener("clickMapObject", function (event) {
-            	map.selectObject(null);
-                $.fancybox({
-                    type: 'iframe',
-                    href: '/future/country/'+event.mapObject.id,
-                    "width": "30%",
-                    closeClick: true,
-                });
+                // SetupSliderBar({{minYear}}, {{maxYear}});
             });
-
-            loadData("mapdata.json");
-
-            // write the map to container div
-            map.write("mapdiv");
-        });
-
-
-        function setData(data){
-            var jsonData = JSON.parse(data);
-
-            if (jsonData.minYear != null)
-            {
-                $("#yearDisplay").text(jsonData.minYear + " - " + jsonData.maxYear);
-            }
-
-        	map.dataProvider = jsonData;
-            map.dataProvider.zoomLongitude = 0;
-            map.dataProvider.zoomLatitude = 10;
-        	map.validateNow();
-        }
-
-
-        function loadData(file){
-            var request;
-            if (window.XMLHttpRequest) {
-                request = new XMLHttpRequest();
-        		// load
-        	    request.open('GET', file, false);
-        	    request.send();
-        	    setData(request.responseText);
-            }
-        }
-
-
-        var $modern = $("#modern").slider({
-            range: true, 
-            min: -3000, 
-            max: 2014, 
-            values: [ -3000 , 2014 ]
-        });
-
-        $modern.slider("pips", { 
-            rest: "label", 
-            suffix: "", 
-            step: 100,
-            formatLabel: function(value) {
-                var label = "AD";
-                if (value < 0) {
-                    label = "BC";
-                }
-                return Math.abs(value) + "<b class=\"heart\">"+label+"</b>";
-            }
-        });
-
-        $modern.on({
-            slidechange: function(event, ui){
-                var range = ui.values;
-                var fileToLoad = "mapdata.json?";
-                fileToLoad += "minYear=" + parseInt(range[0]).toString();
-                fileToLoad += "&maxYear=" + parseInt(range[1]).toString();
-                loadData(fileToLoad);
-            }
-        });
-    </script>
-{% endblock %}
+        </script>
+    </body>
+</html>

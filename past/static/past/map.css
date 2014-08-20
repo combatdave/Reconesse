@@ -3,13 +3,10 @@ html, body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	-webkit-font-smoothing: antialiased;
 }
 
 body {
 	background-color: #33bcff;
-	font-family: 'Geogrotesque', sans-serif;
-	font-weight: 400;
 }
 
 #mapdiv {
@@ -25,20 +22,10 @@ body {
 }
 
 .barfloat {
-    position: fixed; 
-    bottom: 0px;
+    position: fixed;
+    bottom: 20px;
     
     width: 100%;
-}
-
-.barcontainer {
-    position: relative;
-    width: 80%; 
-    height: 20px;
-    
-    margin: auto;
-    display: table;
-    
 }
 
 .barcontent {
