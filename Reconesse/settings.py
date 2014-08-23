@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'ey88i8h1*%xs+0za201@=m7yl#)85mu-3nbvu(v&0o+8uwd406'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "thysja.reconesse.org", "reconesse.org"]
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025

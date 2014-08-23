@@ -6,10 +6,10 @@ AmCharts.ready(function() {
     // create AmMap object
     map = new AmCharts.AmMap();
     // set path to images
-    map.pathToImages = "../static/ammap/images/"; //"http://www.ammap.com/lib/images/";
+    map.pathToImages = "../static/ammap/images/";
 
     var dataProvider = {
-        mapURL: "../static/ammap/worldLow.svg",
+        map: "worldLow"
         getAreasFromMap: true,          
     }; 
     // pass data provider to the map object
