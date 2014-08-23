@@ -6,28 +6,33 @@
 	
 	<head>
 		<title>Reconesse Database - {{ article.title }}</title>
-		
-		<meta charset=utf-8>
-		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+
+        <meta charset=utf-8>
+        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
 
         <link rel="stylesheet" type="text/css" href="{% static 'past/articlestyle.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-        <link rel="stylesheet" type="test/css" href="{% static 'css/screen.css' %}" />
-		<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
-		
-		<!-- Favicon -->
-		<link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
 	</head>
 	
 	<body>
-        <div id="header">
-            
-        </div>
-        
-        <div class="colmask threecol">
-            <div class="colmid">
-                <div class="colleft">
-                    <div class="col1">
+
+        <div class="wrapper">
+
+            <div class="header">
+                
+            </div>
+
+            <div class="container content">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <!-- Center column -->
+
+                        <!-- Header stuff -->
                         <div class="articleheader" id="mainheader">
                             <h1>{{ article.title }}</h1>
                             
@@ -58,36 +63,22 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        
+
+                        <!-- Divider -->
                         <hr class="green" />
-                        
+
+                        <!-- Actual content -->
                         <div class="articlecontent">
                             <p>
                                 {{ article.content|linebreaks }}
                             </p>
                         </div>
                     </div>
-                    <div class="col2">
-                        <div class="articleheader">
-<!--                            left-->
-                        </div>
-                        <hr class="green" />
-                        <div class="related">
-                            {% if relatedArticles %}
-                                <div id="title">You might also be interested in:</div>
-                                {% for relatedArticle in relatedArticles %}
-                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
-                                {% endfor %}
-                                </br>
-                            {% endif %}
 
-                            <div id="title">Also in "{{ article.category }}":</div>
-                            {% for sameCategoryArticle in sameCategoryArticles %}
-                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="col3">
+
+                    <div class="col-md-2 col-md-push-2">
+                        <!-- Right column -->
+
                         <div class="profilepictures">
                             {% if images|length_is:"0" %}
                                 <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
@@ -114,30 +105,66 @@
         
                         <hr class="blue" />
                     </div>
+
+
+                    <div class="col-md-2 col-md-pull-10">
+                        <!-- Left column -->
+
+                        <!-- Spacer for the left column -->
+                        <div class="articleheader" id="leftpadder">
+                        </div>
+
+                        <hr class="green hidesmall" />
+
+                        <div class="related">
+                            {% if relatedArticles %}
+                                <div id="title">You might also be interested in:</div>
+                                {% for relatedArticle in relatedArticles %}
+                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                                {% endfor %}
+                                </br>
+                            {% endif %}
+
+                            <div id="title">Also in "{{ article.category }}":</div>
+                            {% for sameCategoryArticle in sameCategoryArticles %}
+                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="footer">
+                <div class="container">
+                    
                 </div>
             </div>
         </div>
-        
-        <div id="footer">
-            
-        </div>
 
-		<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
 		<script type="text/javascript">
-			function UpdateSizes() {
+            function UpdateSizes() {
                 var headerHeight = $("#mainheader").height();
-                
-                //alert(headerHeight);
-                
                 $(".articleheader").height(headerHeight);
-			};
-            
+
+                if ($(".container").width() <= 720)
+                {
+                    $(".articleheader#leftpadder").height(0);
+                    $(".hidesmall").hide();
+                }
+                else
+                {
+                    $(".hidesmall").show();
+                }
+            };
+
             $(window).load(UpdateSizes);
             $(window).resize(UpdateSizes);
-
-            $(document).ready(function() {
-                
-            });
 		</script>
 	</body>
 </html>
