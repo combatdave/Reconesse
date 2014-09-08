@@ -20,7 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'ey88i8h1*%xs+0za201@=m7yl#)85mu-3nbvu(v&0o+8uwd406'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
+DEBUG = True
+# We check whether there is a DEBUG variable in .env that's set to 'False'
+try:
+    if os.getenv("DEBUG").lower() == "false":
+        DEBUG = False
+except:
+    pass
 
 TEMPLATE_DEBUG = True
 
@@ -66,14 +73,15 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ATOMIC_REQUESTS': True
-    }
-}
+import dj_database_url
+DATABASES = { 'default' : dj_database_url.config() }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#        'ATOMIC_REQUESTS': True
+#    }
+#}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
