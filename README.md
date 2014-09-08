@@ -40,7 +40,7 @@ Grab a full Postgres installation, e.g. [http://postgresapp.com/](http://postgre
 
 Create a database
 
-    createdb reconnesse
+    createdb reconesse
 
 Create a file called `.env` which holds a uri to our database. Locally, this would be something like
 
