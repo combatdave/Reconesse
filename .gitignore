@@ -41,6 +41,5 @@ Icon
 # Project-specific files
 # ========================
 
-.DS_Store
 venv
 .env
