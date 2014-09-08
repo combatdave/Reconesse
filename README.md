@@ -7,8 +7,7 @@ Reconesse website
 Setup
 =====
 
-Setting up a virtual environment
---------------------------------
+#### Setting up a virtual environment
 
 Make sure `virtualenv` is installed
 
@@ -31,8 +30,7 @@ To leave the virtual environment run
 
     deactivate
 
-Setting up Honcho + Postgres
-----------------------------
+#### Setting up Honcho + Postgres
 
 Install Honcho
 
