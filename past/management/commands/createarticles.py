@@ -1,6 +1,4 @@
-import os
-os.environ["DJANGO_SETTINGS_MODULE"] =  "Reconesse.settings"
-
+from django.core.management.base import BaseCommand, CommandError
 import random
 from past.models import Article, Category
 from django_countries import countries
@@ -111,7 +109,13 @@ def CreateRandomEntry():
 	print "Inserted ", a
 
 
-for i in xrange(10):
-	CreateRandomEntry()
+class Command(BaseCommand):
+	args = '<num entiries>'
+	help = 'Creates a number of random entries'
 
-print "Done"
+	def handle(self, *args, **options):
+		num = args[0]
+		for i in xrange(num):
+			CreateRandomEntry()
+
+		print "Done"
