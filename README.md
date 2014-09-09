@@ -21,7 +21,7 @@ We `source` the new environment
 
     source venv/bin/activate    # If using Bash
     . venv/bin/activate.fish    # If using Fish
-    venv/scripts/activate.bat   # If on Windows
+    venv/scripts/activate.bat   # If on Windows (For shame, Dave, for shame!)
 
 Now we can install the dependencies, and they will stay local to the virtual environment
 
