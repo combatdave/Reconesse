@@ -5,58 +5,64 @@
 
 <html lang="en">
 
-    <head>
-        <title>Reconesse Database</title>
+<head>
+    <title>Reconesse Database</title>
 
-        <meta charset=utf-8>
-        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
-        
-        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
-        <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
-        <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
-        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+    <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
 
-        <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-    </head>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
 
-    <body>
-   
-        <div id="mapdiv"></div>
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/map.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/modal_window.css' %}" />
 
-        <div class="barfloat">
-            <div class="container" style="position: relative;">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="barcontent yearcontainer" id="minYear"></div>
-                        <div class="barcontent" id="slidercontainer"><div id="sliderbar"></div></div>
-                        <div class="barcontent yearcontainer" id="maxYear"></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
-                            <div class="barcontent barbuttoncontainer">
-                                <div class="barbutton" id="present">
-                                    PRESENT
-                                </div>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
+</head>
+
+<body>
+
+    <div class="menu-container">
+        <button class="mod md-trigger" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span> Search</button>
+        <button class="mod md-trigger" data-modal="search-panel"><span class="glyphicon glyphicon-bookmark"></span> My Bookmarks</button>
+    </div>
+    <div id="mapdiv"></div>
+
+    <div class="barfloat">
+        <div class="container" style="position: relative;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="barcontent yearcontainer" id="minYear"></div>
+                    <div class="barcontent" id="slidercontainer"><div id="sliderbar"></div></div>
+                    <div class="barcontent yearcontainer" id="maxYear"></div>
+                </div>
+                <div class="col-md-4">
+                    <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
+                        <div class="barcontent barbuttoncontainer">
+                            <div class="barbutton" id="present">
+                                PRESENT
                             </div>
-                            <div class="barcontent barbuttoncontainer">
-                                <div class="barbutton" id="future">
-                                    FUTURE
-                                </div>
+                        </div>
+                        <div class="barcontent barbuttoncontainer">
+                            <div class="barbutton" id="future">
+                                FUTURE
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <center><div id="yearDisplay">All years</div></center> -->
         </div>
+        <!-- <center><div id="yearDisplay">All years</div></center> -->
+    </div>
 
-
+<!--
         <div class="slide-out-div">
             <a class="handle">Search</a>
             <ol id='auto-checkboxes'>
@@ -76,40 +82,70 @@
             </ol>
             <div id="searchloadingtext"></div>
         </div>
+-->
 
+    <div class="md-modal md-effect-11" id="search-panel">
+        <div class="md-content">
+            <h3>Search</h3>
+            <div>
+                <ol id='auto-checkboxes'>
+                    <li data-value="all" data-name="search" data-checked="1"> All
+                        <ol>
+                            {% for branch in categories %}
+                            <li data-value='{{ branch.0 }}'>{{ branch.0 }}
+                                <ol>
+                                    {% for child in branch.1 %}
+                                    <li data-value='{{ child }}'>{{ child }}</li>
+                                    {% endfor %}
+                                </ol>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                </ol>
+                <div id="searchloadingtext"></div>
+                <!--<button class="mod md-close">Close me!</button>-->
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+
+    <!-- Modal window -->
+    <script src="{% static 'past/js/modal_window.js' %}"></script>
+    <script src="{% static 'past/js/classie.js' %}"></script>
 
     <!-- jquery-->
-        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-        <script src="../static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
     <!-- Map js-->
-        <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
-        
+    <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
+
     <!-- fancybox-->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-        
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
     <!-- pips for the year slider-->
-        <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
+    <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
     <!-- slideout box-->
-        <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
-        
+    <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+
     <!-- checkboxes-->
-        <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
 
     <!-- Custom JS -->
-        <script type="text/javascript" src="{% static 'past/map.js' %}"></script>
+    <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
-        <script>
-            $(document).ready(function() {
+    <script>
+    $(document).ready(function() {
                 // page setup
                 $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
                 $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
 
                 SetupSliderBar({{minYear}}, {{maxYear}});
             });
-        </script>
-    </body>
+    </script>
+</body>
 </html>
