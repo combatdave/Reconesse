@@ -35,7 +35,8 @@ To leave the virtual environment run
 
 Install Honcho
 
-    brew install honcho
+    brew install honcho        # OSX
+    apt-get install honcho     # *nix
 
 Grab a full Postgres installation, e.g. [http://postgresapp.com/](http://postgresapp.com/), and run it.
 
