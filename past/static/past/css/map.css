@@ -1,0 +1,64 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background-color: #33bcff;
+}
+
+#mapdiv {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-out-div {
+    padding: 10px;
+    width: 200px;
+    background: #FFC5BD;
+    //border: 1px solid #29216d;
+}
+
+.barfloat {
+    position: fixed;
+    bottom: 20px;
+    
+    width: 100%;
+}
+
+.barcontent {
+    display: table-cell;
+    width: auto;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#slidercontainer {
+    width: 100%;
+}
+
+.yearcontainer, .barbuttoncontainer{
+    position: relative;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.barbuttoncontainer {
+    padding: 5px;
+}
+
+.barbutton#present {
+    background-color: #66ffcc;
+}
+
+.barbutton#future {
+    background-color: #ffc5bd;
+}
+
+.barbutton {
+    padding: 2px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
