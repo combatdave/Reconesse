@@ -3,6 +3,8 @@ from django_countries.fields import CountryField
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
+import urlutils
+
 
 class CategoryManager(models.Manager):
 	def GetRoots(self):
@@ -44,6 +46,17 @@ class Category(models.Model):
 
 
 class Article(models.Model):
+	class Meta:
+        ordering = ('reference',)
+
+    # reference contains a unique reference string for the article
+    # reference == urlutils.obfuscate(Article.pk)
+    # Article.pk == urlutils.clarify(reference)
+    reference = models.CharField(max_length = 15,
+                                 null = True,
+                                 default = None,
+                                 unique = True)
+
 	title = models.CharField(max_length=200)
 	content = models.TextField()
 	summaryLines = models.TextField()
@@ -63,6 +76,15 @@ class Article(models.Model):
 
 	def getTagNames(self):
 		return self.tags.all()
+
+	def save(self, *args, **kwargs):
+		""" We redefine the save method to create a unique reference number upon
+		being called for the first time on any Article """
+        created = not self.pk
+        super(Article, self).save(*args, **kwargs)
+        if created:
+            self.reference = urlutils.obfuscate(self.pk)
+            self.save()
 
 
 class PastImage(models.Model):

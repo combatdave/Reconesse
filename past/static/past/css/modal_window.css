@@ -127,12 +127,17 @@ button.mod {
 	text-transform: uppercase;
 	cursor: pointer;
 	display: inline-block;
-	margin: 3px;
+	margin-top: 5px;
+	margin-right: 5px;
 	border-radius: 2px;
 }
 
 button.mod:hover {
 	background: #DB5E4D;
+}
+
+button:focus {
+    outline: none;
 }
 
 .menu-container {
