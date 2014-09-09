@@ -38,7 +38,7 @@ Install Honcho
     brew install honcho        # OSX
     apt-get install honcho     # *nix
     
-*Note:* Apparently, you can `pip install honcho`. Haven't tried this.
+**Note:** Apparently, you can `pip install honcho`. Haven't tried this, though.
 
 Grab a full Postgres installation, e.g. [http://postgresapp.com/](http://postgresapp.com/), and run it.
 
