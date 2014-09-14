@@ -115,6 +115,7 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		num = args[0]
+		num = int(num)
 		for i in xrange(num):
 			CreateRandomEntry()
 

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^(?P<articleID>\d+)/$', views.ViewArticle, name='ViewArticle'),
     url('mapdata.json', views.GetMapData, name="GetMapData"),
     url(r'^country/(?P<countryCode>[^/]+)/$', views.GetCountryArticles, name='GetCountryArticles'),
+    url(r'^search/$', views.Search, name="Search")
 )
