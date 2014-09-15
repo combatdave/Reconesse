@@ -1,3 +1,4 @@
+// Initialize modal window effects
 var ModalEffects = (function() {
 
 	function init() {
@@ -33,11 +34,6 @@ var ModalEffects = (function() {
 				}
 			});
 
-			close.addEventListener( 'click', function( ev ) {
-				ev.stopPropagation();
-				removeModalHandler();
-			});
-
 		} );
 
 	}
@@ -45,3 +41,20 @@ var ModalEffects = (function() {
 	init();
 
 })();
+
+var scrollWrappers;
+function resizeScrollWrappers()
+{
+	var bodyheight = $(document).height() / 2 - 150;
+	scrollWrappers.height(bodyheight);
+}
+
+// On resize, we want to set the size on .md-scroll-wrapper
+$(window).resize(function() {
+	resizeScrollWrappers();
+});
+
+$(document).ready(function() {
+	scrollWrappers = $('.md-scroll-wrapper');
+	resizeScrollWrappers();
+});

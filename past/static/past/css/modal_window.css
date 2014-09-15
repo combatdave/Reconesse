@@ -4,9 +4,10 @@
 	top: 50%;
 	left: 50%;
 	width: 50%;
-	max-width: 630px;
-	min-width: 320px;
-	height: auto;
+	max-width: 80%;
+	min-width: 60%;
+	height: 50%;
+	max-height: 60%;
 	z-index: 2000;
 	visibility: hidden;
 	-webkit-backface-visibility: hidden;
@@ -16,6 +17,12 @@
 	-moz-transform: translateX(-50%) translateY(-50%);
 	-ms-transform: translateX(-50%) translateY(-50%);
 	transform: translateX(-50%) translateY(-50%);
+}
+
+@media all and (min-width: 1280px) {
+	.md-modal {
+		min-width: 40%;
+	}
 }
 
 .md-show {
@@ -42,6 +49,15 @@
 	visibility: visible;
 }
 
+.md-scroll-wrapper {
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
+	/*background: rgba(0,0,0,0.1);*/
+	/* iOS inertia */
+	-webkit-overflow-scrolling: touch;
+}
+
 /* Content styles */
 .md-content {
 	color: #000;
@@ -50,6 +66,7 @@
 	position: relative;
 	border-radius: 3px;
 	margin: 0 auto;
+	height: 100%;
 }
 
 .md-content h3 {

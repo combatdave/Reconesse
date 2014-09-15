@@ -82,42 +82,66 @@
             </ol>
             <div id="searchloadingtext"></div>
         </div>
--->
+    -->
 
     <div class="md-modal md-effect-11" id="search-panel">
         <div class="md-content">
             <h3>Search</h3>
-            <div>
-                <ol id='auto-checkboxes'>
-                    <li data-value="all" data-name="search" data-checked="1"> All
-                        <ol>
-                            {% for branch in categories %}
-                            <li data-value='{{ branch.0 }}'>{{ branch.0 }}
-                                <ol>
-                                    {% for child in branch.1 %}
-                                    <li data-value='{{ child }}'>{{ child }}</li>
-                                    {% endfor %}
-                                </ol>
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    </li>
-                </ol>
+            
+            <div class="row" style="margin: 0; padding: 0;">
+                <div class="col-sm-4 col-xs-12">
+                    <h4>Categories</h4>
+                    <div class="md-scroll-wrapper">
+                        <div>
+                            <ol id='auto-checkboxes'>
+                                <li data-value="all" data-name="search" data-checked="1">&nbsp;All
+                                    <ol>
+                                        {% for branch in categories %}
+                                        <li data-value='{{ branch.0 }}'>&nbsp;{{ branch.0 }}
+                                            <ol>
+                                                {% for child in branch.1 %}
+                                                <li data-value='{{ child }}'>&nbsp;{{ child }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+                                </li>
+                            </ol>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <h4>Countries</h4>
+                    <div class="md-scroll-wrapper">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet imperdiet finibus. Pellentesque ultrices consectetur nisi vitae ullamcorper. Quisque elementum consequat orci ac porttitor. Vestibulum consequat ultricies dictum. Fusce et porttitor metus. Proin consequat nulla et neque interdum auctor. Phasellus eu semper felis, vitae venenatis nibh. Morbi finibus, elit vitae lacinia ornare, ex felis tempus eros, quis vehicula nisl lectus et purus. Aliquam pretium ultrices leo, at pharetra leo feugiat nec. Vestibulum libero velit, tempor vitae egestas eget, scelerisque non urna. Praesent fermentum purus diam, et pretium magna egestas in. Proin maximus leo lacus, in pretium sapien sagittis vel. Sed vitae scelerisque justo. Cras vel pellentesque nisl, sit amet tincidunt arcu. Pellentesque convallis purus dictum facilisis lacinia.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <h4>Period</h4>
+                    <div class="md-scroll-wrapper">
+                        <div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="searchloadingtext"></div>
-                <!--<button class="mod md-close">Close me!</button>-->
+                 <!--<button class="mod md-close">Close me!</button>-->
             </div>
         </div>
     </div>
     <div class="md-overlay"></div>
 
-    <!-- Modal window -->
-    <script src="{% static 'past/js/modal_window.js' %}"></script>
-    <script src="{% static 'past/js/classie.js' %}"></script>
-
     <!-- jquery-->
     <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+    <!-- Modal window -->
+    <script src="{% static 'past/js/modal_window.js' %}"></script>
+    <script src="{% static 'past/js/classie.js' %}"></script>
 
     <!-- Map js-->
     <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
