@@ -21,6 +21,7 @@ We `source` the new environment
 
     source venv/bin/activate    # If using Bash
     . venv/bin/activate.fish    # If using Fish
+    venv/scripts/activate.bat   # If on Windows (For shame, Dave, for shame!)
 
 Now we can install the dependencies, and they will stay local to the virtual environment
 
@@ -34,13 +35,16 @@ To leave the virtual environment run
 
 Install Honcho
 
-    brew install honcho
+    brew install honcho        # OSX
+    apt-get install honcho     # *nix
+    
+**Note:** Apparently, you can `pip install honcho`. Haven't tried this, though.
 
 Grab a full Postgres installation, e.g. [http://postgresapp.com/](http://postgresapp.com/), and run it.
 
 Create a database
 
-    createdb reconnesse
+    createdb reconesse
 
 Create a file called `.env` which holds a uri to our database. Locally, this would be something like
 

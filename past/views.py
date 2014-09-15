@@ -49,10 +49,12 @@ def ViewArticle(request, articleID):
 
 
 def GetArticleYearRanges():
-	queryResult = Article.objects.aggregate(Min("birthYear"))
-
-	earliest = queryResult["birthYear__min"]
+	earliest = Article.objects.aggregate(Min("birthYear"))["birthYear__min"]
+	latest = Article.objects.aggregate(Max("deathYear"))["deathYear__max"]
 	now = datetime.datetime.now().year
+
+	if latest > now:
+		now = latest
 
 	return earliest, now
 
@@ -150,3 +152,57 @@ def GetCountryArticles(request, countryCode):
 	return render(request, "past/articlelist.html", context)
 
 	#return HttpResponse("Got {0} articles for {1} ({2})".format(len(articlesByCountry), unicode(countryName), countryCode))
+
+
+def Search(request):
+	categories = request.GET.getlist("category")
+	countrycodes = request.GET.getlist("countrycode")
+	keywords = request.GET.getlist("keyword")
+	tags = request.GET.getlist("tag")
+	minYear = request.GET.get("minyear")
+	maxYear = request.GET.get("maxyear")
+
+	earliestPossible, latestPossible = GetArticleYearRanges()
+	if minYear is None:
+		minYear = earliestPossible
+	if maxYear is None:
+		maxYear = latestPossible
+	countrycodes = [code.upper() for code in countrycodes]
+
+	bornInTimePeriod = Q(birthYear__gte=minYear) & Q(birthYear__lte=maxYear)
+	diedInTimePeriod = Q(deathYear__gte=minYear) & Q(deathYear__lte=maxYear)
+	overlappedTimePeriod = Q(birthYear__lt=minYear) & Q(deathYear__gt=maxYear)
+	timeQuery = bornInTimePeriod | diedInTimePeriod | overlappedTimePeriod
+
+	textQuery = Q()
+	for keyword in keywords:
+		textQuery = textQuery | (Q(content__icontains=keyword) | Q(title__icontains=keyword))
+
+	countryQuery = Q()
+	for countrycode in countrycodes:
+		countryQuery = countryQuery | (Q(country__exact=countrycode))
+
+	categoryQuery = Q()
+	for category in categories:
+		categoryQuery = categoryQuery | Q(category__name__iexact=category)
+
+	tagQuery = Q()
+	for tag in tags:
+		tagQuery = tagQuery | Q(tags__name__iexact=tag)
+
+	fullQuery = timeQuery & textQuery & countryQuery & categoryQuery & tagQuery
+
+	matches = Article.objects.filter(fullQuery)
+
+	matches = [dict(name=m.title, id=m.id) for m in matches]
+
+	jsonResponse = {}
+	jsonResponse["categories"] = categories
+	jsonResponse["countryCodes"] = countrycodes
+	jsonResponse["keywords"] = keywords
+	jsonResponse["minYear"] = minYear
+	jsonResponse["maxYear"] = maxYear
+	jsonResponse["matches"] = matches
+	jsonResponse["tags"] = tags
+
+	return HttpResponse(json.dumps(jsonResponse), content_type="application/json")
