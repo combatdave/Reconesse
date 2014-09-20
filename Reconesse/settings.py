@@ -134,7 +134,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
+            'filename': 'reconesse.log',
             'formatter': 'verbose'
         },
     },
