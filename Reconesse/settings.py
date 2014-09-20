@@ -102,11 +102,20 @@ USE_TZ = True
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-    '/var/www/static/', # Might not need this?
 )
 
 STATIC_URL = '/static/'
+STATIC_ROOT = None
+try:
+    STATIC_ROOT = os.getenv("STATIC_ROOT")
+except:
+    pass
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = None
+try:
+    MEDIA_ROOT = os.getenv("MEDIA_ROOT")
+except:
+    pass
 #MEDIA_ROOT = '/home1/reconess/django-projects/Reconesse/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
+#MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
