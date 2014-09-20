@@ -4,100 +4,102 @@
 
 <html lang="en">
 
-    <head>
-        <title>Reconesse Database</title>
+<head>
+    <title>Reconesse Database</title>
 
-        <meta charset=utf-8>
-        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-        <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
-        
-        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
-        <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
-        <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css'
+          href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
-        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css"
+          href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+    <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}"/>
 
-        <!-- Map js-->
-        <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
-        <script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}" ></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
 
-        <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-    </head>
+    <!-- Map js-->
+    <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ammap/maps/js/worldLow.js' %}"></script>
 
-    <body>
-   
-        <div id="mapdiv"></div>
+    <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
+</head>
 
-        <div class="barfloat">
-            <div class="container" style="position: relative;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
-                            <div class="barcontent barbuttoncontainer">
-                                <div class="barbutton" id="present">
-                                    PAST
-                                </div>
-                            </div>
-                            <div class="barcontent barbuttoncontainer">
-                                <div class="barbutton" id="future">
-                                    PRESENT
-                                </div>
-                            </div>
+<body>
+
+<div id="mapdiv"></div>
+
+<div class="barfloat">
+    <div class="container" style="position: relative;">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
+                    <div class="barcontent barbuttoncontainer">
+                        <div class="barbutton" id="present">
+                            PAST
+                        </div>
+                    </div>
+                    <div class="barcontent barbuttoncontainer">
+                        <div class="barbutton" id="future">
+                            PRESENT
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <center><div id="yearDisplay">All years</div></center> -->
         </div>
+    </div>
+    <!-- <center><div id="yearDisplay">All years</div></center> -->
+</div>
 
 
-        <div class="slide-out-div">
-            <a class="handle">Search</a>
-            <ol id='auto-checkboxes'>
-                <li data-value="all" data-name="search" data-checked="1"> All
+<div class="slide-out-div">
+    <a class="handle">Search</a>
+    <ol id='auto-checkboxes'>
+        <li data-value="all" data-name="search" data-checked="1"> All
+            <ol>
+                {% for branch in categories %}
+                <li data-value='{{ branch.0 }}'>{{ branch.0 }}
                     <ol>
-                        {% for branch in categories %}
-                            <li data-value='{{ branch.0 }}'>{{ branch.0 }}
-                                <ol>
-                                {% for child in branch.1 %}
-                                    <li data-value='{{ child }}'>{{ child }}</li>
-                                {% endfor %}
-                                </ol>
-                            </li>
+                        {% for child in branch.1 %}
+                        <li data-value='{{ child }}'>{{ child }}</li>
                         {% endfor %}
                     </ol>
                 </li>
+                {% endfor %}
             </ol>
-            <div id="searchloadingtext"></div>
-        </div>
+        </li>
+    </ol>
+    <div id="searchloadingtext"></div>
+</div>
 
 
-    <!-- jquery-->
-        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-        
-    <!-- fancybox-->
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-        
-    <!-- pips for the year slider-->
-        <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
+<!-- jquery-->
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-    <!-- slideout box-->
-        <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
-        
-    <!-- checkboxes-->
-        <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+<!-- fancybox-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 
-    <!-- Custom JS -->
-        <script type="text/javascript" src="{% static 'future/map.js' %}"></script>
+<!-- pips for the year slider-->
+<script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
-        <script>
+<!-- slideout box-->
+<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+
+<!-- checkboxes-->
+<script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
+<script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'future/map.js' %}"></script>
+
+<script>
             $(document).ready(function() {
                 // page setup
                 // $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
@@ -105,6 +107,7 @@
 
                 // SetupSliderBar({{minYear}}, {{maxYear}});
             });
-        </script>
-    </body>
+
+</script>
+</body>
 </html>

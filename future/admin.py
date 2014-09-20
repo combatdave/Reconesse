@@ -6,16 +6,13 @@ from future.models import Article
 
 class ArticleAdminForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea)
+
     class Meta:
         model = Article
 
 
 class ArticleAdmin(admin.ModelAdmin):
-	form = ArticleAdminForm
-
-	#fieldsets = [
-    #    (None,               {'fields': ['title', 'content']})
-    #]
+    form = ArticleAdminForm
 
 
 admin.site.register(Article, ArticleAdmin)

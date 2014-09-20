@@ -1,21 +1,22 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}"/>
 
 <body>
-	<h1>{{ countryName }}</h1>
+<h1>{{ countryName }}</h1>
 
-	{% if articles %}
-		{% for article in articles %}
-			<h2>{{ article.title }}</h2>
-		    <p>{{ article.content }}</p>
-		    <small> Tags: 
-		    {% for tag in article.getTagNames %}
-		    	#{{ tag }}
-		    {% endfor %}
-			</small>
-		{% endfor %}
-	{% else %}
-		There are no entries for this country.
-	{% endif %}
+{% if articles %}
+{% for article in articles %}
+<h2>{{ article.title }}</h2>
+
+<p>{{ article.content }}</p>
+<small> Tags:
+    {% for tag in article.getTagNames %}
+    #{{ tag }}
+    {% endfor %}
+</small>
+{% endfor %}
+{% else %}
+There are no entries for this country.
+{% endif %}
 </body>
