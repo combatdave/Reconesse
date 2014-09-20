@@ -67,6 +67,7 @@ class RelatedArticlesInline(admin.TabularInline):
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
 
+    readonly_fields = ("slug", )
     inlines = [PastImageToArticleInline, RelatedArticlesInline, ]
     exclude = ("relatedArticles", )
 

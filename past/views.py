@@ -23,9 +23,9 @@ def index(request):
     return render(request, 'past/map.html', context)
 
 
-def ViewArticle(request, articleID):
+def ViewArticle(request, slug):
     try:
-        article = Article.objects.get(id=articleID)
+        article = Article.objects.get(slug=slug)
     except Article.DoesNotExist:
         raise Http404
 

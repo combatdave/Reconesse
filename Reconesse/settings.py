@@ -112,7 +112,7 @@ except:
     pass
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = None
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 try:
     MEDIA_ROOT = os.getenv("MEDIA_ROOT")
 except:

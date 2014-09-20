@@ -1,7 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 from taggit.managers import TaggableManager
-from taggit.models import Tag
+from utils import unique_slugify
 
 
 class CategoryManager(models.Manager):
@@ -58,11 +58,18 @@ class Article(models.Model):
     category = models.ForeignKey(Category, related_name="category")
     tags = TaggableManager(related_name="past_tags")
 
+    slug = models.SlugField(blank=True)
+
     def __unicode__(self):
         return self.title
 
     def getTagNames(self):
         return self.tags.all()
+
+    def save(self, **kwargs):
+        slug_str = "%s %s %s %s" % (self.title, self.country, self.birthYear, self.deathYear if self.deathYear is not None else "")
+        unique_slugify.unique_slugify(self, slug_str)
+        super(Article, self).save(**kwargs)
 
 
 class PastImage(models.Model):

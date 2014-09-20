@@ -125,14 +125,14 @@
                     {% if relatedArticles %}
                     <div id="title">You might also be interested in:</div>
                     {% for relatedArticle in relatedArticles %}
-                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                    <span><a href="../{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
                     {% endfor %}
                     </br>
                     {% endif %}
 
                     <div id="title">Also in "{{ article.category }}":</div>
                     {% for sameCategoryArticle in sameCategoryArticles %}
-                    <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                    <span><a href="../{{ sameCategoryArticle.slug }}">{{ sameCategoryArticle.title }}</a></span>
                     {% endfor %}
                 </div>
             </div>
