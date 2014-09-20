@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from django.template import RequestContext, loader
-from django.db.models import Q, Avg, Max, Min
+from django.db.models import Q, Max, Min
 import json
 import datetime
 
 from django_countries import countries
 from past.models import Article, PastImage, Category
+
 
 # Create your views here.
 def index(request):
@@ -24,7 +24,6 @@ def index(request):
 
 
 def ViewArticle(request, articleID):
-    article = None
     try:
         article = Article.objects.get(id=articleID)
     except Article.DoesNotExist:
@@ -76,38 +75,24 @@ def GetMapData(request):
     showAll = request.GET.get("showAll")
 
     allCategories = Category.objects.all()
-    categoryFilter = allCategories;
+    categoryFilter = allCategories
     if showAll != "true":
         filterListParam = request.GET.getlist("filterCategories[]")
-        print "not showAll, filterListParam =", filterListParam
         categoryFilter = allCategories.filter(name__in=filterListParam)
 
     categoryIDs = [category.id for category in categoryFilter]
-    categoryIDsString = str(tuple(categoryIDs))
-    if len(categoryIDs) == 1:
-        categoryIDsString = categoryIDsString.replace(",", "")
 
     if maxYear >= latestYear and minYear <= earliestYear and len(allCategories) == len(categoryFilter):
         allArticles = Article.objects.all()
     else:
-        query = """
-        SELECT * FROM past_article
+        bornInTimePeriod = Q(birthYear__gte=minYear) & Q(birthYear__lte=maxYear)
+        diedInTimePeriod = Q(deathYear__gte=minYear) & Q(deathYear__lte=maxYear)
+        overlappedTimePeriod = Q(birthYear__lt=minYear) & Q(deathYear__gt=maxYear)
+        timeQuery = bornInTimePeriod | diedInTimePeriod | overlappedTimePeriod
 
-        WHERE
-        (
-            (birthYear >= {minYear} AND birthYear <= {maxYear})
-            OR
-            (deathYear >= {minYear} AND deathYear <= {maxYear})
-            OR
-            (birthYear < {minYear} AND deathYear > {maxYear})
-        )
-        AND
-        (
-            category_id IN {categoryIDs}
-        )
-""".format(minYear=minYear, maxYear=maxYear, categoryIDs=categoryIDsString)
+        categoryQuery = Q(category__id__in=categoryIDs)
 
-        allArticles = Article.objects.raw(query)
+        allArticles = Article.objects.filter(timeQuery & categoryQuery)
 
     numByCountryCode = {}
     for article in allArticles:
@@ -143,16 +128,12 @@ def GetCountryArticles(request, countryCode):
 
     articlesByCountry = Article.objects.filter(country__exact=countryCode)
     if len(articlesByCountry) == 0:
-        articlesByCountry = None
         raise Http404
 
     context = {}
     context["countryName"] = countryName
     context["articles"] = articlesByCountry
     return render(request, "past/articlelist.html", context)
-
-
-# return HttpResponse("Got {0} articles for {1} ({2})".format(len(articlesByCountry), unicode(countryName), countryCode))
 
 
 def Search(request):
