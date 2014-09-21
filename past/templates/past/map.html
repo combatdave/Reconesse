@@ -7,7 +7,6 @@
 
 <head>
     <title>Reconesse Database</title>
-
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
@@ -39,9 +38,9 @@
         <div class="container" style="position: relative;">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="barcontent yearcontainer" id="minYear"></div>
-                    <div class="barcontent" id="slidercontainer"><div id="sliderbar"></div></div>
-                    <div class="barcontent yearcontainer" id="maxYear"></div>
+                    <div class="barcontent yearcontainer minYear"></div>
+                    <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
+                    <div class="barcontent yearcontainer maxYear"></div>
                 </div>
                 <div class="col-md-4">
                     <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
@@ -84,7 +83,7 @@
         </div>
     -->
 
-    <div class="md-modal md-effect-11" id="search-panel">
+    <div class="md-modal md-effect-1" id="search-panel">
         <div class="md-content">
             <h3>Search</h3>
             
@@ -116,60 +115,79 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <h4>Countries</h4>
                     <div class="md-scroll-wrapper">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi aliquet imperdiet finibus. Pellentesque ultrices consectetur nisi vitae ullamcorper. Quisque elementum consequat orci ac porttitor. Vestibulum consequat ultricies dictum. Fusce et porttitor metus. Proin consequat nulla et neque interdum auctor. Phasellus eu semper felis, vitae venenatis nibh. Morbi finibus, elit vitae lacinia ornare, ex felis tempus eros, quis vehicula nisl lectus et purus. Aliquam pretium ultrices leo, at pharetra leo feugiat nec. Vestibulum libero velit, tempor vitae egestas eget, scelerisque non urna. Praesent fermentum purus diam, et pretium magna egestas in. Proin maximus leo lacus, in pretium sapien sagittis vel. Sed vitae scelerisque justo. Cras vel pellentesque nisl, sit amet tincidunt arcu. Pellentesque convallis purus dictum facilisis lacinia.</p>
-                    </div>
+                    <label>
+                        <input class="test" id="select-all-countries" type="checkbox" checked>
+                        Select All
+                    </label>
+                    <ul>
+                        {% for c in countries %}
+                        <li>
+                            <label>
+                                <input class="countries-checkbox" type="checkbox" value="{{c.code}}" checked />
+                                {{c.name}}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h4>Period</h4>
-                    <div class="md-scroll-wrapper">
-                        <div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="searchloadingtext"></div>
-                 <!--<button class="mod md-close">Close me!</button>-->
             </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <h4>Period</h4>
+                <div class="md-scroll-wrapper">
+                    <div>
+                        <div class="barcontent yearcontainer minYear"></div>
+                    <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
+                    <div class="barcontent yearcontainer maxYear"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="searchloadingtext"></div>
+            <!--<button class="mod md-close">Close me!</button>-->
         </div>
     </div>
-    <div class="md-overlay"></div>
+</div>
+<div class="md-overlay"></div>
 
-    <!-- jquery-->
-    <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<!-- jquery-->
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-    <!-- Modal window -->
-    <script src="{% static 'past/js/modal_window.js' %}"></script>
-    <script src="{% static 'past/js/classie.js' %}"></script>
+<!-- Modal window -->
+<script src="{% static 'past/js/modal_window.js' %}"></script>
+<script src="{% static 'past/js/classie.js' %}"></script>
 
-    <!-- Map js-->
-    <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
+<!-- Map js-->
+<script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
 
-    <!-- fancybox-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<!-- fancybox-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 
-    <!-- pips for the year slider-->
-    <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
+<!-- pips for the year slider-->
+<script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
-    <!-- slideout box-->
-    <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+<!-- slideout box-->
+<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
 
-    <!-- checkboxes-->
-    <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+<!-- checkboxes-->
+<script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
+<script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
 
-    <!-- Custom JS -->
-    <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
-    <script>
-    $(document).ready(function() {
-                // page setup
-                $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
-                $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
+<script>
+var maxYear, minYear;
+$(document).ready(function() {
+    // page setup
+    maxYear = {{maxYear}};
+    minYear = {{minYear}};
+    $(".yearcontainer.minYear").text(GetLabelForYear(minYear));
+    $(".yearcontainer.maxYear").text(GetLabelForYear(maxYear));
 
-                SetupSliderBar({{minYear}}, {{maxYear}});
-            });
-    </script>
+    SetupSliderBar(minYear, maxYear);
+});
+</script>
 </body>
 </html>

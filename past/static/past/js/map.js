@@ -56,6 +56,18 @@ AmCharts.ready(function() {
     map.write("mapdiv");
 });
 
+/*
+function ShowMenu(e) {
+    $.fancybox({
+        type: 'iframe',
+        href: '/past/country/'+event.mapObject.id,
+        width: "400",
+        height: "400",
+        closeClick: true,
+        autoDimensions: false,
+    });
+}
+*/
 
 function ShowMenu(e) {
     $.fancybox({
@@ -67,7 +79,6 @@ function ShowMenu(e) {
         autoDimensions: false,
     });
 }
-
 
 function setData(data) {
     var parsedData = JSON.parse(data);
@@ -172,27 +183,39 @@ function GetLabelForYear(year) {
 
 function SetupSliderBar(minYear, maxYear)
 {
-    var $sliderbar = $("#sliderbar").slider({
-        range: true, 
-        min: minYear, 
-        max: maxYear, 
-        values: [minYear, maxYear],
-        step: 100,
+    $(".sliderbar").each(function() {
+        $(this).empty().slider({
+            values: [minYear, maxYear],
+            min: minYear,
+            max: maxYear,
+            step: 100,
+            range: true,
+            orientation: "horizontal",
+            slide: updateSliders,
+            change: updateSliders
+        });
     });
 
-    $sliderbar.on({
-        slidechange: function(event, ui){
-            var range = ui.values;
-
-            searchMinYear = parseInt(range[0]).toString();
-            searchMaxYear = parseInt(range[1]).toString();
-
-            loadData();
-        }
+    function updateSliders(e, ui) {
+        if (!e.originalEvent) return;
+        var range = ui.values;
+        searchMinYear = parseInt(range[0]).toString();
+        searchMaxYear = parseInt(range[1]).toString();
+        $('.minYear').text(GetLabelForYear(range[0]));
+        $('.maxYear').text(GetLabelForYear(range[1]));
+        var activeSlider = this;
+        $(".sliderbar").slider("values", range);
+    };
+    /*
+    $("#update").click(function() {
+        $(".slider").slider("value", 10);
+        return false;
     });
-
+    */
     $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
     $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+    $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+    $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
 }
 
 
@@ -223,6 +246,8 @@ function AutoSearch()
 }
 
 
+
+
 $('#auto-checkboxes').bonsai({
     expandAll: true,
     checkboxes: true,
@@ -247,4 +272,42 @@ $("#auto-checkboxes :checkbox").change( function(event) {
     }
     searchTimeout = window.setTimeout(AutoSearch, 500);
     $("#searchloadingtext").text("Please wait...");
+});
+
+
+
+$('#select-all-countries').on('click', function(e) { 
+    if(this.checked) {
+        $('.countries-checkbox').each(function() {
+            this.checked = true;                        
+        });
+    }
+    else
+    {
+        $('.countries-checkbox').each(function() {
+            this.checked = false;                        
+        });
+    }
+});
+
+$('.countries-checkbox').on('change', function(e)
+{
+    if(!this.checked)
+    {
+        $('#select-all-countries').prop('checked', false);
+    }
+    else
+    {
+        var allChecked = true;
+        $('.countries-checkbox').each(function() {
+            if (!this.checked)
+            {
+                allChecked = false;
+            }
+        });
+        if (allChecked)
+        {
+            $('#select-all-countries').prop('checked', true);
+        }
+    }
 });
