@@ -63,26 +63,6 @@
         </div>
         <!-- <center><div id="yearDisplay">All years</div></center> -->
     </div>
-
-<!--
-        <div class="slide-out-div">
-            <a class="handle">Search</a>
-            <ol id='auto-checkboxes'>
-                <li data-value="all" data-name="search" data-checked="1"> All
-
-                    <ol>
-                        {% for child in branch.1 %}
-                        <li data-value='{{ child }}'>{{ child }}</li>
-                        {% endfor %}
-                    </ol>
-                </li>
-                {% endfor %}
-            </ol>
-
-            <div id="searchloadingtext"></div>
-        </div>
-    -->
-
     <div class="md-modal md-effect-1" id="search-panel">
         <div class="md-content">
             <!--<h3>Search</h3>-->
@@ -178,11 +158,11 @@
                     <div class="country">{{ article.country.name }}</div>
                     
                     {% for tag in article.getTagNames %}
-                        <div class="hashtag-container">
-                            <div class="hashtag">
-                                {{ tag }}
-                            </div>
+                    <div class="hashtag-container">
+                        <div class="hashtag">
+                            {{ tag }}
                         </div>
+                    </div>
                     {% endfor %}
 
 
@@ -190,88 +170,88 @@
                     <div class="related-articles">
                         <div class="related">
                             {% if relatedArticles %}
-                                <div id="title">You might also be interested in:</div>
-                                {% for relatedArticle in relatedArticles %}
-                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
-                                {% endfor %}
-                                </br>
-                            {% endif %}
-    
-                            <div id="title">Also in "{{ article.category }}":</div>
-                            {% for sameCategoryArticle in sameCategoryArticles %}
-                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                            <div id="title">You might also be interested in:</div>
+                            {% for relatedArticle in relatedArticles %}
+                            <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
                             {% endfor %}
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-sm-8">
-                    <div id="sharecontainer" style="display:block;">
-                        <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
-                        <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
-                        <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
-                        <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
-                    </div>
-                    <h2>{{ article.title }}</h2>
-                    <h4>
-                        {% if article.deathYear %}
-                        <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
-                        {% else %}
-                        {{ article.birthYear }}-present
+                        </br>
                         {% endif %}
-                    </h4>
-                    <div class="article-content">
-                        <div class="profiletext">
+                        
+                        <div id="title">Also in "{{ article.category }}":</div>
+                        {% for sameCategoryArticle in sameCategoryArticles %}
+                        <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-8">
+                <div id="sharecontainer" style="display:block;">
+                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
+                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
+                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                </div>
+                <h2>{{ article.title }}</h2>
+                <h4>
+                    {% if article.deathYear %}
+                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
+                    {% else %}
+                    {{ article.birthYear }}-present
+                    {% endif %}
+                </h4>
+                <div class="article-content">
+                    <div class="profiletext">
                         <ul>
                             {% for summaryLine in summary %}
-                                <li>{{ summaryLine }}</li>
+                            <li>{{ summaryLine }}</li>
                             {% endfor %}
                         </ul>
-                        </div>
-                        <div class="delimiter"></div>
-                        {{ article.content|linebreaks }}
                     </div>
+                    <div class="delimiter"></div>
+                    {{ article.content|linebreaks }}
                 </div>
             </div>
         </div>
     </div>
-    <button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
-    {% endif %}
+</div>
+<button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
+{% endif %}
 
-    <div class="md-overlay"></div>
+<div class="md-overlay"></div>
 
 
-    <!-- jquery-->
-    <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<!-- jquery-->
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-    <!-- Modal window -->
-    <script src="{% static 'past/js/modal_window.js' %}"></script>
-    <script src="{% static 'past/js/classie.js' %}"></script>
+<!-- Modal window -->
+<script src="{% static 'past/js/modal_window.js' %}"></script>
+<script src="{% static 'past/js/classie.js' %}"></script>
 
-    <!-- Map js-->
-    <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
+<!-- Map js-->
+<script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
 
-    <!-- fancybox-->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<!-- fancybox-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 
-    <!-- pips for the year slider-->
-    <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
+<!-- pips for the year slider-->
+<script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
-    <!-- slideout box-->
-    <script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+<!-- slideout box-->
+<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
 
-    <!-- checkboxes-->
-    <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+<!-- checkboxes-->
+<script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
+<script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
 
-    <!-- Custom JS -->
-    <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
+<!-- Custom JS -->
+<script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
-    <script>
-    var maxYear, minYear, article = '{{article.reference}}';
-    $(document).ready(function() {
+<script>
+var maxYear, minYear, article = '{{article.slug}}';
+$(document).ready(function() {
     // page setup
     maxYear = {{maxYear}};
     minYear = {{minYear}};
@@ -284,6 +264,6 @@
 
     SetupSliderBar(minYear, maxYear);
 });
-    </script>
+</script>
 </body>
 </html>

@@ -20,7 +20,7 @@ def get_all_countries():
     return[{'name': unicode(country_dict[c]), 'code': c} for c in codes]
 
 
-def index(request, reference = None, slug = None):
+def index(request, slug = None):
     yearData = GetArticleYearRanges()
     
     categories = Category.objects.GetTree()
@@ -31,9 +31,9 @@ def index(request, reference = None, slug = None):
     context["categories"] = categories
     context["countries"] = get_all_countries()
 
-    if reference:
+    if slug:
         try:
-            context['article'] = Article.objects.get(reference = reference)
+            context['article'] = Article.objects.get(slug = slug)
             context['images'] = PastImage.objects\
                                          .filter(article=context['article'])
             context["summary"] = context['article'].summaryLines.split("\n")
@@ -137,11 +137,7 @@ def GetMapData(request):
     jsonResponse = {}
     jsonResponse["minYear"] = minYear
     jsonResponse["maxYear"] = maxYear
-<<<<<<< HEAD
     #jsonResponse["map"] = "worldLow"
-=======
-    # jsonResponse["map"] = "worldLow"
->>>>>>> 9abb596fc15e9e41c98e4628f94fd7ca520e5b18
     #jsonResponse["getAreasFromMap"] = False
     jsonResponse["areas"] = areas
 

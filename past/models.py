@@ -72,16 +72,16 @@ class Article(models.Model):
     def getTagNames(self):
         return self.tags.all()
 
-     def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         """ We redefine the save method to create a unique slug number upon
         being called for the first time on any Article """
         created = not self.pk
         super(Article, self).save(*args, **kwargs)
         if created:
-            slug_str = "%s %s %s %s" % (self.title,
-                                        self.birthYear,
-                                        self.deathYear\
-                                        if self.deathYear is not None else "")
+            slug_str = "%s %s %s" % (self.title,
+                                     self.birthYear,
+                                     self.deathYear\
+                                     if self.deathYear is not None else "")
             self.slug = slugify(slug_str)
             self.save()
 
