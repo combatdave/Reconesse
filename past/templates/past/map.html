@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
 
     <link rel="stylesheet" type="text/css" href="{% static 'past/css/article_map.css' %}" />
+
 </head>
 
 <body>
@@ -68,19 +69,16 @@
             <a class="handle">Search</a>
             <ol id='auto-checkboxes'>
                 <li data-value="all" data-name="search" data-checked="1"> All
+
                     <ol>
-                        {% for branch in categories %}
-                            <li data-value='{{ branch.0 }}'>{{ branch.0 }}
-                                <ol>
-                                {% for child in branch.1 %}
-                                    <li data-value='{{ child }}'>{{ child }}</li>
-                                {% endfor %}
-                                </ol>
-                            </li>
+                        {% for child in branch.1 %}
+                        <li data-value='{{ child }}'>{{ child }}</li>
                         {% endfor %}
                     </ol>
                 </li>
+                {% endfor %}
             </ol>
+
             <div id="searchloadingtext"></div>
         </div>
     -->

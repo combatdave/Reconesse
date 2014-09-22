@@ -3,59 +3,66 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	
-	<head>
-		<meta charset=utf-8>
-		<!-- <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no"> -->
 
-		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-		<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
+<head>
+    <meta charset=utf-8>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no"> -->
 
-	    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' type='text/css'
+          href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
-	    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css"
+          href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
 
-	    <link rel="stylesheet" type="text/css" href="{% static 'past/articleliststyle.css' %}" />
-	    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-	</head>
-        
-    <body>
-        <table class="linktable">
-            <tr><th>{{ countryName }}</th></tr>
-            {% for article in articles %}
-            <tr><td>
-                <a href="/past/{{ article.reference }}/" target="_top" class="fancyboxlink" id="articlelink-{{ article.id }}", articleid="{{ article.id }}">
-                	<div class="articleinfo">
-	                    <div class="articlename">
-	                        {{ article.title }}
-	                    </div>
-	                    <div class="articledates">
-	                    	{% if article.deathYear %}
-	                        	{{ article.birthYear }}-{{ article.deathYear }}
-	                        {% else %}
-	                        	{{ article.birthYear }}-present
-	                        {% endif %}
-	                    </div>
-	                    <div class="articletagcontainer">
-	                        <div class="articletag">
-	                            {% for tag in article.getTagNames %}
-	                            	{{ tag }}{% if not forloop.last %}, {% endif %}
-	                            {% endfor %}
-	                        </div>
-	                    </div>
-	                </div>
-	                <img src="{% static 'images/rightarrow.png' %}" class="articlehover"></img>
-                </a>
-            </td></tr>
-            {% endfor %}
-        </table>
-        
-        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
 
-		<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-		<script type="text/javascript">
+    <link rel="stylesheet" type="text/css" href="{% static 'past/articleliststyle.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
+</head>
+
+<body>
+<table class="linktable">
+    <tr>
+        <th>{{ countryName }}</th>
+    </tr>
+    {% for article in articles %}
+    <tr>
+        <td>
+            <a href="/past/{{ article.slug }}" target="_blank" class="fancyboxlink" id="articlelink-{{ article.id }}",
+            articleid="{{ article.id }}">
+            <div class="articleinfo">
+                <div class="articlename">
+                    {{ article.title }}
+                </div>
+                <div class="articledates">
+                    {% if article.deathYear %}
+                    {{ article.birthYear }}-{{ article.deathYear }}
+                    {% else %}
+                    {{ article.birthYear }}-present
+                    {% endif %}
+                </div>
+                <div class="articletagcontainer">
+                    <div class="articletag">
+                        {% for tag in article.getTagNames %}
+                        {{ tag }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <img src="{% static 'images/rightarrow.png' %}" class="articlehover"></img>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
 			// $("a").click( function(event) {
 			// 	if (typeof parent.OpenArticle == 'function')
 			// 	{
@@ -66,6 +73,7 @@
 
 			$(document).ready(function() {
 			});
-		</script>
-	</body>
+
+</script>
+</body>
 </html>

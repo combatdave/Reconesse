@@ -3,151 +3,156 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	
-	<head>
-		<title>Reconesse Database - {{ article.title }}</title>
 
-        <meta charset=utf-8>
-        <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+<head>
+    <title>Reconesse Database - {{ article.title }}</title>
 
-        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-        <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' type='text/css'
+          href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
-        <link rel="stylesheet" type="text/css" href="{% static 'past/articlestyle.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-	</head>
-	
-	<body>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
 
-        <div class="wrapper">
+    <link rel="stylesheet" type="text/css" href="{% static 'past/articlestyle.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
+</head>
 
-            <div class="header">
-                
-            </div>
+<body>
 
-            <div class="container content">
-                <div class="row">
-                    <div class="col-md-8 col-md-push-2">
-                        <!-- Center column -->
+<div class="wrapper">
 
-                        <!-- Header stuff -->
-                        <div class="articleheader" id="mainheader">
-                            <h1>{{ article.title }}</h1>
-                            
-                            <div id="datesandshare">
-                                <h3>
-                                    {% if article.deathYear %}
-                                        {{ article.birthYear }}-{{ article.deathYear }}
-                                    {% else %}
-                                        {{ article.birthYear }}-present
-                                    {% endif %}
-                                </h3>
-                                
-                                <div id="sharecontainer">
-                                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
-                                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
-                                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
-                                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            
-                            <div class="country">{{ article.country.name }}</div>
-                            
-                            {% for tag in article.getTagNames %}
-                                <div class="hashtag-container">
-                                    <div class="hashtag">
-                                        {{ tag }}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
+    <div class="header">
 
-                        <!-- Divider -->
-                        <hr class="green" />
+    </div>
 
-                        <!-- Actual content -->
-                        <div class="articlecontent">
-                            <p>
-                                {{ article.content|linebreaks }}
-                            </p>
-                        </div>
-                    </div>
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-8 col-md-push-2">
+                <!-- Center column -->
 
+                <!-- Header stuff -->
+                <div class="articleheader" id="mainheader">
+                    <h1>{{ article.title }}</h1>
 
-                    <div class="col-md-2 col-md-push-2">
-                        <!-- Right column -->
-
-                        <div class="profilepictures">
-                            {% if images|length_is:"0" %}
-                                <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
+                    <div id="datesandshare">
+                        <h3>
+                            {% if article.deathYear %}
+                            {{ article.birthYear }}-{{ article.deathYear }}
                             {% else %}
-                                {% for image in images %}
-                                    {% if forloop.first %}
-                                        <img src={{ image.imageField.url }} class="mainimage"></img>
-                                    {% else %}
-                                        <img src={{ image.imageField.url }} class="thumbnail"></img>
-                                    {% endif %}
-                                {% endfor %}
+                            {{ article.birthYear }}-present
                             {% endif %}
+                        </h3>
+
+                        <div id="sharecontainer">
+                            <a href="https://twitter.com/Reconesse" target="_blank"
+                               class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/reconesse" target="_blank"
+                               class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
+                            <a href="http://www.pinterest.com/reconesse/" target="_blank"
+                               class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
+                            <a href="http://instagram.com/reconessed" target="_blank"
+                               class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
                         </div>
-        
-                        <hr class="blue" />
-        
-                        <div class="profiletext">
-                            <ul>
-                                {% for summaryLine in summary %}
-                                    <li>{{ summaryLine }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-        
-                        <hr class="blue" />
                     </div>
 
+                    <div class="country">{{ article.country.name }}</div>
 
-                    <div class="col-md-2 col-md-pull-10">
-                        <!-- Left column -->
-
-                        <!-- Spacer for the left column -->
-                        <div class="articleheader" id="leftpadder">
-                        </div>
-
-                        <hr class="green hidesmall" />
-
-                        <div class="related">
-                            {% if relatedArticles %}
-                                <div id="title">You might also be interested in:</div>
-                                {% for relatedArticle in relatedArticles %}
-                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
-                                {% endfor %}
-                                </br>
-                            {% endif %}
-
-                            <div id="title">Also in "{{ article.category }}":</div>
-                            {% for sameCategoryArticle in sameCategoryArticles %}
-                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
-                            {% endfor %}
+                    {% for tag in article.getTagNames %}
+                    <div class="hashtag-container">
+                        <div class="hashtag">
+                            {{ tag }}
                         </div>
                     </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Divider -->
+                <hr class="green"/>
+
+                <!-- Actual content -->
+                <div class="articlecontent">
+                    <p>
+                        {{ article.content|linebreaks }}
+                    </p>
                 </div>
             </div>
 
 
-            <div class="footer">
-                <div class="container">
-                    
+            <div class="col-md-2 col-md-push-2">
+                <!-- Right column -->
+
+                <div class="profilepictures">
+                    {% if images|length_is:"0" %}
+                    <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
+                    {% else %}
+                    {% for image in images %}
+                    {% if forloop.first %}
+                    <img src={{ image.imageField.url }} class="mainimage"></img>
+                    {% else %}
+                    <img src={{ image.imageField.url }} class="thumbnail"></img>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+                <hr class="blue"/>
+
+                <div class="profiletext">
+                    <ul>
+                        {% for summaryLine in summary %}
+                        <li>{{ summaryLine }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <hr class="blue"/>
+            </div>
+
+
+            <div class="col-md-2 col-md-pull-10">
+                <!-- Left column -->
+
+                <!-- Spacer for the left column -->
+                <div class="articleheader" id="leftpadder">
+                </div>
+
+                <hr class="green hidesmall"/>
+
+                <div class="related">
+                    {% if relatedArticles %}
+                    <div id="title">You might also be interested in:</div>
+                    {% for relatedArticle in relatedArticles %}
+                    <span><a href="../{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
+                    {% endfor %}
+                    </br>
+                    {% endif %}
+
+                    <div id="title">Also in "{{ article.category }}":</div>
+                    {% for sameCategoryArticle in sameCategoryArticles %}
+                    <span><a href="../{{ sameCategoryArticle.slug }}">{{ sameCategoryArticle.title }}</a></span>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <div class="footer">
+        <div class="container">
 
-		<script type="text/javascript">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
             function UpdateSizes() {
                 var headerHeight = $("#mainheader").height();
                 $(".articleheader").height(headerHeight);
@@ -165,6 +170,7 @@
 
             $(window).load(UpdateSizes);
             $(window).resize(UpdateSizes);
-		</script>
-	</body>
+
+</script>
+</body>
 </html>

@@ -3,117 +3,121 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	
-	<head>
-		<title>Reconesse Database</title>
-		
-		<meta charset=utf-8>
-		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-		<link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'tooltipster/tooltipster.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
-		
-		<!-- Favicon -->
-		<link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
-	</head>
-	
-	<body>
-        <div class="testouter">
-            <div class="testheader">
-                <div class="button-area" id="top">
-<!--
-                    <div class="button-container">
-                        <div class="navbutton">
-                            about
-                            <a href="/about/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <div class="navbutton">
-                            help
-                            <a href="/help/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <div class="navbutton">
-                            shop
-                            <a href="/shop/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <div class="navbutton">
-                            contact
-                            <a href="/contact/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
--->
+<head>
+    <title>Reconesse Database</title>
+
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'tooltipster/tooltipster.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
+</head>
+
+<body>
+<div class="testouter">
+    <div class="testheader">
+        <div class="button-area" id="top">
+            <!--
+                                <div class="button-container">
+                                    <div class="navbutton">
+                                        about
+                                        <a href="/about/">
+                                            <span class="link-spanner"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <div class="navbutton">
+                                        help
+                                        <a href="/help/">
+                                            <span class="link-spanner"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <div class="navbutton">
+                                        shop
+                                        <a href="/shop/">
+                                            <span class="link-spanner"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <div class="navbutton">
+                                        contact
+                                        <a href="/contact/">
+                                            <span class="link-spanner"></span>
+                                        </a>
+                                    </div>
+                                </div>
+            -->
+        </div>
+    </div>
+
+    <div class="testcontent">
+        <div class="button-area" id="main">
+            <div class="button-container" onlick="/past">
+                <div class="navbutton" id="past">
+                    past
+                    <a href="/past/">
+                        <span class="link-spanner"></span>
+                    </a>
                 </div>
             </div>
-            
-            <div class="testcontent">
-                <div class="button-area" id="main">
-                    <div class="button-container" onlick="/past">
-                        <div class="navbutton" id="past">
-                            past
-                            <a href="/past/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <div class="navbutton" id="present">
-                            present
-                            <a href="/present/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <div class="navbutton" id="future">
-                            future
-                            <a href="/future/">
-                                <span class="link-spanner"></span>
-                            </a>
-                        </div>
-                    </div>
+            <div class="button-container">
+                <div class="navbutton" id="present">
+                    present
+                    <a href="/present/">
+                        <span class="link-spanner"></span>
+                    </a>
                 </div>
             </div>
-            
-            <div class="testfooter">
-                <div><a href="/admin">ADMIN LOGIN</a></div>
-                <div class="byline-section">
-                <div class="footer-block">
-                    <h4>Want to get in touch?</h4>
-                    <a href="mailto:info@reconesse.org">Drop us a line!</a>
-                </div>
-                <div class="footer-spacer"></div>
-                <div class="footer-block-middle">
-                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
-                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
-                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
-                </div>
-                <div class="footer-spacer"></div>
-                <div class="footer-block copyright-byline">
-                    &copy; Copyright 2014 Reconesse Database
-                </div>
+            <div class="button-container">
+                <div class="navbutton" id="future">
+                    future
+                    <a href="/future/">
+                        <span class="link-spanner"></span>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
 
-		<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-		<script type="text/javascript" src="{% static 'tooltipster/jquery.tooltipster.min.js' %}"></script>
-		<script type="text/javascript">
+    <div class="testfooter">
+        <div><a href="/admin">ADMIN LOGIN</a></div>
+        <div class="byline-section">
+            <div class="footer-block">
+                <h4>Want to get in touch?</h4>
+                <a href="mailto:info@reconesse.org">Drop us a line!</a>
+            </div>
+            <div class="footer-spacer"></div>
+            <div class="footer-block-middle">
+                <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i
+                        class="fa fa-fw fa-twitter"></i></a>
+                <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i
+                        class="fa fa-fw fa-facebook"></i></a>
+                <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i
+                        class="fa fa-fw fa-pinterest"></i></a>
+                <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i
+                        class="fa fa-fw fa-instagram"></i></a>
+            </div>
+            <div class="footer-spacer"></div>
+            <div class="footer-block copyright-byline">
+                &copy; Copyright 2014 Reconesse Database
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'tooltipster/jquery.tooltipster.min.js' %}"></script>
+<script type="text/javascript">
 			$(document).ready(function() {
 	            $('#past').tooltipster({
 	            	content: $('<span class="tooltip-content"><h4>The past</h4>Something something databasey it\'s so big and full of knowledge about <strong>8 women for every 100 men</strong>. Other things do a thing with numbers. <p>&diams;<p> Our database will record stories of amazing women of the past and present who have not gotten their share in history.</span>'),
@@ -172,6 +176,7 @@
             
             $(window).load(UpdateSizes);
             $(window).resize(UpdateSizes);
-		</script>
-	</body>
+
+</script>
+</body>
 </html>

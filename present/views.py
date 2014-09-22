@@ -9,20 +9,20 @@ from present.models import Entry
 
 # Create your views here.
 def index(request):
-	context = {}
+    context = {}
 
-	entries = Entry.objects.all()
-	context["entries"] = entries
+    entries = Entry.objects.all()
+    context["entries"] = entries
 
-	return render(request, 'present/blog.html', context)
+    return render(request, 'present/blog.html', context)
 
 
 def ViewEntry(request, entryID):
-	entry = None
-	try:
-		entry = Entry.objects.get(id=entryID)
-	except Entry.DoesNotExist:
-		raise Http404
+    entry = None
+    try:
+        entry = Entry.objects.get(id=entryID)
+    except Entry.DoesNotExist:
+        raise Http404
 
-	context = {'entry': entry}
-	return render(request, 'present/entry.html', context)
+    context = {'entry': entry}
+    return render(request, 'present/entry.html', context)

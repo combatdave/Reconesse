@@ -43,3 +43,5 @@ Icon
 
 venv
 .env
+.idea
+*.log

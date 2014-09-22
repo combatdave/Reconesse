@@ -1,7 +1,8 @@
 from django.db import models
 from django_countries.fields import CountryField
 from taggit.managers import TaggableManager
-from taggit.models import Tag
+#from utils import unique_slugify
+from django.template.defaultfilters import slugify
 
 import urlutils
 
@@ -46,17 +47,8 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-
     class Meta:
-        ordering = ('reference',)
-
-    # reference contains a unique reference string for the article
-    # reference == urlutils.obfuscate(Article.pk)
-    # Article.pk == urlutils.clarify(reference)
-    reference = models.CharField(max_length = 15,
-                                 null = True,
-                                 default = None,
-                                 unique = True)
+        ordering = ('slug',)
 
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -72,19 +64,25 @@ class Article(models.Model):
     category = models.ForeignKey(Category, related_name="category")
     tags = TaggableManager(related_name="past_tags")
 
+    slug = models.SlugField(blank=True)
+
     def __unicode__(self):
         return self.title
 
     def getTagNames(self):
         return self.tags.all()
 
-    def save(self, *args, **kwargs):
-        """ We redefine the save method to create a unique reference number upon
+     def save(self, *args, **kwargs):
+        """ We redefine the save method to create a unique slug number upon
         being called for the first time on any Article """
         created = not self.pk
         super(Article, self).save(*args, **kwargs)
         if created:
-            self.reference = urlutils.obfuscate(self.pk)
+            slug_str = "%s %s %s %s" % (self.title,
+                                        self.birthYear,
+                                        self.deathYear\
+                                        if self.deathYear is not None else "")
+            self.slug = slugify(slug_str)
             self.save()
 
 

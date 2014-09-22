@@ -78,45 +78,46 @@ achievementList = achievements.split("\n")
 tags = "#money #cash #green #TagsForLikes #dough #bills #crisp #benjamin #benjamins #franklin #franklins #bank #payday #hundreds #twentys #fives #ones #100s #20s #greens #photooftheday #instarich #instagood #capital #stacks #stack #bread #paid"
 tagsList = tags.split()
 
-categories = Category.objects.all()	
-
+categories = Category.objects.all()
 
 if len(categories) == 0:
-	raise Exception("No categories! Go make some.")
+    raise Exception("No categories! Go make some.")
+
 
 def CreateRandomEntry():
-	articleName = random.choice(firstNames) + " " + random.choice(lastNames)
-	articleText = loremIpsum * random.randint(1, 10)
-	articleSummaryLines = "\n".join([random.choice(achievementList) for i in xrange(1, random.randint(2, 5))])
-	birthYear = random.randint(-1000, 2014)
-	deathYear = birthYear + random.randint(20, 90)
-	if deathYear > 2014:
-		deathYear = None
+    articleName = random.choice(firstNames) + " " + random.choice(lastNames)
+    articleText = loremIpsum * random.randint(1, 10)
+    articleSummaryLines = "\n".join([random.choice(achievementList) for i in xrange(1, random.randint(2, 5))])
+    birthYear = random.randint(-1000, 2014)
+    deathYear = birthYear + random.randint(20, 90)
+    if deathYear > 2014:
+        deathYear = None
 
-	randomCountry = random.choice(list(countries))[0]
+    randomCountry = random.choice(list(countries))[0]
 
-	randomCategory = random.choice(categories)
+    randomCategory = random.choice(categories)
 
-	a = Article(title=articleName, content=articleText, summaryLines=articleSummaryLines, birthYear=birthYear, deathYear=deathYear, country=randomCountry, category=randomCategory)
-	a.save()
-	for i in range(1, random.randint(2, 5)):
-		a.tags.add(random.choice(tagsList))
+    a = Article(title=articleName, content=articleText, summaryLines=articleSummaryLines, birthYear=birthYear,
+                deathYear=deathYear, country=randomCountry, category=randomCategory)
+    a.save()
+    for i in range(1, random.randint(2, 5)):
+        a.tags.add(random.choice(tagsList))
 
-	allArticles = Article.objects.all()
-	for i in range(0, random.randint(0, 3)):
-		a.relatedArticles.add(random.choice(allArticles))
+    allArticles = Article.objects.all()
+    for i in range(0, random.randint(0, 3)):
+        a.relatedArticles.add(random.choice(allArticles))
 
-	print "Inserted ", a
+    print "Inserted ", a
 
 
 class Command(BaseCommand):
-	args = '<num entiries>'
-	help = 'Creates a number of random entries'
+    args = '<num entiries>'
+    help = 'Creates a number of random entries'
 
-	def handle(self, *args, **options):
-		num = args[0]
-		num = int(num)
-		for i in xrange(num):
-			CreateRandomEntry()
+    def handle(self, *args, **options):
+        num = args[0]
+        num = int(num)
+        for i in xrange(num):
+            CreateRandomEntry()
 
-		print "Done"
+        print "Done"
