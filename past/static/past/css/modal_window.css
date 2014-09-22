@@ -210,25 +210,25 @@ button:focus {
 
 .pink-input {
 	border-radius: 0;
-	border: none;
+	border: 1px solid #777;
 	background-color: #FFA396;
 	box-shadow: none;
-	color: #FFF;
+	color: #777;
 }
 
 .pink-input::-webkit-input-placeholder { /* WebKit browsers */
-    color:    #FFD5CF;
+    color:    #FFF;
 }
 .pink-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	color:    #FFD5CF;
+	color:    #FFF;
 	opacity:  1;
 }
 .pink-input::-moz-placeholder { /* Mozilla Firefox 19+ */
-	color:    #FFD5CF;
+	color:    #FFF;
 	opacity:  1;
 }
 .pink-input:-ms-input-placeholder { /* Internet Explorer 10+ */
-	color:    #FFD5CF;
+	color:    #FFF;
 }
 
 .form-control:focus {

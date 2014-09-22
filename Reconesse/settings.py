@@ -106,7 +106,45 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
+STATIC_ROOT = None
+try:
+    STATIC_ROOT = os.getenv("STATIC_ROOT")
+except:
+    pass
 
 MEDIA_URL = '/media/'
-#MEDIA_ROOT = '/home1/reconess/django-projects/Reconesse/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
+MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, MEDIA_URL))
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'reconesse.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'MYAPP': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}

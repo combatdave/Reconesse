@@ -176,7 +176,7 @@
                             {% endfor %}
                         </br>
                         {% endif %}
-                        
+
                         <div id="title">Also in "{{ article.category }}":</div>
                         {% for sameCategoryArticle in sameCategoryArticles %}
                         <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
@@ -220,6 +220,10 @@
 
 <div class="md-overlay"></div>
 
+<!-- Underscore templates -->
+<script type="text/template" id="person-list-entry">
+
+</script>
 
 <!-- jquery-->
 <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
@@ -240,11 +244,14 @@
 <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
 <!-- slideout box-->
-<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>-->
 
 <!-- checkboxes-->
 <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
 <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+
+<!-- underscore.js -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
 <!-- Custom JS -->
 <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>

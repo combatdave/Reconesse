@@ -227,23 +227,6 @@ function SetupSliderBar(minYear, maxYear)
 }
 
 
-$(function(){
-    $('.slide-out-div').tabSlideOut({
-        tabHandle: '.handle',                     
-        pathToTabImage: "../static/images/search.png",
-        imageHeight: '122px',                     
-        imageWidth: '40px',                       
-        tabLocation: 'right',
-        speed: 300,
-        action: 'click',
-        topPos: '200px',
-        leftPos: '20px',
-        fixedPosition: false
-    });
-
-});
-
-
 var searchTimeout = null;
 
 
