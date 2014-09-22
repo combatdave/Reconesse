@@ -42,9 +42,7 @@ var ModalEffects = (function() {
 
 })();
 
-var scrollWrappers;
-var smallScrollWrappers;
-var articleContent;
+var scrollWrappers, smallScrollWrappers, articleContent, relatedArticles;
 function resizeScrollWrappers()
 {
 	var height = $(document).height();
@@ -53,6 +51,7 @@ function resizeScrollWrappers()
 	smallScrollWrappers.height(bodyheight - 140);
 
 	articleContent.height(height * 0.75 - 190);
+	relatedArticles.height(height * 0.75 - 466);
 }
 
 // On resize, we want to set the size on .md-scroll-wrapper
@@ -64,5 +63,6 @@ $(document).ready(function() {
 	scrollWrappers = $('.md-scroll-wrapper');
 	smallScrollWrappers = $('.md-scroll-wrapper-small');
 	articleContent = $('.article-content');
+	relatedArticles = $('.related-articles');
 	resizeScrollWrappers();
 });

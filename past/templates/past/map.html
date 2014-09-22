@@ -188,21 +188,22 @@
                     {% endfor %}
 
 
-                    <div class="delimiter" style="margin: 2em 0;"></div>
-
-                    <div class="related">
-                        {% if relatedArticles %}
-                            <div id="title">You might also be interested in:</div>
-                            {% for relatedArticle in relatedArticles %}
-                                <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                    <div class="delimiter" style="margin: 1.5em 0 0 0;"></div>
+                    <div class="related-articles">
+                        <div class="related">
+                            {% if relatedArticles %}
+                                <div id="title">You might also be interested in:</div>
+                                {% for relatedArticle in relatedArticles %}
+                                    <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                                {% endfor %}
+                                </br>
+                            {% endif %}
+    
+                            <div id="title">Also in "{{ article.category }}":</div>
+                            {% for sameCategoryArticle in sameCategoryArticles %}
+                                <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
                             {% endfor %}
-                            </br>
-                        {% endif %}
-
-                        <div id="title">Also in "{{ article.category }}":</div>
-                        {% for sameCategoryArticle in sameCategoryArticles %}
-                            <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
-                        {% endfor %}
+                        </div>
                     </div>
 
                 </div>
