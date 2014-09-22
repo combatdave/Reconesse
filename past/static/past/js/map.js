@@ -6,10 +6,10 @@ AmCharts.ready(function() {
     // create AmMap object
     map = new AmCharts.AmMap();
     // set path to images
-    map.pathToImages = "../static/ammap/images/"; //"http://www.ammap.com/lib/images/";
+    map.pathToImages = (article) ? "../../static/ammap/images/" : "../static/ammap/images/"; //"http://www.ammap.com/lib/images/";
 
     var dataProvider = {
-        mapURL: "../static/ammap/worldLow.svg",
+        mapURL: (article) ? "../../static/ammap/worldLow.svg" : "../static/ammap/worldLow.svg",
         getAreasFromMap: true,          
     }; 
     // pass data provider to the map object
@@ -206,16 +206,24 @@ function SetupSliderBar(minYear, maxYear)
         var activeSlider = this;
         $(".sliderbar").slider("values", range);
     };
-    /*
-    $("#update").click(function() {
-        $(".slider").slider("value", 10);
-        return false;
-    });
-    */
-    $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-    $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-    $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-    $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+
+    // Terrible, terrible hack.
+    // Should definitely be done some other way.
+    if (!article)
+    {
+        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+    }
+    else
+    {
+        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+    }
+    
 }
 
 
@@ -244,8 +252,6 @@ function AutoSearch()
     searchTimeout = null;
     loadData();
 }
-
-
 
 
 $('#auto-checkboxes').bonsai({
@@ -311,3 +317,12 @@ $('.countries-checkbox').on('change', function(e)
         }
     }
 });
+
+(function()
+{
+    var btn = $('#article-button');
+    if (btn)
+    {
+        btn.click();
+    }
+})();

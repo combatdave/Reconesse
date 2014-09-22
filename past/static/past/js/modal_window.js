@@ -43,10 +43,16 @@ var ModalEffects = (function() {
 })();
 
 var scrollWrappers;
+var smallScrollWrappers;
+var articleContent;
 function resizeScrollWrappers()
 {
-	var bodyheight = $(document).height() / 2 - 150;
+	var height = $(document).height();
+	var bodyheight = height / 2 - 140;
 	scrollWrappers.height(bodyheight);
+	smallScrollWrappers.height(bodyheight - 140);
+
+	articleContent.height(height * 0.75 - 190);
 }
 
 // On resize, we want to set the size on .md-scroll-wrapper
@@ -56,5 +62,7 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	scrollWrappers = $('.md-scroll-wrapper');
+	smallScrollWrappers = $('.md-scroll-wrapper-small');
+	articleContent = $('.article-content');
 	resizeScrollWrappers();
 });

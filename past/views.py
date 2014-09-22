@@ -21,7 +21,7 @@ def get_all_countries():
     return[{'name': unicode(country_dict[c]), 'code': c} for c in codes]
 
 
-def index(request):
+def index(request, reference = None):
     yearData = GetArticleYearRanges()
     
     categories = Category.objects.GetTree()
@@ -31,6 +31,16 @@ def index(request):
     context["maxYear"] = yearData[1]
     context["categories"] = categories
     context["countries"] = get_all_countries()
+
+    if reference:
+        try:
+            context['article'] = Article.objects.get(reference = reference)
+            context['images'] = PastImage.objects\
+                                         .filter(article=context['article'])
+        except Exception as e:
+            context['article'] = ''
+    else:
+        context['article'] = ''
 
     return render(request, 'past/map.html', context)
 
@@ -167,12 +177,12 @@ def GetCountryArticles(request, countryCode):
 
 
 def Search(request):
-    categories = request.GET.getlist("category")
-    countrycodes = request.GET.getlist("countrycode")
-    keywords = request.GET.getlist("keyword")
-    tags = request.GET.getlist("tag")
-    minYear = request.GET.get("minyear")
-    maxYear = request.GET.get("maxyear")
+    categories = request.POST.getlist("category")
+    countrycodes = request.POST.getlist("countrycode")
+    keywords = request.POST.getlist("keyword")
+    tags = request.POST.getlist("tag")
+    minYear = request.POST.get("minyear")
+    maxYear = request.POST.get("maxyear")
 
     earliestPossible, latestPossible = GetArticleYearRanges()
     if minYear is None:
