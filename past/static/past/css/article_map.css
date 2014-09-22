@@ -55,12 +55,12 @@ hr.green {
 
 .country {
     clear: both;
-    background-color: #00FFAA;
+    background-color: #66ffcc;
     font-style: italic;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: #666666;
+    color: #777;
     
     padding: 5px;
 }
@@ -68,10 +68,10 @@ hr.green {
 .hashtag-container {
     width: auto;
     height: auto;
-    background-color: #CCCCCC;
-    color: #FFFFFF;
+    background-color: #999;
+    color: #66ffcc;
     
-    margin: 3px;
+    margin-right: 3px;
     display: inline-block;
 }
 

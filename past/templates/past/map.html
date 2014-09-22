@@ -177,8 +177,42 @@
                         {% endfor %}
                         {% endif %}
                     </div>
+                    <div class="country">{{ article.country.name }}</div>
+                    
+                    {% for tag in article.getTagNames %}
+                        <div class="hashtag-container">
+                            <div class="hashtag">
+                                {{ tag }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                    <div class="delimiter" style="margin: 2em 0;"></div>
+
+                    <div class="related">
+                        {% if relatedArticles %}
+                            <div id="title">You might also be interested in:</div>
+                            {% for relatedArticle in relatedArticles %}
+                                <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                            {% endfor %}
+                            </br>
+                        {% endif %}
+
+                        <div id="title">Also in "{{ article.category }}":</div>
+                        {% for sameCategoryArticle in sameCategoryArticles %}
+                            <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                        {% endfor %}
+                    </div>
+
                 </div>
                 <div class="col-sm-8">
+                    <div id="sharecontainer" style="display:block;">
+                        <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
+                        <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
+                        <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                    </div>
                     <h2>{{ article.title }}</h2>
                     <h4>
                         {% if article.deathYear %}
@@ -188,9 +222,15 @@
                         {% endif %}
                     </h4>
                     <div class="article-content">
-                        <p>
-                            {{ article.content|linebreaks }}
-                        </p>
+                        <div class="profiletext">
+                        <ul>
+                            {% for summaryLine in summary %}
+                                <li>{{ summaryLine }}</li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                        <div class="delimiter"></div>
+                        {{ article.content|linebreaks }}
                     </div>
                 </div>
             </div>

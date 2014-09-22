@@ -37,6 +37,11 @@ def index(request, reference = None):
             context['article'] = Article.objects.get(reference = reference)
             context['images'] = PastImage.objects\
                                          .filter(article=context['article'])
+            context["summary"] = context['article'].summaryLines.split("\n")
+            relatedArticles = context['article'].relatedArticles.all().order_by('?')[:3]
+            if len(relatedArticles) != 0:
+                context["relatedArticles"] = relatedArticles
+            context["sameCategoryArticles"] = Article.objects.filter(Q(category__id=context['article'].category.id), ~Q(id=context['article'].id)).order_by('?')[:3]
         except Exception as e:
             context['article'] = ''
     else:
