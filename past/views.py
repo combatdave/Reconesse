@@ -21,7 +21,7 @@ def get_all_countries():
     return[{'name': unicode(country_dict[c]), 'code': c} for c in codes]
 
 
-def index(request, reference = None):
+def index(request, reference = None, slug = None):
     yearData = GetArticleYearRanges()
     
     categories = Category.objects.GetTree()
@@ -43,7 +43,7 @@ def index(request, reference = None):
                 context["relatedArticles"] = relatedArticles
             context["sameCategoryArticles"] = Article.objects.filter(Q(category__id=context['article'].category.id), ~Q(id=context['article'].id)).order_by('?')[:3]
         except Exception as e:
-            context['article'] = ''
+            context['article'] = 'failed'
     else:
         context['article'] = ''
 

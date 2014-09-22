@@ -217,7 +217,7 @@
                     <h2>{{ article.title }}</h2>
                     <h4>
                         {% if article.deathYear %}
-                        {{ article.birthYear }}-{{ article.deathYear }}
+                        <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
                         {% else %}
                         {{ article.birthYear }}-present
                         {% endif %}
@@ -279,6 +279,10 @@
     minYear = {{minYear}};
     $(".minYear").text(GetLabelForYear(minYear));
     $(".maxYear").text(GetLabelForYear(maxYear));
+    {% if article %}
+    $("#birthYear").text(GetLabelForYear({{article.birthYear}}));
+    $("#deathYear").text(GetLabelForYear({{article.deathYear}}));
+    {% endif %}
 
     SetupSliderBar(minYear, maxYear);
 });

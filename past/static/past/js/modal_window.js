@@ -50,8 +50,8 @@ function resizeScrollWrappers()
 	scrollWrappers.height(bodyheight);
 	smallScrollWrappers.height(bodyheight - 140);
 
-	articleContent.height(height * 0.75 - 190);
-	relatedArticles.height(height * 0.75 - 466);
+	articleContent.height(height * 0.8 - 190);
+	relatedArticles.height(height * 0.8 - 466);
 }
 
 // On resize, we want to set the size on .md-scroll-wrapper
