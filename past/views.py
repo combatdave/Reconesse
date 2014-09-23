@@ -162,18 +162,18 @@ def GetCountryArticles(request, countryCode):
 
 
 def Search(request):
-    categories = request.GET.getlist("category")
-    countrycodes = request.GET.getlist("countrycode")
-    keywords = request.GET.getlist("keyword")
-    tags = request.GET.getlist("tag")
-    minYear = request.GET.get("minyear")
-    maxYear = request.GET.get("maxyear")
+    categories = request.POST.getlist("category", [])
+    countrycodes = request.POST.getlist("countrycode", [])
+    keywords = request.POST.getlist("keyword", [])
+    tags = request.POST.getlist("tag", '')
+    minYear = request.POST.get("minyear", '')
+    maxYear = request.POST.get("maxyear", '')
 
 
     earliestPossible, latestPossible = GetArticleYearRanges()
-    if minYear is None:
+    if not minYear:
         minYear = earliestPossible
-    if maxYear is None:
+    if not maxYear:
         maxYear = latestPossible
     countrycodes = [code.upper() for code in countrycodes]
 
@@ -181,36 +181,73 @@ def Search(request):
     diedInTimePeriod = Q(deathYear__gte=minYear) & Q(deathYear__lte=maxYear)
     overlappedTimePeriod = Q(birthYear__lt=minYear) & Q(deathYear__gt=maxYear)
     timeQuery = bornInTimePeriod | diedInTimePeriod | overlappedTimePeriod
+    
+    fullQuery = timeQuery
 
-    textQuery = Q()
-    for keyword in keywords:
-        textQuery = textQuery | (Q(content__icontains=keyword) | Q(title__icontains=keyword))
+    if keywords != ['']:
+        textQuery = Q()
+        for keyword in keywords:
+            textQuery = textQuery |\
+                        (Q(content__icontains=keyword) |\
+                         Q(title__icontains=keyword))
+        fullQuery = fullQuery & textQuery
 
-    countryQuery = Q()
-    for countrycode in countrycodes:
-        countryQuery = countryQuery | (Q(country__exact=countrycode))
+    if countrycodes != ['']:
+        countryQuery = Q()
+        for countrycode in countrycodes:
+            countryQuery = countryQuery | (Q(country__exact=countrycode))
+        fullQuery = fullQuery & countryQuery
 
-    categoryQuery = Q()
-    for category in categories:
-        categoryQuery = categoryQuery | Q(category__name__iexact=category)
+    if categories != ['']:
+        categoryQuery = Q()
+        for category in categories:
+            categoryQuery = categoryQuery | Q(category__name__iexact=category)
+        fullQuery = fullQuery & categoryQuery
 
-    tagQuery = Q()
-    for tag in tags:
-        tagQuery = tagQuery | Q(tags__name__iexact=tag)
+    if tags != ['']:
+        tagQuery = Q()
+        for tag in tags:
+            tagQuery = tagQuery | Q(tags__name__iexact=tag)
+        fullQuery = fullQuery & tagQuery
 
-    fullQuery = timeQuery & textQuery & countryQuery & categoryQuery & tagQuery
+    #fullQuery = timeQuery & textQuery & countryQuery & categoryQuery & tagQuery
 
     matches = Article.objects.filter(fullQuery)
 
-    matches = [dict(name=m.title, id=m.id) for m in matches]
+    matches = [dict(name=m.title,
+                    slug=m.slug,
+                    country=m.country.code,
+                    birth=m.birthYear,
+                    death=m.deathYear,
+                    tags=[str(t) for t in m.tags.all()]) for m in matches]
+ 
+    numByCountryCode = {}
+    articlesByCountryCode = {}
+    for article in matches:
+        country = article['country']
+        if country not in numByCountryCode:
+            numByCountryCode[country] = 0
+        numByCountryCode[country] += 1
+        if country not in articlesByCountryCode:
+            articlesByCountryCode[country] = []
+        articlesByCountryCode[country].append(article)
+    
+    areas = []
+    for country, num in numByCountryCode.iteritems():
+        countryData = {}
+        countryData["id"] = country
+        countryData["value"] = num
+        areas.append(countryData)
 
-    jsonResponse = {}
-    jsonResponse["categories"] = categories
-    jsonResponse["countryCodes"] = countrycodes
-    jsonResponse["keywords"] = keywords
-    jsonResponse["minYear"] = minYear
-    jsonResponse["maxYear"] = maxYear
-    jsonResponse["matches"] = matches
-    jsonResponse["tags"] = tags
-
+    jsonResponse = {
+        "categories"    : categories,
+        "countryCodes"  : countrycodes,
+        "keywords"      : keywords,
+        "minYear"       : minYear,
+        "maxYear"       : maxYear,
+        #"matches"       : matches,
+        "tags"          : tags,
+        "areas"         : areas,
+        "articles"      : articlesByCountryCode
+    }
     return HttpResponse(json.dumps(jsonResponse), content_type="application/json")

@@ -31,6 +31,12 @@ function renderBookmarkArray(bookmarks, template, node)
     }
 }
 
+
+function bookmarkPerson(data)
+{
+    // If not exists in bookmark array
+}
+
 $(document).ready(function(e)
 {
     if (storage.support())

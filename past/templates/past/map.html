@@ -172,14 +172,14 @@
                             {% if relatedArticles %}
                             <div id="title">You might also be interested in:</div>
                             {% for relatedArticle in relatedArticles %}
-                            <span><a href="../{{ relatedArticle.id }}">{{ relatedArticle.title }}</a></span>
+                            <span><a href="/past/{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
                             {% endfor %}
                         </br>
                         {% endif %}
 
                         <div id="title">Also in "{{ article.category }}":</div>
                         {% for sameCategoryArticle in sameCategoryArticles %}
-                        <span><a href="../{{ relatedArticle.id }}">{{ sameCategoryArticle.title }}</a></span>
+                        <span><a href="/past/{{ sameCategoryArticle.slug }}/">{{ sameCategoryArticle.title }}</a></span>
                         {% endfor %}
                     </div>
                 </div>
@@ -218,11 +218,38 @@
 <button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
 {% endif %}
 
+<div class="md-modal md-effect-1" id="article-list">
+    <div class="md-content">
+        <div class="list-group" id="list-country-articles">
+
+        </div>
+    </div>
+</div>
+<button id="article-list-button" class="md-trigger" style="display:none;" data-modal="article-list"></button>
+
 <div class="md-overlay"></div>
+
+<form type="hidden" id="query" method="POST" action="/past/search/">
+    {% csrf_token %}
+    <input type="hidden" name="category" />
+    <input type="hidden" name="countrycode" />
+    <input type="hidden" name="keyword" />
+    <input type="hidden" name="tag" />
+    <input type="hidden" name="minyear" />
+    <input type="hidden" name="maxyear" />
+</form>
+
 
 <!-- Underscore templates -->
 <script type="text/template" id="person-list-entry">
-
+<a href="/past/<%- slug %>" class="list-group-item active">
+    <div class="bookmark-container" bookmark-data="{\"slug\":\"<%- slug %>\",\"name\":\"<%- name %>\",\"birth\":\"<%- yearFrom %>\",\"death\":\"<%- yearTo %>\"}">
+        <span class="glyphicon glyphicon-bookmark"></span>
+         Bookmark
+    </div>
+    <h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
+    <p class="list-group-item-text"><%- tags %></p>
+</a>
 </script>
 
 <!-- jquery-->
@@ -238,7 +265,7 @@
 <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
 
 <!-- fancybox-->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>-->
 
 <!-- pips for the year slider-->
 <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>

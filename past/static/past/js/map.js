@@ -6,10 +6,10 @@ AmCharts.ready(function() {
     // create AmMap object
     map = new AmCharts.AmMap();
     // set path to images
-    map.pathToImages = (article) ? "../../static/ammap/images/" : "../static/ammap/images/"; //"http://www.ammap.com/lib/images/";
+    map.pathToImages = "/static/ammap/images/"; //"http://www.ammap.com/lib/images/";
 
     var dataProvider = {
-        mapURL: (article) ? "../../static/ammap/worldLow.svg" : "../static/ammap/worldLow.svg",
+        mapURL: "/static/ammap/worldLow.svg",
         getAreasFromMap: true,          
     }; 
     // pass data provider to the map object
@@ -40,12 +40,12 @@ AmCharts.ready(function() {
     map.balloon.color = "#000000";
 
     map.allowClickOnSelectedObject = true;
-    map.addListener("clickMapObject", function (event) {
+    map.addListener("clickMapObject", function (e) {
         map.selectObject(null);
-        ShowMenu(event);
+        showCountryArticles(e.mapObject.id);
+        //ShowMenu(e);
     });
     
-    showAllCategories = true;
     loadData();
 
     map.dataProvider.zoomLongitude = 0;
@@ -56,36 +56,49 @@ AmCharts.ready(function() {
     map.write("mapdiv");
 });
 
+function showCountryArticles(countryCode)
+{
+    var articleList = $('#list-country-articles');
+    articleList.empty();
+    articles = articlesByCountry[countryCode];
+    for (var i = 0; i < articles.length; ++i)
+    {
+        var argv = {
+            slug        : articles[i].slug,
+            name        : articles[i].name,
+            yearFrom    : GetLabelForYear(articles[i].birth),
+            yearTo      : GetLabelForYear(articles[i].death),
+            tags        : ''
+        }
+
+        for (var j = 0; j < articles[i].tags.length; ++j)
+        {
+            argv.tags += articles[i].tags[j] + " "
+        }
+        articleList.append(person_template(argv));   
+    }
+    $('#article-list-button').click();
+}
+
 /*
 function ShowMenu(e) {
     $.fancybox({
         type: 'iframe',
-        href: '/past/country/'+event.mapObject.id,
+        href: '/past/country/'+e.mapObject.id,
         width: "400",
         height: "400",
         closeClick: true,
         autoDimensions: false,
-    });
+    }); 
 }
 */
 
-function ShowMenu(e) {
-    $.fancybox({
-        type: 'iframe',
-        href: '/past/country/'+event.mapObject.id,
-        width: "400",
-        height: "400",
-        closeClick: true,
-        autoDimensions: false,
-    });
-}
-
 function setData(data) {
-    var parsedData = JSON.parse(data);
+    //var parsedData = JSON.parse(data);
 
-    SetYearDisplayText(parsedData.minYear, parsedData.maxYear);
+    SetYearDisplayText(data.minYear, data.maxYear);
 
-    map.dataProvider.areas = parsedData.areas;
+    map.dataProvider.areas = data.areas;
     map.validateData();
 
     $("#searchloadingtext").text("");
@@ -98,34 +111,50 @@ function SetYearDisplayText(minYear, maxYear)
 }
 
 
-var searchMinYear = null;
-var searchMaxYear = null;
-var selectedCategories = []
+/*
+ * ======
+ * SEARCH
+ * ======
+ */
 
+// Search parameters
+var searchMinYear = null,
+    searchMaxYear = null,
+    selectedCategories = [],
+    selectedCountries = [],
+    keywords = [],
+    tags = [];
 
-function loadData(){
-    file = "mapdata.json";
+// Global data
+var articlesByCountry;
 
-    var queryParams = {
-        minYear: searchMinYear,
-        maxYear: searchMaxYear,
-        filterCategories: selectedCategories,
-        showAll: showAllCategories,
-    };
+function loadData()
+{
+    $('input[name=category]').val(selectedCategories);
+    $('input[name=countrycode]').val(selectedCountries);
+    $('input[name=keyword]').val(keywords);
+    $('input[name=tag').val(tags);
+    $('input[name=minyear]').val(searchMinYear);
+    $('input[name=maxyear]').val(searchMaxYear);
 
-    file = file + "?" + $.param(queryParams);
-
-    var request;
-    if (window.XMLHttpRequest) {
-        request = new XMLHttpRequest();
-        // load
-        request.open('GET', file, false);
-        request.send();
-        setData(request.responseText);
-    }
+    var form = $('#query');
+    $.ajax({
+        url     : form.attr('action'),
+        type    : form.attr('method'),
+        data    : form.serialize(),
+        success : function(data)
+        {
+            articlesByCountry = data.articles;
+            setData(data);
+        },
+        error   : function(jqXHR)
+        {
+            console.log(jqXHR);
+        }
+    });
 }
 
-
+/*
 var lastCountryCode = null;
 var lastArticleID = null;
 
@@ -163,6 +192,7 @@ function OpenArticle(url, articleID)
         },
     });
 }
+*/
 
 
 function ReOpenList()
@@ -179,7 +209,11 @@ function GetLabelForYear(year) {
     return Math.abs(year).toString() + " " + label
 }
 
-//  SETUP SHIT
+/*
+ * ==========
+ * SETUP SHIT
+ * ==========
+ */
 
 function SetupSliderBar(minYear, maxYear)
 {
@@ -211,17 +245,17 @@ function SetupSliderBar(minYear, maxYear)
     // Should definitely be done some other way.
     if (!article)
     {
-        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
     }
     else
     {
-        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='../../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='../../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='../../static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='../../static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
     }
     
 }
@@ -301,6 +335,7 @@ $('.countries-checkbox').on('change', function(e)
     }
 });
 
+// If we are looking at a single article, we open the corresponding modal window
 (function()
 {
     var btn = $('#article-button');
@@ -309,3 +344,10 @@ $('.countries-checkbox').on('change', function(e)
         btn.click();
     }
 })();
+
+// TEMPLATES
+var person_template;
+$(document).ready(function()
+{
+    person_template = _.template($('#person-list-entry').html());
+});
