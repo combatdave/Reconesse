@@ -157,3 +157,13 @@ li .thumb {
 .bookmark-container:hover {
     color: #FFF;
 }
+
+.list-group-item {
+    background-color: #ffc5bd;
+    border-radius: 0 !important;
+    border: 1px solid #777;
+}
+
+.list-group-item:hover {
+    background-color: #66ffcc !important;
+}

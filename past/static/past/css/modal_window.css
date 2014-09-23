@@ -30,6 +30,17 @@
 	max-height: 80% !important;
 }
 
+#article-list {
+	max-width: 40%;
+	min-width: 40%;
+}
+
+@media all and (max-width: 900px) {
+	#article-list {
+		min-width: 80%;
+		max-width: 80%;
+	}
+}
 
 .md-show {
 	visibility: visible;
