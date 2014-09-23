@@ -1,7 +1,10 @@
 from django.db import models
 from django_countries.fields import CountryField
 from taggit.managers import TaggableManager
-from utils import unique_slugify
+#from utils import unique_slugify
+from django.template.defaultfilters import slugify
+
+import urlutils
 
 
 class CategoryManager(models.Manager):
@@ -44,6 +47,9 @@ class Category(models.Model):
 
 
 class Article(models.Model):
+    class Meta:
+        ordering = ('slug',)
+
     title = models.CharField(max_length=200)
     content = models.TextField()
     summaryLines = models.TextField()
@@ -66,10 +72,18 @@ class Article(models.Model):
     def getTagNames(self):
         return self.tags.all()
 
-    def save(self, **kwargs):
-        slug_str = "%s %s %s %s" % (self.title, self.country, self.birthYear, self.deathYear if self.deathYear is not None else "")
-        unique_slugify.unique_slugify(self, slug_str)
-        super(Article, self).save(**kwargs)
+    def save(self, *args, **kwargs):
+        """ We redefine the save method to create a unique slug number upon
+        being called for the first time on any Article """
+        created = not self.pk
+        super(Article, self).save(*args, **kwargs)
+        if created:
+            slug_str = "%s %s %s" % (self.title,
+                                     self.birthYear,
+                                     self.deathYear\
+                                     if self.deathYear is not None else "")
+            self.slug = slugify(slug_str)
+            self.save()
 
 
 class PastImage(models.Model):

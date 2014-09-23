@@ -7,114 +7,297 @@
 
 <head>
     <title>Reconesse Database</title>
-
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel='stylesheet' type='text/css'
-          href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
-    <link rel="stylesheet" type="text/css"
-          href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
     <link rel="stylesheet" type='text/css' href="{% static 'slider/jquery-ui-slider-pips.css' %}">
     <link rel="stylesheet" type='text/css' href="{% static 'slider/slider.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
 
-    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
 
-    <link rel="stylesheet" type="text/css" href="{% static 'past/map.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/map.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/modal_window.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/article_map.css' %}" />
+
 </head>
 
 <body>
 
-<div id="mapdiv"></div>
+    <div class="menu-container">
+        <button class="mod md-trigger" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span> Search</button>
+        <button class="mod"><span class="glyphicon glyphicon-bookmark"></span> My Bookmarks</button>
+    </div>
+    <div id="mapdiv"></div>
 
-<div class="barfloat">
-    <div class="container" style="position: relative;">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="barcontent yearcontainer" id="minYear"></div>
-                <div class="barcontent" id="slidercontainer">
-                    <div id="sliderbar"></div>
+    <div class="barfloat">
+        <div class="container" style="position: relative;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="barcontent yearcontainer minYear"></div>
+                    <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
+                    <div class="barcontent yearcontainer maxYear"></div>
                 </div>
-                <div class="barcontent yearcontainer" id="maxYear"></div>
-            </div>
-            <div class="col-md-4">
-                <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
-                    <div class="barcontent barbuttoncontainer">
-                        <div class="barbutton" id="present">
-                            PRESENT
+                <div class="col-md-4">
+                    <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
+                        <div class="barcontent barbuttoncontainer">
+                            <div class="barbutton" id="present">
+                                PRESENT
+                            </div>
                         </div>
-                    </div>
-                    <div class="barcontent barbuttoncontainer">
-                        <div class="barbutton" id="future">
-                            FUTURE
+                        <div class="barcontent barbuttoncontainer">
+                            <div class="barbutton" id="future">
+                                FUTURE
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- <center><div id="yearDisplay">All years</div></center> -->
     </div>
-    <!-- <center><div id="yearDisplay">All years</div></center> -->
-</div>
+    <div class="md-modal md-effect-1" id="search-panel">
+        <div class="md-content">
+            <!--<h3>Search</h3>-->
+            
+            <div class="row content-row">
+                <div class="col-sm-4 col-xs-12">
+                    <h4>Categories</h4>
+                    <div class="md-scroll-wrapper">
+                        <div>
+                            <ol id='auto-checkboxes'>
+                                <li data-value="all" data-name="search" data-checked="1">&nbsp;All
+                                    <ol>
+                                        {% for branch in categories %}
+                                        <li data-value='{{ branch.0 }}'>&nbsp;{{ branch.0 }}
+                                            <ol>
+                                                {% for child in branch.1 %}
+                                                <li data-value='{{ child }}'>&nbsp;{{ child }}</li>
+                                                {% endfor %}
+                                            </ol>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+                                </li>
+                            </ol>
 
 
-<div class="slide-out-div">
-    <a class="handle">Search</a>
-    <ol id='auto-checkboxes'>
-        <li data-value="all" data-name="search" data-checked="1"> All
-            <ol>
-                {% for branch in categories %}
-                <li data-value='{{ branch.0 }}'>{{ branch.0 }}
-                    <ol>
-                        {% for child in branch.1 %}
-                        <li data-value='{{ child }}'>{{ child }}</li>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <h4>Countries</h4>
+                    <div class="md-scroll-wrapper">
+                        <ul>
+                            <li>
+                                <label>
+                                    <input class="test" id="select-all-countries" type="checkbox" checked>
+                                    Select All
+                                </label>
+                                <div class="delimiter"></div>
+                            </li>
+
+                            {% for c in countries %}
+                            <li>
+                                <label>
+                                    <input class="countries-checkbox" type="checkbox" value="{{c.code}}" checked />
+                                    {{c.name}}
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <h4>Period</h4>
+                    <div class="md-wrapper">
+                        <div>
+                            <div class="barcontent yearcontainer"></div>
+                            <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
+                            <div class="barcontent yearcontainer"></div>
+                        </div>
+                        <div class="text-center">
+                            <span class="minYear"></span> - <span class="maxYear"></span>
+                        </div>
+                        <input type="text" class="form-control pink-input" placeholder="Keywords, comma separated"></input>
+                    </div>
+                    <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
+                    </div>
+                </div>
+
+                <div id="searchloadingtext"></div>
+                <!--<button class="mod md-close">Close me!</button>-->
+            </div>
+        </div>
+    </div>
+    {% if article %}
+    <div class="md-modal md-effect-1 article-modal" id="article-panel">
+        <div class="md-content">
+            <div class="row content-row">
+                <div class="col-sm-4">
+                    <div class="profilepictures">
+                        {% if images|length_is:"0" %}
+                        <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
+                        {% else %}
+                        {% for image in images %}
+                        {% if forloop.first %}
+                        <img src={{ image.imageField.url }} class="mainimage"></img>
+                        {% else %}
+                        <img src={{ image.imageField.url }} class="thumbnail"></img>
+                        {% endif %}
                         {% endfor %}
-                    </ol>
-                </li>
-                {% endfor %}
-            </ol>
-        </li>
-    </ol>
-    <div id="searchloadingtext"></div>
-</div>
+                        {% endif %}
+                    </div>
+                    <div class="country">{{ article.country.name }}</div>
+                    
+                    {% for tag in article.getTagNames %}
+                    <div class="hashtag-container">
+                        <div class="hashtag">
+                            {{ tag }}
+                        </div>
+                    </div>
+                    {% endfor %}
 
+
+                    <div class="delimiter" style="margin: 1.5em 0 0 0;"></div>
+                    <div class="related-articles">
+                        <div class="related">
+                            {% if relatedArticles %}
+                            <div id="title">You might also be interested in:</div>
+                            {% for relatedArticle in relatedArticles %}
+                            <span><a href="/past/{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
+                            {% endfor %}
+                        </br>
+                        {% endif %}
+
+                        <div id="title">Also in "{{ article.category }}":</div>
+                        {% for sameCategoryArticle in sameCategoryArticles %}
+                        <span><a href="/past/{{ sameCategoryArticle.slug }}/">{{ sameCategoryArticle.title }}</a></span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-8">
+                <div id="sharecontainer" style="display:block;">
+                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
+                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
+                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
+                </div>
+                <h2>{{ article.title }}</h2>
+                <h4>
+                    {% if article.deathYear %}
+                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
+                    {% else %}
+                    {{ article.birthYear }}-present
+                    {% endif %}
+                </h4>
+                <div class="article-content">
+                    <div class="profiletext">
+                        <ul>
+                            {% for summaryLine in summary %}
+                            <li>{{ summaryLine }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="delimiter"></div>
+                    {{ article.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
+{% endif %}
+
+<div class="md-modal md-effect-1" id="article-list">
+    <div class="md-content">
+        <div class="list-group" id="list-country-articles">
+
+        </div>
+    </div>
+</div>
+<button id="article-list-button" class="md-trigger" style="display:none;" data-modal="article-list"></button>
+
+<div class="md-overlay"></div>
+
+<form type="hidden" id="query" method="POST" action="/past/search/">
+    {% csrf_token %}
+    <input type="hidden" name="category" />
+    <input type="hidden" name="countrycode" />
+    <input type="hidden" name="keyword" />
+    <input type="hidden" name="tag" />
+    <input type="hidden" name="minyear" />
+    <input type="hidden" name="maxyear" />
+</form>
+
+
+<!-- Underscore templates -->
+<script type="text/template" id="person-list-entry">
+<a href="/past/<%- slug %>" class="list-group-item">
+    <div class="bookmark-container" bookmark-data="{\"slug\":\"<%- slug %>\",\"name\":\"<%- name %>\",\"birth\":\"<%- yearFrom %>\",\"death\":\"<%- yearTo %>\"}">
+        <span class="glyphicon glyphicon-bookmark"></span>
+         Bookmark
+    </div>
+    <h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
+    <p class="list-group-item-text"><%- tags %></p>
+</a>
+</script>
 
 <!-- jquery-->
 <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+<!-- Modal window -->
+<script src="{% static 'past/js/modal_window.js' %}"></script>
+<script src="{% static 'past/js/classie.js' %}"></script>
 
 <!-- Map js-->
 <script type="text/javascript" src="{% static 'ammap/ammap.js' %}"></script>
 
 <!-- fancybox-->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>-->
 
 <!-- pips for the year slider-->
 <script type="text/javascript" src="{% static 'slider/jquery-ui-slider-pips.js' %}"></script>
 
 <!-- slideout box-->
-<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>-->
 
 <!-- checkboxes-->
 <script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
 <script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
 
+<!-- underscore.js -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
 <!-- Custom JS -->
-<script type="text/javascript" src="{% static 'past/map.js' %}"></script>
+<script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
 <script>
-            $(document).ready(function() {
-                // page setup
-                $(".yearcontainer#minYear").text(GetLabelForYear({{minYear}}));
-                $(".yearcontainer#maxYear").text(GetLabelForYear({{maxYear}}));
+var maxYear, minYear, article = '{{article.slug}}';
+$(document).ready(function() {
+    // page setup
+    maxYear = {{maxYear}};
+    minYear = {{minYear}};
+    $(".minYear").text(GetLabelForYear(minYear));
+    $(".maxYear").text(GetLabelForYear(maxYear));
+    {% if article %}
+    $("#birthYear").text(GetLabelForYear({{article.birthYear}}));
+    $("#deathYear").text(GetLabelForYear({{article.deathYear}}));
+    {% endif %}
 
-                SetupSliderBar({{minYear}}, {{maxYear}});
-            });
-
+    SetupSliderBar(minYear, maxYear);
+});
 </script>
 </body>
 </html>

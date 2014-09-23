@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -37,6 +36,7 @@ ALLOWED_HOSTS = ["localhost", "thysja.reconesse.org", "reconesse.org"]
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
+
 ZINNIA_MAIL_COMMENT_AUTHORS = False
 
 # Application definition
@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     "present",
     "future",
 )
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -73,9 +74,8 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 import dj_database_url
-
-DATABASES = {'default': dj_database_url.config()}
-# DATABASES = {
+DATABASES = { 'default' : dj_database_url.config() }
+#DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -102,6 +102,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    '/var/www/static/', # Might not need this?
 )
 
 STATIC_URL = '/static/'
@@ -112,11 +113,8 @@ except:
     pass
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
-try:
-    MEDIA_ROOT = os.getenv("MEDIA_ROOT")
-except:
-    pass
+MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, MEDIA_URL))
+
 
 LOGGING = {
     'version': 1,
