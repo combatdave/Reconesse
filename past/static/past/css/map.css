@@ -167,3 +167,9 @@ li .thumb {
 .list-group-item:hover {
     background-color: #66ffcc !important;
 }
+
+#country_name {
+    padding-top: 1em;
+    padding-left: 1.3em;
+    margin-bottom: 0;
+}

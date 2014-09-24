@@ -77,6 +77,7 @@ function showCountryArticles(countryCode)
         }
         articleList.append(person_template(argv));   
     }
+    $('#country_name').text(countries[countryCode]);
     $('#article-list-button').click();
 }
 
@@ -133,7 +134,7 @@ function loadData()
     $('input[name=category]').val(selectedCategories);
     $('input[name=countrycode]').val(selectedCountries);
     $('input[name=keyword]').val(keywords);
-    $('input[name=tag').val(tags);
+    $('input[name=tag]').val(tags);
     $('input[name=minyear]').val(searchMinYear);
     $('input[name=maxyear]').val(searchMaxYear);
 
