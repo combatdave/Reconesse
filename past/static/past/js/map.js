@@ -1,7 +1,6 @@
 var map;
 var showAllCategories = true;
 
-// add all your code to this method, as this will ensure that page is loaded
 AmCharts.ready(function() {
     // create AmMap object
     map = new AmCharts.AmMap();
@@ -81,22 +80,7 @@ function showCountryArticles(countryCode)
     $('#article-list-button').click();
 }
 
-/*
-function ShowMenu(e) {
-    $.fancybox({
-        type: 'iframe',
-        href: '/past/country/'+e.mapObject.id,
-        width: "400",
-        height: "400",
-        closeClick: true,
-        autoDimensions: false,
-    }); 
-}
-*/
-
 function setData(data) {
-    //var parsedData = JSON.parse(data);
-
     SetYearDisplayText(data.minYear, data.maxYear);
 
     map.dataProvider.areas = data.areas;
@@ -147,6 +131,7 @@ function loadData()
         {
             articlesByCountry = data.articles;
             setData(data);
+            saveSettings();
         },
         error   : function(jqXHR)
         {
@@ -155,59 +140,83 @@ function loadData()
     });
 }
 
-/*
-var lastCountryCode = null;
-var lastArticleID = null;
-
-
-function ShowMenu(event) {
-    lastCountryCode = event.mapObject.id;
-    lastArticleID = null;
-    OpenCountryListFancybox();
-}
-
-
-function OpenCountryListFancybox()
-{
-    $.fancybox.open({
-        type: 'iframe',
-        href: '/past/country/'+lastCountryCode,
-        width: "400px",
-        height: "400px",
-        padding: "0px",
-        closeClick: true,
-    });
-}
-
-
-function OpenArticle(url, articleID)
-{
-    lastArticleID = articleID;
-
-    $.fancybox.open({
-        href: url,
-        type: "iframe",
-        padding: "0px",
-        afterClose: function() {
-            ReOpenList();
-        },
-    });
-}
-*/
-
-
-function ReOpenList()
-{
-    OpenCountryListFancybox();
-}
-
-
 function GetLabelForYear(year) {
     var label = "AD";
     if (year < 0) {
         label = "BC";
     }
     return Math.abs(year).toString() + " " + label
+}
+
+function applySettings(s)
+{
+    $('input:checkbox').removeAttr('checked');
+    if (s.minYear && s.maxYear)
+    {
+        $(".sliderbar").slider("values", [s.minYear, s.maxYear]);
+        searchMinYear = s.minYear;
+        searchMaxYear = s.maxYear;
+    }
+    if (s.categories)
+    {
+        selectedCategories = s.categories;
+        for (var i = 0; i < selectedCategories.length; ++i)
+        {
+            $(":checkbox[value='" + selectedCategories[i] + "']").prop("checked","true");
+        }
+    }
+    if (s.countries)
+    {
+        selectedCountries = s.countries;
+        for (var i = 0; i < selectedCountries.length; ++i)
+        {
+            $(":checkbox[value='" + selectedCountries[i] + "']").prop("checked","true");
+        }
+        var allChecked = true;
+        $('.countries-checkbox').each(function() {
+            if (!this.checked)
+            {
+                allChecked = false;
+            }
+        });
+        if (allChecked)
+        {
+            $('#select-all-countries').prop('checked', true);
+        }
+    }
+    if (s.keywords)
+    {
+        keywords = s.keywords;
+        var kwString = "";
+        for (var i = 0; i < keywords.lenght; ++i)
+        {
+            kwString += (keywords[i] + ', ');
+        }
+        $('#keyword-box').val(kwString);
+    }
+    // TODO
+    /*
+    if (s.tags)
+    {
+        tags = s.tags;
+
+    }
+    */
+}
+
+function saveSettings()
+{
+    if (storage.support())
+    {
+        storage.settings.minYear = $('#minYear').text();
+        storage.settings.maxYear = $('#maxYear').text();
+        storage.settings.categories = selectedCategories;
+        storage.settings.countries = selectedCountries;
+        storage.settings.keywords = keywords;
+        console.log(storage);
+        localStorage['settings'] = JSON.stringify(storage.settings);
+        console.log('Settings saved')
+    }
 }
 
 /*
@@ -242,23 +251,10 @@ function SetupSliderBar(minYear, maxYear)
         $(".sliderbar").slider("values", range);
     };
 
-    // Terrible, terrible hack.
-    // Should definitely be done some other way.
-    if (!article)
-    {
-        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-    }
-    else
-    {
-        $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-        $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-        $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-    }
-    
+    $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+    $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+    $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
+    $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
 }
 
 
@@ -281,7 +277,7 @@ $('#auto-checkboxes').bonsai({
 $("#auto-checkboxes :checkbox").change( function(event) {
     showAllCategories = false;
     newSelectedCategories = []
-    $("input:checkbox").each( function(event) {
+    $("input:checkbox[name=search]").each( function(event) {
         var categoryName = $(this).attr("value");
         var checked = $(this).is(":checked");
         if (checked) {
@@ -289,7 +285,6 @@ $("#auto-checkboxes :checkbox").change( function(event) {
         }
     });
     selectedCategories = newSelectedCategories;
-
     if (searchTimeout != null)
     {
         window.clearTimeout(searchTimeout);
@@ -297,8 +292,6 @@ $("#auto-checkboxes :checkbox").change( function(event) {
     searchTimeout = window.setTimeout(AutoSearch, 500);
     $("#searchloadingtext").text("Please wait...");
 });
-
-
 
 $('#select-all-countries').on('click', function(e) { 
     if(this.checked) {
@@ -312,6 +305,7 @@ $('#select-all-countries').on('click', function(e) {
             this.checked = false;                        
         });
     }
+    saveCheckboxes();
 });
 
 $('.countries-checkbox').on('change', function(e)
@@ -334,7 +328,57 @@ $('.countries-checkbox').on('change', function(e)
             $('#select-all-countries').prop('checked', true);
         }
     }
+
+    saveCheckboxes();
 });
+
+
+function saveCheckboxes()
+{
+    var newSelectedCountries = []
+    $('.countries-checkbox').each(function() {
+        var countryCode = $(this).attr("value");
+        var checked = $(this).is(":checked");
+        if (checked) {
+            newSelectedCountries.push(countryCode);
+        }
+    });
+    selectedCountries = newSelectedCountries;
+    if (searchTimeout != null)
+    {
+        window.clearTimeout(searchTimeout);
+    }
+    searchTimeout = window.setTimeout(AutoSearch, 500);
+}
+
+
+$('#keyword-box').on('keydown', function(e)
+{
+    var ENTER_KEY = 13, SPACE_KEY = 32;
+    var kw = $(this).val();
+    var k = e.keyCode;
+    if (k === ENTER_KEY || k === SPACE_KEY)
+    {
+        parseKeywords(kw);
+    }
+});
+
+$('#keyword-box').on('focusout', function()
+{
+    var kw = $(this).val();
+    parseKeywords(kw);
+});
+
+
+function parseKeywords(kw)
+{
+    keywords = kw.split(/(?:,| |;)+/);
+    if (searchTimeout != null)
+    {
+        window.clearTimeout(searchTimeout);
+    }
+    searchTimeout = window.setTimeout(AutoSearch, 500);
+}
 
 // If we are looking at a single article, we open the corresponding modal window
 (function()
@@ -351,4 +395,21 @@ var person_template;
 $(document).ready(function()
 {
     person_template = _.template($('#person-list-entry').html());
+
+    // BOOKMARKS
+    if (storage.support())
+    {
+        // If localStorage is supported by client browser
+        if (typeof localStorage['bookmarks'] === 'undefined')
+            localStorage['bookmarks'] = JSON.stringify([]);
+
+        storage.bookmarks = JSON.parse(localStorage['bookmarks']);
+        //renderBookmarkArray(storage.bookmarks)
+        console.log(localStorage['settings'])
+        if (typeof localStorage['settings'] === 'undefined')
+            localStorage['settings'] = JSON.stringify({});
+        console.log(localStorage['settings'])
+        storage.settings = JSON.parse(localStorage['settings']);
+        applySettings(storage.settings);
+    }
 });

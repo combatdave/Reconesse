@@ -162,6 +162,7 @@ def GetCountryArticles(request, countryCode):
 
 
 def Search(request):
+    print(request)
     categories = request.POST.getlist("category", [])
     countrycodes = request.POST.getlist("countrycode", [])
     keywords = request.POST.getlist("keyword", [])

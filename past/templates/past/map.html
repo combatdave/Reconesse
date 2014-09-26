@@ -126,7 +126,7 @@
                         <div class="text-center">
                             <span class="minYear"></span> - <span class="maxYear"></span>
                         </div>
-                        <input type="text" class="form-control pink-input" placeholder="Keywords, comma separated"></input>
+                        <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
                     </div>
                     <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
                     </div>
@@ -282,11 +282,13 @@ Bookmark
 <!-- underscore.js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
-<!-- Custom JS -->
+<!-- LocalStorage bookmarks -->
+<script type="text/javascript" src="{% static 'past/js/bookmarks.js' %}"></script>
+<!-- Business logic -->
 <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
 <script>
-var maxYear, minYear, article = '{{article.slug}}';
+var maxYear, minYear, minRange, maxRange, article = '{{article.slug}}';
 var countries;
 $(document).ready(function() {
     // page setup
