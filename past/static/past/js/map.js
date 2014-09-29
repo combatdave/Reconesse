@@ -213,6 +213,7 @@ function saveSettings()
         storage.settings.categories = selectedCategories;
         storage.settings.countries = selectedCountries;
         storage.settings.keywords = keywords;
+
         console.log(storage);
         localStorage['settings'] = JSON.stringify(storage.settings);
         console.log('Settings saved')
@@ -403,11 +404,16 @@ $(document).ready(function()
         if (typeof localStorage['bookmarks'] === 'undefined')
             localStorage['bookmarks'] = JSON.stringify([]);
 
+        console.log(localStorage['bookmarks'])
         storage.bookmarks = JSON.parse(localStorage['bookmarks']);
+        console.log(storage.bookmarks)
         //renderBookmarkArray(storage.bookmarks)
         console.log(localStorage['settings'])
         if (typeof localStorage['settings'] === 'undefined')
-            localStorage['settings'] = JSON.stringify({});
+        {
+            saveSettings();
+        }
+            
         console.log(localStorage['settings'])
         storage.settings = JSON.parse(localStorage['settings']);
         applySettings(storage.settings);
