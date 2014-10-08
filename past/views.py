@@ -14,8 +14,8 @@ def get_all_countries():
 
     Elements are on the form {'name', 'code'} """
     codes = Article.objects.all().order_by('country')\
-                                 .distinct('country')\
                                  .values_list('country', flat=True)
+    codes = set(codes)  # .distinct doesnt work with mysql db
     country_dict = dict(countries)
     return[{'name': unicode(country_dict[c]), 'code': c} for c in codes]
 
@@ -168,7 +168,6 @@ def Search(request):
     tags = request.POST.getlist("tag", '')
     minYear = request.POST.get("minyear", '')
     maxYear = request.POST.get("maxyear", '')
-
 
     earliestPossible, latestPossible = GetArticleYearRanges()
     if not minYear:
