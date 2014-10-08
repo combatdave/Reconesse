@@ -4,8 +4,6 @@ from taggit.managers import TaggableManager
 #from utils import unique_slugify
 from django.template.defaultfilters import slugify
 
-import urlutils
-
 
 class CategoryManager(models.Manager):
     def GetRoots(self):
