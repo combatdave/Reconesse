@@ -115,10 +115,10 @@ var articlesByCountry;
 
 function loadData()
 {
-    $('input[name=category]').val(selectedCategories);
-    $('input[name=countrycode]').val(selectedCountries);
-    $('input[name=keyword]').val(keywords);
-    $('input[name=tag]').val(tags);
+    $('input[name=category]').val(JSON.stringify(selectedCategories));
+    $('input[name=countrycode]').val(JSON.stringify(selectedCountries));
+    $('input[name=keyword]').val(JSON.stringify(keywords));
+    $('input[name=tag]').val(JSON.stringify(tags));
     $('input[name=minyear]').val(searchMinYear);
     $('input[name=maxyear]').val(searchMaxYear);
 
