@@ -5,7 +5,7 @@ import json
 import datetime
 
 from django_countries import countries
-from past.models import Article, PastImage, Category
+from past.models import Article, PastImage, Category, PastReference
 
 
 def get_all_countries():
@@ -36,6 +36,7 @@ def index(request, slug = None):
             context['article'] = Article.objects.get(slug = slug)
             context['images'] = PastImage.objects\
                                          .filter(article=context['article'])
+            context['references'] = PastReference.objects.filter(article=context['article']).order_by('id')
             context["summary"] = context['article'].summaryLines.split("\n")
             relatedArticles = context['article'].relatedArticles.all().order_by('?')[:3]
             if len(relatedArticles) != 0:
@@ -55,12 +56,12 @@ def ViewArticle(request, slug):
         raise Http404
 
     images = PastImage.objects.filter(article=article)
-    for i in images:
-        print "Image!", i.imageField.url
+    references = PastImage.objects.filter(article=article)
 
     context = {}
     context['article'] = article
     context["images"] = images
+    context["references"] = references
     context["summary"] = article.summaryLines.split("\n")
 
     relatedArticles = article.relatedArticles.all()

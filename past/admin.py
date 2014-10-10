@@ -2,8 +2,10 @@ from django.contrib import admin
 from django import forms
 from django.utils.html import conditional_escape, mark_safe
 from django.utils.encoding import smart_text
+from django.forms import TextInput, Textarea
+from django.db import models
 
-from past.models import Article, PastImage, Category
+from past.models import Article, PastImage, Category, PastReference
 
 
 class NestedModelChoiceField(forms.ModelChoiceField):
@@ -45,6 +47,12 @@ class ArticleAdminForm(forms.ModelForm):
         self.fields["category"] = NestedModelChoiceField(queryset=Category.objects.all(), related_name="parentcategory",
                                                          parent_field="parent", label_field="name")
 
+    def clean_category(self):
+        category = self.cleaned_data['category']
+        if category.parent is None:
+            raise forms.ValidationError("You can't select a top-level category! For example instead of \"arts\", try \"painter\".")
+        return category
+
     class Meta:
         model = Article
 
@@ -62,17 +70,32 @@ class CategoryToCategoryInline(admin.TabularInline):
 class RelatedArticlesInline(admin.TabularInline):
     fk_name = "from_article"
     model = Article.relatedArticles.through
+    verbose_name = "Related article"
+    verbose_name_plural = "Related articles"
+
+
+class PastReferenceToArticleInline(admin.TabularInline):
+    fk_name = "article"
+    model = PastReference
+
+    formfield_overrides = {
+            models.TextField: {'widget': TextInput(attrs={'size': '100'})},
+        }
 
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
 
     readonly_fields = ("slug", )
-    inlines = [PastImageToArticleInline, RelatedArticlesInline, ]
+    inlines = [PastReferenceToArticleInline, PastImageToArticleInline, RelatedArticlesInline, ]
     exclude = ("relatedArticles", )
 
 
 class PastImageAdmin(admin.ModelAdmin):
+    pass
+
+
+class PastReferenceAdmin(admin.ModelAdmin):
     pass
 
 

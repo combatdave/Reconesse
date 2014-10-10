@@ -90,3 +90,21 @@ class PastImage(models.Model):
 
     def __unicode__(self):
         return "Article: '" + self.article.title + "' - Image: " + self.imageField.url
+
+
+class PastReference(models.Model):
+    class Meta:
+        verbose_name = "Reference (be careful when deleting!)"
+        verbose_name_plural = "References (be careful when deleting these!)"
+    text = models.TextField()
+    url = models.TextField(null=True, blank=True)
+
+    article = models.ForeignKey(Article)
+
+    def __unicode__(self):
+        referencesForThisArticle = [ref.id for ref in PastReference.objects.filter(article=self.article).order_by('id')]
+        if self.id in referencesForThisArticle:
+            myIndex = referencesForThisArticle.index(self.id) + 1
+        else:
+            myIndex = "??"
+        return "Reference [{0}]".format(myIndex)
