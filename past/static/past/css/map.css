@@ -85,6 +85,7 @@ input[type="checkbox"]
 }
 
 input[type="checkbox"]:before{
+    border-radius: 15px;
     position: relative;
     display: block;
     width: 11px;
@@ -94,6 +95,7 @@ input[type="checkbox"]:before{
     content: "";
 }
 input[type="checkbox"]:after{
+    border-radius: 15px;
     position: relative;
     display: block;
     left: 2px;

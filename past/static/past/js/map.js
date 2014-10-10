@@ -214,9 +214,7 @@ function saveSettings()
         storage.settings.countries = selectedCountries;
         storage.settings.keywords = keywords;
 
-        console.log(storage);
         localStorage['settings'] = JSON.stringify(storage.settings);
-        console.log('Settings saved')
     }
 }
 
@@ -333,7 +331,6 @@ $('.countries-checkbox').on('change', function(e)
     saveCheckboxes();
 });
 
-
 function saveCheckboxes()
 {
     var newSelectedCountries = []
@@ -352,6 +349,75 @@ function saveCheckboxes()
     searchTimeout = window.setTimeout(AutoSearch, 500);
 }
 
+// =================
+// BOOKMARK HANDLING
+// =================
+
+$('#list-country-articles').on('click', '.bookmark-container', function(e)
+{
+    e.preventDefault();
+    e.stopPropagation();
+    var data = $(this).attr('bookmark-data');
+    var obj = JSON.parse(data);
+    saveBookmarks(obj);
+});
+
+function saveBookmarks(obj)
+{
+    if (obj)
+    {
+        if (!slugInBookmarks(obj.slug)) storage.bookmarks.push(obj);
+    }
+    if (storage.support())
+        localStorage['bookmarks'] = JSON.stringify(storage.bookmarks);
+    renderBookmarks();
+}
+
+function removeBookmark(slug)
+{
+    for (var i = 0; i < storage.bookmarks.length; ++i)
+    {
+        if (storage.bookmarks[i].slug == slug)
+        {
+            storage.bookmarks.splice(i, 1);
+            saveBookmarks();
+        }
+    }
+    renderBookmarks();
+}
+
+function slugInBookmarks(slug)
+{
+    for (var i = 0; i < storage.bookmarks.length; ++i)
+    {
+        if (storage.bookmarks[i].slug == slug)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+function renderBookmarks()
+{
+    var node = $('#list-bookmark-entries');
+    node.empty();
+    for (var i = 0; i < storage.bookmarks.length; ++i)
+    {
+        var obj = storage.bookmarks[i];
+        var argv = {
+            name: obj.name,
+            yearFrom: obj.birth,
+            yearTo: obj.death,
+            slug: obj.slug
+        };
+        node.append(bookmark_template(argv));
+    }
+}
+
+// ========
+// KEYWORDS
+// ========
 
 $('#keyword-box').on('keydown', function(e)
 {
@@ -381,6 +447,9 @@ function parseKeywords(kw)
     searchTimeout = window.setTimeout(AutoSearch, 500);
 }
 
+// ============================
+// SINGLE ARTICLE VIEW SPECIFIC
+// ============================
 // If we are looking at a single article, we open the corresponding modal window
 (function()
 {
@@ -391,11 +460,14 @@ function parseKeywords(kw)
     }
 })();
 
-// TEMPLATES
-var person_template;
+// ===================
+// TEMPLATES AND SETUP
+// ===================
+var person_template, bookmark_template;
 $(document).ready(function()
 {
     person_template = _.template($('#person-list-entry').html());
+    bookmark_template = _.template($('#bookmark').html());
 
     // BOOKMARKS
     if (storage.support())
@@ -404,18 +476,16 @@ $(document).ready(function()
         if (typeof localStorage['bookmarks'] === 'undefined')
             localStorage['bookmarks'] = JSON.stringify([]);
 
-        console.log(localStorage['bookmarks'])
         storage.bookmarks = JSON.parse(localStorage['bookmarks']);
-        console.log(storage.bookmarks)
-        //renderBookmarkArray(storage.bookmarks)
-        console.log(localStorage['settings'])
+
+
         if (typeof localStorage['settings'] === 'undefined')
         {
             saveSettings();
         }
             
-        console.log(localStorage['settings'])
         storage.settings = JSON.parse(localStorage['settings']);
         applySettings(storage.settings);
     }
+    renderBookmarks();
 });

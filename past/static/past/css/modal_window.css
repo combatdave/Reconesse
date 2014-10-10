@@ -30,9 +30,9 @@
 	max-height: 80% !important;
 }
 
-#article-list {
-	max-width: 40%;
-	min-width: 40%;
+.small-list {
+	max-width: 30%;
+	min-width: 30%;
 }
 
 
@@ -40,16 +40,26 @@
 	#article-panel {
 		min-width: 70%;
 		max-width: 70%;
+		min-height: 90%;
+		max-height: 90%;
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.small-list {
+		min-width: 50%;
+		max-width: 50%;
+		min-height: 70%;
+		max-height: 70%;
 	}
 }
 
 @media all and (max-width: 900px) {
-	#article-list {
+	.small-list {
 		min-width: 80%;
 		max-width: 80%;
 	}
 }
-
 
 .md-show {
 	visibility: visible;
@@ -196,10 +206,27 @@
 	body { font-size: 75%; }
 }
 
-
-button.mod {
+/*
+.mod {
 	border: none;
-	padding: 0.6em 1.2em;
+	background: #FF8675;
+	color: #fff;
+	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
+	/*font-size: 1em;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	cursor: pointer;
+	display: inline-block;
+	margin-top: 0;
+	margin-right: 10px;*/
+	/*border-radius: 2px;*/
+/*}
+*/
+
+
+.bookmark-tag,
+.search-tag {
+    border: none;
 	background: #FF8675;
 	color: #fff;
 	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
@@ -208,16 +235,79 @@ button.mod {
 	text-transform: uppercase;
 	cursor: pointer;
 	display: inline-block;
-	margin-top: 5px;
-	margin-right: 5px;
-	/*border-radius: 2px;*/
+	margin-right: 20px;
+  
+    width: 48px;
+    height: 48px;
+    
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    
+    border-bottom: 1px solid #FF8675;
+
+    /* This makes room for the triangle */
+
+    
+    position: relative;
+    
+    color: white;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 38px;
+
+    padding: 10px 10px 10px 13px;
 }
 
-button.mod:hover {
+/* Makes the triangle */
+.search-tag:before {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: -24px;
+  	left: 0;
+    width: 0;
+    height: 0;
+    border-top: 23px solid #FF8675;
+    border-left: 24px solid transparent;
+    border-right: 24px solid transparent;
+}
+
+
+/* Makes the triangle */
+.bookmark-tag:before {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: -24px;
+  	left: 0;
+    width: 0;
+    height: 0;
+    border-left: 24px solid #FF8675;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+}
+
+.bookmark-tag:after {
+  	content: "";
+    position: absolute;
+    display: block;
+    bottom: -24px;
+  	left: 24px;
+    width: 0;
+    height: 0;
+    border-right: 24px solid #FF8675;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+}
+
+.bookmark-tag:hover,
+.search-tag:hover, {
 	background: #DB5E4D;
 }
 
-button:focus {
+.bookmark-tag:focus,
+.search-tag:focus {
     outline: none;
 }
 
