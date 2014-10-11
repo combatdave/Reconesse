@@ -47,6 +47,8 @@ class Category(models.Model):
 class Article(models.Model):
     class Meta:
         ordering = ('slug',)
+        verbose_name = "profile"
+        verbose_name_plural = "profiles"
 
     title = models.CharField(max_length=200)
     content = models.TextField()
