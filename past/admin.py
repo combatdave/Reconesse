@@ -18,6 +18,7 @@ class NestedModelChoiceField(forms.ModelChoiceField):
         self.label_field = label_field
         self._populate_choices()
 
+
     def _populate_choices(self):
         # This is *hackish* but simpler than subclassing ModelChoiceIterator
         choices = [(u"", self.empty_label)]
@@ -25,16 +26,34 @@ class NestedModelChoiceField(forms.ModelChoiceField):
         queryset = self.queryset.filter(**kwargs).prefetch_related(self.related_name)
 
         for parent in queryset:
-            choices.append((self.prepare_value(parent), self.label_from_instance(parent)))
-            choices.extend([(self.prepare_value(children), self.label_from_instance(children)) for children in
-                            getattr(parent, self.related_name).all()])
+            parentEntry = (self.prepare_value(parent), self.label_from_instance(parent))
+            choices.append(parentEntry)
+
+            choices.extend(self.get_child_list(parent))
 
         self.choices = choices
 
+
+    def get_child_list(self, parent):
+        choices = []
+        children = getattr(parent, self.related_name).all()
+        for child in children:
+            choice = (self.prepare_value(child), self.label_from_instance(child))
+            choices.append(choice)
+
+            childChoices = self.get_child_list(child)
+            choices.extend(childChoices)
+
+        return choices
+
+
     def label_from_instance(self, obj):
         level_indicator = ""
-        if getattr(obj, self.parent_field):
-            level_indicator = "--- "
+
+        parent = getattr(obj, self.parent_field, None)
+        while parent is not None:
+            level_indicator += "--- "
+            parent = getattr(parent, self.parent_field, None)
 
         return mark_safe(level_indicator + conditional_escape(smart_text(getattr(obj, self.label_field))))
 
