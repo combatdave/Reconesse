@@ -34,8 +34,8 @@
     {% include "GoogleAnalytics.html" %}
 
     <div class="menu-container">
-        <button class="mod md-trigger" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span> Search</button>
-        <button class="mod"><span class="glyphicon glyphicon-bookmark"></span> My Bookmarks</button>
+        <div class="mod md-trigger search-tag" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span></div>
+        <div class="mod md-trigger bookmark-tag" data-modal="bookmark-list"><span class="glyphicon glyphicon-plus-sign"></span></div>
     </div>
     <div id="mapdiv"></div>
 
@@ -67,10 +67,13 @@
     </div>
     <div class="md-modal md-effect-1" id="search-panel">
         <div class="md-content">
-            <!--<h3>Search</h3>-->
+            <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
             
             <div class="row content-row">
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <h4>Categories</h4>
                     <div class="md-scroll-wrapper">
                         <div>
@@ -128,7 +131,7 @@
                         <div class="text-center">
                             <span class="minYear"></span> - <span class="maxYear"></span>
                         </div>
-                        <input type="text" class="form-control pink-input" placeholder="Keywords, comma separated"></input>
+                        <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
                     </div>
                     <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
                     </div>
@@ -142,6 +145,14 @@
     {% if article %}
     <div class="md-modal md-effect-1 article-modal" id="article-panel">
         <div class="md-content">
+            <div class="md-top-bar">
+                <div class="md-close-button">
+                </div>
+                <div class="md-back-button">
+                </div>
+                <div class="md-forward-button">
+                </div>
+            </div>
             <div class="row content-row">
                 <div class="col-sm-4">
                     <div class="profilepictures">
@@ -226,14 +237,34 @@
 <button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
 {% endif %}
 
-<div class="md-modal md-effect-1" id="article-list">
+<div class="md-modal md-effect-1 small-list" id="article-list">
     <div class="md-content">
-        <div class="list-group" id="list-country-articles">
+        <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
+        <div class="scroll-list-modal">
+            <h2 id="country_name"></h2>
+            <div class="list-group entries" id="list-country-articles">
+    
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="article-list-button" class="md-trigger" style="display:none;" data-modal="article-list"></button>
+
+<div class="md-modal md-effect-1 small-list" id="bookmark-list">
+    <div class="md-content">
+        <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
+        <div class="list-group entries" id="list-bookmark-entries">
 
         </div>
     </div>
 </div>
-<button id="article-list-button" class="md-trigger" style="display:none;" data-modal="article-list"></button>
 
 <div class="md-overlay"></div>
 
@@ -251,12 +282,18 @@
 <!-- Underscore templates -->
 <script type="text/template" id="person-list-entry">
 <a href="/past/<%- slug %>" class="list-group-item">
-    <div class="bookmark-container" bookmark-data="{\"slug\":\"<%- slug %>\",\"name\":\"<%- name %>\",\"birth\":\"<%- yearFrom %>\",\"death\":\"<%- yearTo %>\"}">
-        <span class="glyphicon glyphicon-bookmark"></span>
-         Bookmark
-    </div>
-    <h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
-    <p class="list-group-item-text"><%- tags %></p>
+<div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>","name":"<%- name %>","birth":"<%- yearFrom %>","death":"<%- yearTo %>"}'>
+<span class="glyphicon glyphicon-bookmark"></span>
+</div>
+<h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
+<p class="list-group-item-text"><%- tags %></p>
+</a>
+</script>
+
+<script type="text/template" id="bookmark">
+<a href="/past/<%- slug %>" class="list-group-item">
+<button type="button" class="close remove-bookmark" slug="<%- slug %>"><span aria-hidden="true"><span class="glyphicon glyphicon-remove-circle"></span></span><span class="sr-only">Remove</span></button>
+<h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
 </a>
 </script>
 
@@ -288,17 +325,23 @@
 <!-- underscore.js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
-<!-- Custom JS -->
+<!-- LocalStorage bookmarks -->
+<script type="text/javascript" src="{% static 'past/js/bookmarks.js' %}"></script>
+<!-- Business logic -->
 <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
 <script>
-var maxYear, minYear, article = '{{article.slug}}';
+var maxYear, minYear, minRange, maxRange, article = '{{article.slug}}';
+var countries;
 $(document).ready(function() {
     // page setup
     maxYear = {{maxYear}};
     minYear = {{minYear}};
     $(".minYear").text(GetLabelForYear(minYear));
     $(".maxYear").text(GetLabelForYear(maxYear));
+
+    countries = { {% for c in countries %}{{c.code}}:'{{c.name}}',{% endfor %} };
+
     {% if article %}
     $("#birthYear").text(GetLabelForYear({{article.birthYear}}));
     $("#deathYear").text(GetLabelForYear({{article.deathYear}}));

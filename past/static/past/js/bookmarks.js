@@ -1,6 +1,7 @@
 var storage = {
-    bookmarks = [],
-    support: function()
+    bookmarks   : [],
+    settings    : {},
+    support     : function()
     {
         /* Check whether browser supports localStorage */
         try
@@ -37,16 +38,3 @@ function bookmarkPerson(data)
     // If not exists in bookmark array
 }
 
-$(document).ready(function(e)
-{
-    if (storage.support())
-    {
-        // If localStorage is supported by client browser
-        if (!localStorage['bookmarks']) localStorage['bookmarks'] = [];
-        storage.bookmarks = json.parse(localStorage['bookmarks']);
-        //renderBookmarkArray(storage.bookmarks)
-    }
-
-
-
-}

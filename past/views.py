@@ -163,10 +163,10 @@ def GetCountryArticles(request, countryCode):
 
 
 def Search(request):
-    categories = request.POST.getlist("category", [])
-    countrycodes = request.POST.getlist("countrycode", [])
-    keywords = request.POST.getlist("keyword", [])
-    tags = request.POST.getlist("tag", '')
+    categories = json.loads(request.POST.get("category", []))
+    countrycodes = json.loads(request.POST.get("countrycode", []))
+    keywords = json.loads(request.POST.get("keyword", []))
+    tags = json.loads(request.POST.get("tag", []))
     minYear = request.POST.get("minyear", '')
     maxYear = request.POST.get("maxyear", '')
 
@@ -202,6 +202,7 @@ def Search(request):
         categoryQuery = Q()
         for category in categories:
             categoryQuery = categoryQuery | Q(category__name__iexact=category)
+            #print(Article.objects.filter(categoryQuery.count()))
         fullQuery = fullQuery & categoryQuery
 
     if tags != ['']:
