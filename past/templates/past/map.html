@@ -65,7 +65,10 @@
     </div>
     <div class="md-modal md-effect-1" id="search-panel">
         <div class="md-content">
-            <!--<h3>Search</h3>-->
+            <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
             
             <div class="row content-row">
                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -140,6 +143,14 @@
     {% if article %}
     <div class="md-modal md-effect-1 article-modal" id="article-panel">
         <div class="md-content">
+            <div class="md-top-bar">
+                <div class="md-close-button">
+                </div>
+                <div class="md-back-button">
+                </div>
+                <div class="md-forward-button">
+                </div>
+            </div>
             <div class="row content-row">
                 <div class="col-sm-4">
                     <div class="profilepictures">
@@ -220,9 +231,15 @@
 
 <div class="md-modal md-effect-1 small-list" id="article-list">
     <div class="md-content">
-        <h2 id="country_name"></h2>
-        <div class="list-group" id="list-country-articles">
-
+        <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
+        <div class="scroll-list-modal">
+            <h2 id="country_name"></h2>
+            <div class="list-group entries" id="list-country-articles">
+    
+            </div>
         </div>
     </div>
 </div>
@@ -231,7 +248,11 @@
 
 <div class="md-modal md-effect-1 small-list" id="bookmark-list">
     <div class="md-content">
-        <div class="list-group" id="list-bookmark-entries">
+        <div class="md-top-bar">
+            <div class="md-close-button">
+            </div>
+        </div>
+        <div class="list-group entries" id="list-bookmark-entries">
 
         </div>
     </div>

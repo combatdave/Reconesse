@@ -10,6 +10,9 @@
 	max-height: 60%;
 	z-index: 2000;
 	visibility: hidden;
+	/*-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);*/
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 	backface-visibility: hidden;
@@ -201,11 +204,25 @@
 	opacity: 1;
 }
 
+.md-top-bar {
+	height: 1.5em;
+	padding: 6px 0 0 6px !important;
+	width: 100%;
+	background-color: #CCC;
+}
 
+.md-close-button {
+	width: 12px;
+	height: 12px;
+	border-radius: 6px;
+	background-color: #FF8675;
+}
+
+/*
 @media screen and (max-width: 32em) {
 	body { font-size: 75%; }
 }
-
+*/
 /*
 .mod {
 	border: none;
@@ -227,7 +244,7 @@
 .bookmark-tag,
 .search-tag {
     border: none;
-	background: #FF8675;
+	background: #FF7364;
 	color: #fff;
 	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
 	font-size: 1em;
@@ -244,7 +261,7 @@
     -moz-border-radius: 0;
     border-radius: 0;
     
-    border-bottom: 1px solid #FF8675;
+    border-bottom: 1px solid #FF7364;
 
     /* This makes room for the triangle */
 
@@ -268,7 +285,7 @@
   	left: 0;
     width: 0;
     height: 0;
-    border-top: 23px solid #FF8675;
+    border-top: 23px solid #FF7364;
     border-left: 24px solid transparent;
     border-right: 24px solid transparent;
 }
@@ -283,7 +300,7 @@
   	left: 0;
     width: 0;
     height: 0;
-    border-left: 24px solid #FF8675;
+    border-left: 24px solid #FF7364;
     border-top: 24px solid transparent;
     border-bottom: 24px solid transparent;
 }
@@ -296,7 +313,7 @@
   	left: 24px;
     width: 0;
     height: 0;
-    border-right: 24px solid #FF8675;
+    border-right: 24px solid #FF7364;
     border-top: 24px solid transparent;
     border-bottom: 24px solid transparent;
 }
