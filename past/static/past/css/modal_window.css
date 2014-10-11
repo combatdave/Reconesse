@@ -218,6 +218,25 @@
 	background-color: #FF8675;
 }
 
+.md-close-button:hover {
+	cursor: pointer;
+}
+
+.close-dot {
+	display: none;
+	width: 6px;
+	height: 6px;
+	margin-left: 3px;
+	margin-top: -9px;
+	border-radius: 3px;
+	background-color: #777;
+	cursor:pointer;
+}
+
+.md-close-button:hover + .close-dot {
+    display: block;
+}
+
 /*
 @media screen and (max-width: 32em) {
 	body { font-size: 75%; }
