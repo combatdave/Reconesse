@@ -226,7 +226,11 @@
                     <div class="delimiter"></div>
                     {% for reference in references %}
                     <div class="row" id="reference-{{forloop.counter}}">
+                        {% if reference.url and reference.url.strip %}
                         [{{ forloop.counter }}] <a href="{{reference.url}}" target="_blank">{{ reference.text }}</a>
+                        {% else %}
+                        [{{ forloop.counter }}] {{ reference.text }}
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
