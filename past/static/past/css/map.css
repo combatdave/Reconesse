@@ -177,6 +177,15 @@ li .thumb {
     color: #FFF;
 }
 
+.plus-tree {
+    color: #555;
+}
+.plus-tree:hover {
+    color: #66ffcc;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .list-group-item {
     background-color: #FF7364;
     color: #FFF !important;

@@ -23,6 +23,10 @@ hr.green {
     background:#00FFAA;
 }
 
+.summary-line {
+    font-weight: 600;
+}
+
 .articleheader {
     margin-top: 10px;
 }
@@ -96,7 +100,7 @@ hr.green {
 
 .related-article,
 .related-article:hover {
-    color: #66ffcc;
+    color: #555;
 }
 
 .related span {
@@ -118,6 +122,7 @@ hr.green {
 .reference,
 .reference:hover {
     color: #FF7364;
+    font-style: italic;
 }
 
 .reference-container {

@@ -72,7 +72,7 @@ function showCountryArticles(countryCode)
 
         for (var j = 0; j < articles[i].tags.length; ++j)
         {
-            argv.tags += articles[i].tags[j] + " "
+            argv.tags += '#' + articles[i].tags[j] + " "
         }
         articleList.append(person_template(argv));   
     }
@@ -141,25 +141,70 @@ function loadData()
     });
 }
 
+function tagSearch(tag)
+{
+    $.ajax({
+        url     : '/past/tagsearch/',
+        type    : 'GET',
+        data    : {tag: tag},
+        success : function(data)
+        {
+            $('#country_name').text(data.tag);
+            var node = $('#list-country-articles');
+            for (var i = 0; i < data.articles.length; ++i)
+            {
+                var argv = data.articles[i];
+                argv = {
+                    name : argv.name,
+                    slug : argv.slug,
+                    yearFrom: GetLabelForYear(argv.birth),
+                    yearTo: GetLabelForYear(argv.death)
+                };
+                node.append(person_template(argv));
+            }
+            $('.md-overlay').click();
+            $('#article-list-button').click();
+        },
+        error   : function(jqXHR)
+        {
+            console.log(jqXHR);
+        }
+    });
+}
+$('.hashtag').on('click', function()
+{
+    tagSearch($(this).attr('tag'));
+});
+
 function populateAllEntries()
 {
     var node = $('.all-entries');
     node.empty();
+    var keys = [];
     for (var key in articlesByCountry)
     {
         if (articlesByCountry.hasOwnProperty(key))
         {
-            var obj = articlesByCountry[key];
-            for (var i = 0; i < obj.length; ++i)
-            {
-                var argv = {
+            keys.push(key);
+        }
+    }
+    
+    keys.sort();
+    
+    len = keys.length;
+    
+    for (var j = 0; j < keys.length; ++j)
+    {
+        var obj = articlesByCountry[keys[j]];
+        for (var i = 0; i < obj.length; ++i)
+        {
+            var argv = {
                 slug: obj[i].slug,
                 name: obj[i].name,
                 yearFrom: GetLabelForYear(obj[i].birth),
                 yearTo: GetLabelForYear(obj[i].death)
             };
             node.append(person_template(argv));
-            }
         }
     }
 }
@@ -241,14 +286,6 @@ function applySettings(s)
         }
         $('#keyword-box').val(kwString);
     }
-    // TODO
-    /*
-    if (s.tags)
-    {
-        tags = s.tags;
-
-    }
-    */
 }
 
 function saveSettings()
@@ -295,6 +332,11 @@ function SetupSliderBar(minYear, maxYear)
         $('.maxYear').text(GetLabelForYear(range[1]));
         var activeSlider = this;
         $(".sliderbar").slider("values", range);
+        if (searchTimeout != null)
+        {
+            window.clearTimeout(searchTimeout);
+        }
+        searchTimeout = window.setTimeout(AutoSearch, 500);
     };
 
     $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
