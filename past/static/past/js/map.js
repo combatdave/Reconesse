@@ -184,6 +184,25 @@ function applySettings(s)
             $('#select-all-countries').prop('checked', true);
         }
     }
+    if (s.categories)
+    {
+        selectedCategories = s.categories;
+        for (var i = 0; i < selectedCategories.length; ++i)
+        {
+            $(":checkbox[value='" + selectedCategories[i] + "']").prop("checked","true");
+        }
+        var allChecked = true;
+        $('.categories-checkbox').each(function() {
+            if ($(this).attr("id") != "select-all-categories" && !this.checked)
+            {
+                allChecked = false;
+            }
+        });
+        if (allChecked)
+        {
+            $('#select-all-categories').prop('checked', true);
+        }
+    }
     if (s.keywords)
     {
         keywords = s.keywords;
@@ -267,30 +286,78 @@ function AutoSearch()
 }
 
 
-$('#auto-checkboxes').bonsai({
-    expandAll: true,
-    checkboxes: true,
-    createCheckboxes: true,
+$('#categories-list > ol li a').click(function() {
+    $(this).parent().find('ol').toggle();
 });
 
-$("#auto-checkboxes :checkbox").change( function(event) {
-    showAllCategories = false;
+
+function DoCategorySearch()
+{
+    // Save selected categories
     newSelectedCategories = []
-    $("input:checkbox[name=search]").each( function(event) {
-        var categoryName = $(this).attr("value");
-        var checked = $(this).is(":checked");
-        if (checked) {
-            newSelectedCategories.push(categoryName);
+    $(".categories-checkbox").each( function(event) {
+        if ($(this).attr("id") != "select-all-categories")
+        {
+            var categoryName = $(this).attr("value");
+            var checked = $(this).is(":checked");
+            if (checked) {
+                newSelectedCategories.push(categoryName);
+            }
         }
     });
     selectedCategories = newSelectedCategories;
+    
+    // Now do the search
     if (searchTimeout != null)
     {
         window.clearTimeout(searchTimeout);
     }
     searchTimeout = window.setTimeout(AutoSearch, 500);
     $("#searchloadingtext").text("Please wait...");
+}
+
+
+function CheckParent(checkbox)
+{
+    // Called when a checkbox has changed, so we can see if the parent needs to change state.
+    // If this *does* cause a state change, then we call this function again to check the next parent up.
+
+    var parentLabel = $(checkbox).parent().parent().parent().siblings(".categories-label")[0];
+    var parentCheckbox = $(parentLabel).children(".categories-checkbox")[0];
+
+    if (parentCheckbox)
+    {
+        var allChecked = true;
+        $(parentCheckbox).parent().parent().find(".categories-checkbox").each(function() {
+            if (this != parentCheckbox)
+            {
+                allChecked = allChecked && this.checked;
+            }
+        });
+
+        if (parentCheckbox.checked != allChecked)
+        {
+            // This checkbox has changed, so do the change then check it's parent to see if it should change
+            parentCheckbox.checked = allChecked;
+            CheckParent(parentCheckbox);
+        }
+    }
+
+    DoCategorySearch();
+}
+
+
+$('.categories-checkbox').on('click', function(e)
+{
+    var modified = this;
+    $(this).parent().parent().find(".categories-checkbox").each(function() {
+        
+        this.checked = modified.checked;
+    });
+
+    CheckParent(this);
 });
+
 
 $('#select-all-countries').on('click', function(e) { 
     if(this.checked) {

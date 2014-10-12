@@ -76,24 +76,29 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <h4>Categories</h4>
                     <div class="md-scroll-wrapper">
-                        <div>
-                            <ol id='auto-checkboxes'>
-                                <li data-value="all" data-name="search" data-checked="1">&nbsp;All
-                                    <ol>
-                                        {% for branch in categories %}
-                                        <li data-value='{{ branch.0 }}'>&nbsp;{{ branch.0 }}
-                                            <ol>
-                                                {% for child in branch.1 %}
-                                                <li data-value='{{ child }}'>&nbsp;{{ child }}</li>
-                                                {% endfor %}
-                                            </ol>
-                                        </li>
-                                        {% endfor %}
-                                    </ol>
+                        <div id="categories-list">
+                            <label class="categories-label">
+                                <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" checked />
+                                All
+                            </label>
+
+                            {% for cat, hasChildren in categories|nestCategories %}
+                                {% if cat == "startli" %}
+                                <li>
+                                {% elif cat == "stopli" %}
                                 </li>
-                            </ol>
-
-
+                                {% elif cat == "startol" %}
+                                <ol>
+                                {% elif cat == "stopol" %}
+                                </ol>
+                                {% else %}
+                                    <label class="categories-label">
+                                        <input class="categories-checkbox" type="checkbox" value="{{ cat }}" checked />
+                                        {{ cat }}
+                                    </label>
+                                    {% if hasChildren %}<a>+</a>{% endif %}
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -324,8 +329,8 @@
 <!--<script type="text/javascript" src="{% static 'tabslideout/jquery.tabSlideOut.v1.3.js' %}"></script>-->
 
 <!-- checkboxes-->
-<script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>
-<script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'bonsai/jquery.qubit.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'bonsai/jquery.bonsai.js' %}"></script>-->
 
 <!-- underscore.js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>

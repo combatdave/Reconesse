@@ -22,13 +22,11 @@ def get_all_countries():
 
 def index(request, slug = None):
     yearData = GetArticleYearRanges()
-    
-    categories = Category.objects.GetTree()
 
     context = {}
     context["minYear"] = yearData[0]
     context["maxYear"] = yearData[1]
-    context["categories"] = categories
+    context["categories"] = Category.objects.GetTree()
     context["countries"] = get_all_countries()
 
     if slug:
@@ -212,7 +210,6 @@ def Search(request):
         categoryQuery = Q()
         for category in categories:
             categoryQuery = categoryQuery | Q(category__name__iexact=category)
-            #print(Article.objects.filter(categoryQuery.count()))
         fullQuery = fullQuery & categoryQuery
 
     if tags != ['']:

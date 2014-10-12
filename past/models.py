@@ -7,8 +7,21 @@ from django.template.defaultfilters import slugify
 
 class CategoryManager(models.Manager):
     def GetRoots(self):
-        topLevel = self.filter(parent__isnull=True)
+        topLevel = self.filter(parent__isnull=True).order_by("name")
         return topLevel
+
+
+    def _GetTreeForRoot(self, root):
+        tree = []
+
+        children = self.filter(parent__id=root.id).order_by("name")
+        for child in children:
+            tree.append(child)
+            subTree = self._GetTreeForRoot(child)
+            if subTree and len(subTree) > 0:
+                tree.append(subTree)
+
+        return tree
 
 
     def GetTree(self):
@@ -17,21 +30,10 @@ class CategoryManager(models.Manager):
         tree = []
 
         for root in roots:
-            children = self.filter(parent__id=root.id)
-            branch = [root, children]
-            tree.append(branch)
+            children = self._GetTreeForRoot(root)
+            tree.append([root, children])
 
         return tree
-
-
-    def GetOrdered(self):
-        tree = self.GetTree()
-        ordered = []
-        for branch in tree:
-            ordered.append(branch[0])
-            ordered += branch[1]
-
-        return ordered
 
 
 class Category(models.Model):

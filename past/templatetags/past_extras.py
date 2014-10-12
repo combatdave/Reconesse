@@ -18,3 +18,34 @@ def addReferences(text):
         text = text.replace(match, link)
 
     return mark_safe(text)
+
+
+def _UnwravelCategories(categories):
+    output = []
+    startedli = False
+
+    for i, cat in enumerate(categories):
+        if type(cat) is list:
+            output.append(["startol", None])
+            output.extend(_UnwravelCategories(cat))
+            output.append(["stopol", None])
+        else:
+            if startedli:
+                startedli = False
+                output.append(["stopli", None])
+
+            output.append(["startli", None])
+            startedli = True
+
+            hasChildren = i+1 < len(categories) and type(categories[i+1]) is list
+            output.append([cat.name, hasChildren])
+
+    if startedli:
+        output.append(["stopli", None])
+
+    return output
+
+
+@register.filter(name='nestCategories')
+def nestCategories(categories):
+    return _UnwravelCategories(categories)
