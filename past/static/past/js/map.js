@@ -362,6 +362,15 @@ $('#list-country-articles').on('click', '.bookmark-container', function(e)
     saveBookmarks(obj);
 });
 
+$('#list-bookmark-entries').on('click', '.bookmark-container', function(e)
+{
+    e.preventDefault();
+    e.stopPropagation();
+    var data = $(this).attr('bookmark-data');
+    var obj = JSON.parse(data);
+    removeBookmark(obj.slug);
+});
+
 function saveBookmarks(obj)
 {
     if (obj)
@@ -450,7 +459,6 @@ $('.md-forward-button').on('click', function()
 {
     window.history.go(1);
 });
-
 
 function parseKeywords(kw)
 {

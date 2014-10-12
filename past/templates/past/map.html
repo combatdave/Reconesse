@@ -266,7 +266,8 @@
                 <div class="scroll-list-modal">
 
             <h2 id="country_name"></h2>
-            <div class="divider" style="height: 1px; width: 100%;"></div>
+
+            <div class="delimiter" style="margin-bottom: 1em;"></div>
             <div class="list-group entries" id="list-country-articles">
     
             </div>
@@ -287,6 +288,7 @@
                 <div class="scroll-list-modal">
 
         <h2 style="margin-top: 0;">Bookmarks</h2>
+        <div class="delimiter" style="margin-bottom: 1em;"></div>
         <div class="list-group entries" id="list-bookmark-entries">
 
         </div>
@@ -321,7 +323,9 @@
 
 <script type="text/template" id="bookmark">
 <a href="/past/<%- slug %>" class="list-group-item">
-<button type="button" class="close remove-bookmark" slug="<%- slug %>"><span aria-hidden="true"><span class="glyphicon glyphicon-remove-circle"></span></span><span class="sr-only">Remove</span></button>
+<div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>"}' style="margin-top: -0.7em;">
+    <span class="glyphicon glyphicon-remove-sign"></span>
+</div>
 <h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
 </a>
 </script>
