@@ -8,7 +8,7 @@ AmCharts.ready(function() {
     map.pathToImages = "/static/ammap/images/"; //"http://www.ammap.com/lib/images/";
 
     var dataProvider = {
-        mapURL: "/static/ammap/worldLow.svg",
+        map: "worldLow",
         getAreasFromMap: true,          
     }; 
     // pass data provider to the map object
