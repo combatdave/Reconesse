@@ -159,7 +159,15 @@
                 </div>
             </div>
             <div class="row content-row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
+                    <h2>{{ article.title }}</h2>
+                <h4>
+                    {% if article.deathYear %}
+                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
+                    {% else %}
+                    {{ article.birthYear }}-present
+                    {% endif %}
+                </h4>
                     <div class="profilepictures">
                         {% if images|length_is:"0" %}
                         <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
@@ -203,21 +211,15 @@
                 </div>
 
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
+                <!--
                 <div id="sharecontainer" style="display:block;">
                     <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
                     <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
                     <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
                     <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
                 </div>
-                <h2>{{ article.title }}</h2>
-                <h4>
-                    {% if article.deathYear %}
-                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
-                    {% else %}
-                    {{ article.birthYear }}-present
-                    {% endif %}
-                </h4>
+                -->
                 <div class="article-content">
                     <div class="profiletext">
                         <ul>
