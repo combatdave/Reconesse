@@ -75,6 +75,10 @@ hr.green {
     display: inline-block;
 }
 
+.hashtag-container:hover {
+    cursor: pointer;
+}
+
 .hashtag {
     margin: 3px;
     padding: 0px;

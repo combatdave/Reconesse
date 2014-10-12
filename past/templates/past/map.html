@@ -42,11 +42,12 @@
     <div class="barfloat">
         <div class="container" style="position: relative;">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="barcontent yearcontainer minYear"></div>
                     <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
                     <div class="barcontent yearcontainer maxYear"></div>
                 </div>
+                <!--
                 <div class="col-md-4">
                     <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
                         <div class="barcontent barbuttoncontainer">
@@ -61,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
         <!-- <center><div id="yearDisplay">All years</div></center> -->
@@ -72,10 +74,11 @@
             </div>
         </div>
             
-            <div class="row content-row" style="margin-top: 1.5em !important;">
+            <div class="row content-row" style="margin-top: 1.5em !important;  padding: 0 1em !important;">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="md-scroll-wrapper">
                         <h4>Categories</h4>
+                        <div class="delimiter"></div>
                         <div>
                             <ol id='auto-checkboxes'>
                                 <li data-value="all" data-name="search" data-checked="1">&nbsp;All
@@ -102,13 +105,14 @@
                     <div class="md-scroll-wrapper">
                         <div>
                             <h4>Countries</h4>
+                            <div class="delimiter"></div>
                         <ul>
                             <li>
                                 <label>
                                     <input class="test" id="select-all-countries" type="checkbox" checked>
                                     Select All
                                 </label>
-                                <div class="delimiter"></div>
+                                <hr style="border-top: dotted 1px;" />
                             </li>
 
                             {% for c in countries %}
@@ -257,10 +261,15 @@
             <div class="md-close-button" title="Close">
             </div>
         </div>
-        <div class="scroll-list-modal">
+        
+            <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
+                <div class="scroll-list-modal">
+
             <h2 id="country_name"></h2>
+            <div class="divider" style="height: 1px; width: 100%;"></div>
             <div class="list-group entries" id="list-country-articles">
     
+            </div>
             </div>
         </div>
     </div>
@@ -274,9 +283,15 @@
             <div class="md-close-button" title="Close">
             </div>
         </div>
+        <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
+                <div class="scroll-list-modal">
+
+        <h2 style="margin-top: 0;">Bookmarks</h2>
         <div class="list-group entries" id="list-bookmark-entries">
 
         </div>
+        </div>
+    </div>
     </div>
 </div>
 
