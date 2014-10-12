@@ -49,7 +49,7 @@ function resizeScrollWrappers()
 	var bh2 = height * 0.7;
 	scrollWrappers.height(bh2 - 120);
 	searchResultWrappers.height(bh2 - 60);
-	smallScrollWrappers.height(bh2 - 258);
+	smallScrollWrappers.height(bh2 - 224);
 
 	articleContent.height(height * 0.8 - 132);
 	articleInfo.height(height * 0.8 - 100);

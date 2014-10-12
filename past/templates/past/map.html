@@ -78,6 +78,8 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="md-scroll-wrapper">
                         <div id="categories-list">
+                            <h4>Categories</h4>
+                            <div class="delimiter"></div>
                             <label class="categories-label">
                                 <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" checked />
                                 All
@@ -141,9 +143,11 @@
                         <div class="text-center">
                             <span class="minYear"></span> - <span class="maxYear"></span>
                         </div>
-                        <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
+                        
                     </div>
                     <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
+                        <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
+                        <div class="delimiter" style="margin: 1em 0;"></div>
                         <div class="all-entries">
                         </div>
                     </div>
@@ -236,7 +240,7 @@
                     <div class="profiletext">
                         <ul>
                             {% for summaryLine in summary %}
-                            <li>{{ summaryLine}}</li>
+                            <li class="summary-line">{{ summaryLine}}</li>
                             {% endfor %}
                         </ul>
                     </div>
