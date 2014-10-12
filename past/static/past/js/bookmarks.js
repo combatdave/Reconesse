@@ -14,27 +14,3 @@ var storage = {
         }
     }
 }
-
-
-function renderBookmark(bookmark, template, node)
-{
-
-}
-
-function renderBookmarkArray(bookmarks, template, node)
-{
-    node.empty();
-    for (var i = 0; i < bookmarks.length; ++i)
-    {
-        renderBookmark(bookmarks[i],
-                       template,
-                       node)
-    }
-}
-
-
-function bookmarkPerson(data)
-{
-    // If not exists in bookmark array
-}
-

@@ -295,6 +295,7 @@ function SetupSliderBar(minYear, maxYear)
         $('.maxYear').text(GetLabelForYear(range[1]));
         var activeSlider = this;
         $(".sliderbar").slider("values", range);
+        loadData();
     };
 
     $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
