@@ -60,7 +60,7 @@ hr.green {
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: #777;
+    color: #555;
     
     padding: 5px;
 }
@@ -68,11 +68,15 @@ hr.green {
 .hashtag-container {
     width: auto;
     height: auto;
-    background-color: #999;
+    background-color: #555;
     color: #66ffcc;
     
     margin-right: 3px;
     display: inline-block;
+}
+
+.hashtag-container:hover {
+    cursor: pointer;
 }
 
 .hashtag {
@@ -86,8 +90,13 @@ hr.green {
 }
 
 .related #title {
-    color: #888888;
+    color: #FFF;
     text-transform: uppercase;
+}
+
+.related-article,
+.related-article:hover {
+    color: #66ffcc;
 }
 
 .related span {
@@ -98,4 +107,19 @@ hr.green {
 .profiletext ul {
     list-style: square;
     color: #666666;
+}
+
+.article-info {
+    background-color: #FF7364 !important;
+    overflow-y: auto;
+    color: #FFF;
+}
+
+.reference,
+.reference:hover {
+    color: #FF7364;
+}
+
+.reference-container {
+    padding-left: 1em;
 }

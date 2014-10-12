@@ -42,11 +42,12 @@
     <div class="barfloat">
         <div class="container" style="position: relative;">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="barcontent yearcontainer minYear"></div>
                     <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
                     <div class="barcontent yearcontainer maxYear"></div>
                 </div>
+                <!--
                 <div class="col-md-4">
                     <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
                         <div class="barcontent barbuttoncontainer">
@@ -61,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
         <!-- <center><div id="yearDisplay">All years</div></center> -->
@@ -68,13 +70,12 @@
     <div class="md-modal md-effect-1" id="search-panel">
         <div class="md-content">
             <div class="md-top-bar">
-            <div class="md-close-button">
+            <div class="md-close-button" title="Close">
             </div>
         </div>
             
-            <div class="row content-row">
+            <div class="row content-row" style="margin-top: 1.5em !important;  padding: 0 1em !important;">
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h4>Categories</h4>
                     <div class="md-scroll-wrapper">
                         <div id="categories-list">
                             <label class="categories-label">
@@ -103,15 +104,18 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h4>Countries</h4>
+                    
                     <div class="md-scroll-wrapper">
+                        <div>
+                            <h4>Countries</h4>
+                            <div class="delimiter"></div>
                         <ul>
                             <li>
                                 <label>
                                     <input class="test" id="select-all-countries" type="checkbox" checked>
                                     Select All
                                 </label>
-                                <div class="delimiter"></div>
+                                <hr style="border-top: dotted 1px;" />
                             </li>
 
                             {% for c in countries %}
@@ -123,10 +127,11 @@
                             </li>
                             {% endfor %}
                         </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <h4>Period</h4>
+
                     <div class="md-wrapper">
                         <div>
                             <div class="barcontent yearcontainer"></div>
@@ -139,6 +144,8 @@
                         <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
                     </div>
                     <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
+                        <div class="all-entries">
+                        </div>
                     </div>
                 </div>
 
@@ -151,15 +158,27 @@
     <div class="md-modal md-effect-1 article-modal" id="article-panel">
         <div class="md-content">
             <div class="md-top-bar">
-                <div class="md-close-button">
+                <div class="md-close-button" title="Close">
                 </div>
-                <div class="md-back-button">
+                <div class="md-back-button" title="Back">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
                 </div>
-                <div class="md-forward-button">
+                <div class="md-forward-button" title="Forward">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
                 </div>
             </div>
             <div class="row content-row">
-                <div class="col-sm-4">
+                <div class="col-sm-3 article-info">
+                    <div>
+                    <h4 style="text-transform: uppercase;">{{ article.title }}</h2>
+                <h4>
+                    {% if article.deathYear %}
+                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
+                    {% else %}
+                    {{ article.birthYear }}-present
+                    {% endif %}
+                </h4>
+                <div class="delimiter"></div>
                     <div class="profilepictures">
                         {% if images|length_is:"0" %}
                         <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
@@ -185,39 +204,34 @@
 
 
                     <div class="delimiter" style="margin: 1.5em 0 0 0;"></div>
-                    <div class="related-articles">
+
                         <div class="related">
                             {% if relatedArticles %}
                             <div id="title">You might also be interested in:</div>
                             {% for relatedArticle in relatedArticles %}
-                            <span><a href="/past/{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
+                            <span><a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a></span>
                             {% endfor %}
                         </br>
                         {% endif %}
 
                         <div id="title">Also in "{{ article.category }}":</div>
                         {% for sameCategoryArticle in sameCategoryArticles %}
-                        <span><a href="/past/{{ sameCategoryArticle.slug }}/">{{ sameCategoryArticle.title }}</a></span>
+                        <span><a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a></span>
                         {% endfor %}
-                    </div>
+
                 </div>
+            </div>
 
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-9" style="padding-right: 0;">
+                <!--
                 <div id="sharecontainer" style="display:block;">
                     <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
                     <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
                     <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
                     <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
                 </div>
-                <h2>{{ article.title }}</h2>
-                <h4>
-                    {% if article.deathYear %}
-                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
-                    {% else %}
-                    {{ article.birthYear }}-present
-                    {% endif %}
-                </h4>
+                -->
                 <div class="article-content">
                     <div class="profiletext">
                         <ul>
@@ -226,13 +240,13 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="delimiter"></div>
+                    <div class="delimiter grey"></div>
                     {{ article.content|addReferences|linebreaks }}
-                    <div class="delimiter"></div>
+                    <div class="delimiter red" style="width: 50%; margin-bottom: 1.5em;"></div>
                     {% for reference in references %}
-                    <div class="row" id="reference-{{forloop.counter}}">
+                    <div class="row reference-container" id="reference-{{forloop.counter}}">
                         {% if reference.url and reference.url.strip %}
-                        [{{ forloop.counter }}] <a href="{{reference.url}}" target="_blank">{{ reference.text }}</a>
+                        <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
                         {% else %}
                         [{{ forloop.counter }}] {{ reference.text }}
                         {% endif %}
@@ -249,13 +263,19 @@
 <div class="md-modal md-effect-1 small-list" id="article-list">
     <div class="md-content">
         <div class="md-top-bar">
-            <div class="md-close-button">
+            <div class="md-close-button" title="Close">
             </div>
         </div>
-        <div class="scroll-list-modal">
+        
+            <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
+                <div class="scroll-list-modal">
+
             <h2 id="country_name"></h2>
+
+            <div class="delimiter" style="margin-bottom: 1em;"></div>
             <div class="list-group entries" id="list-country-articles">
     
+            </div>
             </div>
         </div>
     </div>
@@ -266,12 +286,19 @@
 <div class="md-modal md-effect-1 small-list" id="bookmark-list">
     <div class="md-content">
         <div class="md-top-bar">
-            <div class="md-close-button">
+            <div class="md-close-button" title="Close">
             </div>
         </div>
+        <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
+                <div class="scroll-list-modal">
+
+        <h2 style="margin-top: 0;">Bookmarks</h2>
+        <div class="delimiter" style="margin-bottom: 1em;"></div>
         <div class="list-group entries" id="list-bookmark-entries">
 
         </div>
+        </div>
+    </div>
     </div>
 </div>
 
@@ -294,14 +321,16 @@
 <div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>","name":"<%- name %>","birth":"<%- yearFrom %>","death":"<%- yearTo %>"}'>
 <span class="glyphicon glyphicon-bookmark"></span>
 </div>
-<h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
+<h4 class="list-group-item-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
 <p class="list-group-item-text"><%- tags %></p>
 </a>
 </script>
 
 <script type="text/template" id="bookmark">
 <a href="/past/<%- slug %>" class="list-group-item">
-<button type="button" class="close remove-bookmark" slug="<%- slug %>"><span aria-hidden="true"><span class="glyphicon glyphicon-remove-circle"></span></span><span class="sr-only">Remove</span></button>
+<div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>"}' style="margin-top: -0.7em;">
+    <span class="glyphicon glyphicon-remove-sign"></span>
+</div>
 <h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
 </a>
 </script>

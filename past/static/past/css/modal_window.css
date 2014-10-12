@@ -3,11 +3,8 @@
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: 50%;
-	max-width: 80%;
-	min-width: 60%;
-	height: 50%;
-	max-height: 60%;
+	width: 65%;
+	height: 70%;
 	z-index: 2000;
 	visibility: hidden;
 	/*-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
@@ -43,8 +40,8 @@
 	#article-panel {
 		min-width: 70%;
 		max-width: 70%;
-		min-height: 90%;
-		max-height: 90%;
+		min-height: 80%;
+		max-height: 80%;
 	}
 }
 
@@ -54,6 +51,9 @@
 		max-width: 50%;
 		min-height: 70%;
 		max-height: 70%;
+	}
+	.md-modal {
+		width: 90%;
 	}
 }
 
@@ -96,10 +96,16 @@
 	margin: 0;
 	padding: 1em;
 	overflow-y: auto;
-	/*background: #66ffcc;*/
+	background: #FF7364;
+	color: #FFF;
 	/* iOS inertia */
-	border: 1px solid #777;
+	/*border: 1px solid #777;*/
 	-webkit-overflow-scrolling: touch;
+}
+
+.article-content {
+	background: #FFF;
+	color: #555;
 }
 
 .related-articles {
@@ -112,7 +118,7 @@
 
 .content-row {
 	margin: 0.2em;
-	margin-top: 0;
+	margin-top: 1em !important;
 	padding: 1em;
 }
 
@@ -206,40 +212,45 @@
 
 .md-top-bar {
 	height: 1.5em;
-	padding: 6px 0 0 6px !important;
+	padding: 4px 0 0 6px !important;
 	width: 100%;
 	background-color: #CCC;
 }
 
 .md-close-button {
+	display: inline-block;
 	width: 12px;
 	height: 12px;
 	border-radius: 6px;
 	background-color: #FF8675;
 }
 
-/*
-@media screen and (max-width: 32em) {
-	body { font-size: 75%; }
-}
-*/
-/*
-.mod {
-	border: none;
-	background: #FF8675;
-	color: #fff;
-	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
-	/*font-size: 1em;
-	letter-spacing: 1px;
-	text-transform: uppercase;
+.md-close-button:hover,
+.md-back-button:hover,
+.md-forward-button {
 	cursor: pointer;
-	display: inline-block;
-	margin-top: 0;
-	margin-right: 10px;*/
-	/*border-radius: 2px;*/
-/*}
-*/
+}
 
+.close-dot {
+	display: none;
+	width: 6px;
+	height: 6px;
+	margin-left: 3px;
+	margin-top: -9px;
+	border-radius: 3px;
+	background-color: #777;
+	cursor:pointer;
+}
+
+.md-close-button:hover + .close-dot {
+    display: block;
+}
+
+.md-back-button,
+.md-forward-button {
+	color: #999;
+	display: inline-block;
+}
 
 .bookmark-tag,
 .search-tag {
@@ -336,8 +347,8 @@
 }
 
 .pink-input {
-	border-radius: 0;
-	border: 1px solid #777;
+	border-radius: 20px;
+	border: 1px solid #FFF;
 	background-color: #FFA396;
 	box-shadow: none;
 	color: #777;

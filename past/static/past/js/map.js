@@ -130,6 +130,7 @@ function loadData()
         success : function(data)
         {
             articlesByCountry = data.articles;
+            populateAllEntries();
             setData(data);
             saveSettings();
         },
@@ -140,10 +141,37 @@ function loadData()
     });
 }
 
+function populateAllEntries()
+{
+    var node = $('.all-entries');
+    node.empty();
+    for (var key in articlesByCountry)
+    {
+        if (articlesByCountry.hasOwnProperty(key))
+        {
+            var obj = articlesByCountry[key];
+            for (var i = 0; i < obj.length; ++i)
+            {
+                var argv = {
+                slug: obj[i].slug,
+                name: obj[i].name,
+                yearFrom: GetLabelForYear(obj[i].birth),
+                yearTo: GetLabelForYear(obj[i].death)
+            };
+            node.append(person_template(argv));
+            }
+        }
+    }
+}
+
 function GetLabelForYear(year) {
-    var label = "AD";
-    if (year < 0) {
-        label = "BC";
+    var label = ""
+    if (typeof year == 'number')
+    {
+        label = "AD";
+        if (year < 0) {
+            label = "BC";
+        }
     }
     return Math.abs(year).toString() + " " + label
 }
@@ -429,6 +457,15 @@ $('#list-country-articles').on('click', '.bookmark-container', function(e)
     saveBookmarks(obj);
 });
 
+$('#list-bookmark-entries').on('click', '.bookmark-container', function(e)
+{
+    e.preventDefault();
+    e.stopPropagation();
+    var data = $(this).attr('bookmark-data');
+    var obj = JSON.parse(data);
+    removeBookmark(obj.slug);
+});
+
 function saveBookmarks(obj)
 {
     if (obj)
@@ -503,6 +540,20 @@ $('#keyword-box').on('focusout', function()
     parseKeywords(kw);
 });
 
+$('.md-close-button').on('click', function()
+{
+    $('.md-overlay').click();
+});
+
+$('.md-back-button').on('click', function()
+{
+    window.history.go(-1);
+});
+
+$('.md-forward-button').on('click', function()
+{
+    window.history.go(1);
+});
 
 function parseKeywords(kw)
 {

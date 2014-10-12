@@ -22,7 +22,15 @@ li {
 .delimiter {
     height: 1px;
     width: 100%;
-    background-color: #777;
+    background-color: #FFF;
+}
+
+.grey {
+    background-color: #555;
+}
+
+.red {
+    background-color: #FF7364;
 }
 
 #mapdiv {
@@ -91,7 +99,7 @@ input[type="checkbox"]:before{
     width: 11px;
     height: 11px;
     border: none;
-    background-color: #ffc5bd;
+    background-color: #FF7364;
     content: "";
 }
 input[type="checkbox"]:after{
@@ -102,8 +110,8 @@ input[type="checkbox"]:after{
     top: 10px;
     width: 7px;
     height: 7px;
-    border-width: 1px;
-    border-style: solid;
+    /*border-width: 1px;
+    border-style: solid;*/
     background-color: #777;
     border: none;
     content: "";
@@ -113,7 +121,6 @@ input[type="checkbox"]:after{
 }
 input[type="checkbox"]:checked:after{
     background-color: #66ffcc;
-    border: 1px solid #777;
 }
 input[type="checkbox"]:disabled:after{
     -webkit-filter: opacity(0.4);
@@ -123,7 +130,7 @@ input[type="checkbox"]:not(:disabled):checked:hover:after{
     border: 1px solid #777;
 }
 input[type="checkbox"]:not(:disabled):hover:after{  
-    border: none;  
+    border: 1px solid #66ffcc;
 }
 input[type="checkbox"]:not(:disabled):hover:before{
     border: none;
@@ -148,11 +155,12 @@ li .thumb {
     padding-top: 7px;
     cursor: pointer;
 }
-/*
+
 .scroll-list-modal {
     background-color: #FF7364;
+    padding: 1em !important;
 }
-*/
+
 
 .bookmark-container {
     float: right;
@@ -170,29 +178,30 @@ li .thumb {
 }
 
 .list-group-item {
-    background-color: #FFC5BD;
-    color: #777 !important;
+    background-color: #FF7364;
+    color: #FFF !important;
     border-radius: 0 !important;
-    border: 1px solid #777;
+    border: 1px dotted #FFF;
 }
-/*
+
 .list-group-item h4,
 .list-group-item small {
     color: #FFF !important;
 }
-*/
+
 .list-group-item:hover {
-    color: #777 !important;
+    color: #555 !important;
     background-color: #66ffcc !important;
 }
 
 .list-group-item:hover h4,
 .list-group-item:hover small {
-    color: #777 !important;
+    color: #555 !important;
 }
 
 #country_name {
     margin-top: 0;
     padding-left: 0;
-    margin-bottom: 0;
+    width: 100%;
+    background-color: #FF7364;
 }
