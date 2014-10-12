@@ -141,6 +141,8 @@
                         <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
                     </div>
                     <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
+                        <div class="all-entries">
+                        </div>
                     </div>
                 </div>
 
@@ -316,7 +318,7 @@
 <div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>","name":"<%- name %>","birth":"<%- yearFrom %>","death":"<%- yearTo %>"}'>
 <span class="glyphicon glyphicon-bookmark"></span>
 </div>
-<h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
+<h4 class="list-group-item-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
 <p class="list-group-item-text"><%- tags %></p>
 </a>
 </script>

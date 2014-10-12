@@ -130,6 +130,7 @@ function loadData()
         success : function(data)
         {
             articlesByCountry = data.articles;
+            populateAllEntries();
             setData(data);
             saveSettings();
         },
@@ -140,10 +141,36 @@ function loadData()
     });
 }
 
+function populateAllEntries()
+{
+    var node = $('.all-entries');
+    for (var key in articlesByCountry)
+    {
+        if (articlesByCountry.hasOwnProperty(key))
+        {
+            var obj = articlesByCountry[key];
+            for (var i = 0; i < obj.length; ++i)
+            {
+                var argv = {
+                slug: obj[i].slug,
+                name: obj[i].name,
+                yearFrom: GetLabelForYear(obj[i].birth),
+                yearTo: GetLabelForYear(obj[i].death)
+            };
+            node.append(person_template(argv));
+            }
+        }
+    }
+}
+
 function GetLabelForYear(year) {
-    var label = "AD";
-    if (year < 0) {
-        label = "BC";
+    var label = ""
+    if (typeof year == 'number')
+    {
+        label = "AD";
+        if (year < 0) {
+            label = "BC";
+        }
     }
     return Math.abs(year).toString() + " " + label
 }
