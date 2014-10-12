@@ -46,11 +46,11 @@ var scrollWrappers, smallScrollWrappers, articleContent, relatedArticles;
 function resizeScrollWrappers()
 {
 	var height = $(document).height();
-	var bodyheight = height / 2 - 140;
+	var bodyheight = height / 2 + 20;
 	scrollWrappers.height(bodyheight);
 	smallScrollWrappers.height(bodyheight - 140);
 
-	articleContent.height(height * 0.8 - 190);
+	articleContent.height(height * 0.8 - 210);
 	relatedArticles.height(height * 0.8 - 466);
 }
 

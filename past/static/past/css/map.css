@@ -22,7 +22,7 @@ li {
 .delimiter {
     height: 1px;
     width: 100%;
-    background-color: #777;
+    background-color: #FFF;
 }
 
 #mapdiv {
@@ -91,7 +91,7 @@ input[type="checkbox"]:before{
     width: 11px;
     height: 11px;
     border: none;
-    background-color: #ffc5bd;
+    background-color: #FF7364;
     content: "";
 }
 input[type="checkbox"]:after{
@@ -102,8 +102,8 @@ input[type="checkbox"]:after{
     top: 10px;
     width: 7px;
     height: 7px;
-    border-width: 1px;
-    border-style: solid;
+    /*border-width: 1px;
+    border-style: solid;*/
     background-color: #777;
     border: none;
     content: "";
@@ -113,7 +113,6 @@ input[type="checkbox"]:after{
 }
 input[type="checkbox"]:checked:after{
     background-color: #66ffcc;
-    border: 1px solid #777;
 }
 input[type="checkbox"]:disabled:after{
     -webkit-filter: opacity(0.4);
@@ -123,7 +122,7 @@ input[type="checkbox"]:not(:disabled):checked:hover:after{
     border: 1px solid #777;
 }
 input[type="checkbox"]:not(:disabled):hover:after{  
-    border: none;  
+    border: 1px solid #66ffcc;
 }
 input[type="checkbox"]:not(:disabled):hover:before{
     border: none;
