@@ -287,7 +287,7 @@ function AutoSearch()
 
 
 $('#categories-list > ol li a').click(function() {
-    $(this).parent().find('ol').toggle();
+    $(this).parent().children('ol').toggle();
 });
 
 
@@ -555,4 +555,6 @@ $(document).ready(function()
         applySettings(storage.settings);
     }
     renderBookmarks();
+
+    $('#categories-list > ol li a').parent().find('ol').hide();
 });
