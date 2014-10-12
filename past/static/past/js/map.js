@@ -180,21 +180,31 @@ function populateAllEntries()
 {
     var node = $('.all-entries');
     node.empty();
+    var keys = [];
     for (var key in articlesByCountry)
     {
         if (articlesByCountry.hasOwnProperty(key))
         {
-            var obj = articlesByCountry[key];
-            for (var i = 0; i < obj.length; ++i)
-            {
-                var argv = {
+            keys.push(key);
+        }
+    }
+    
+    keys.sort();
+    
+    len = keys.length;
+    
+    for (var j = 0; j < keys.length; ++j)
+    {
+        var obj = articlesByCountry[keys[j]];
+        for (var i = 0; i < obj.length; ++i)
+        {
+            var argv = {
                 slug: obj[i].slug,
                 name: obj[i].name,
                 yearFrom: GetLabelForYear(obj[i].birth),
                 yearTo: GetLabelForYear(obj[i].death)
             };
             node.append(person_template(argv));
-            }
         }
     }
 }
