@@ -196,8 +196,8 @@
                     
                     {% for tag in article.getTagNames %}
                     <div class="hashtag-container">
-                        <div class="hashtag">
-                            {{ tag }}
+                        <div class="hashtag" tag="{{tag}}">
+                            #{{ tag }}
                         </div>
                     </div>
                     {% endfor %}

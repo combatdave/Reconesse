@@ -72,7 +72,7 @@ function showCountryArticles(countryCode)
 
         for (var j = 0; j < articles[i].tags.length; ++j)
         {
-            argv.tags += articles[i].tags[j] + " "
+            argv.tags += '#' + articles[i].tags[j] + " "
         }
         articleList.append(person_template(argv));   
     }
@@ -140,6 +140,41 @@ function loadData()
         }
     });
 }
+
+function tagSearch(tag)
+{
+    $.ajax({
+        url     : '/past/tagsearch/',
+        type    : 'GET',
+        data    : {tag: tag},
+        success : function(data)
+        {
+            $('#country_name').text(data.tag);
+            var node = $('#list-country-articles');
+            for (var i = 0; i < data.articles.length; ++i)
+            {
+                var argv = data.articles[i];
+                argv = {
+                    name : argv.name,
+                    slug : argv.slug,
+                    yearFrom: GetLabelForYear(argv.birth),
+                    yearTo: GetLabelForYear(argv.death)
+                };
+                node.append(person_template(argv));
+            }
+            $('.md-overlay').click();
+            $('#article-list-button').click();
+        },
+        error   : function(jqXHR)
+        {
+            console.log(jqXHR);
+        }
+    });
+}
+$('.hashtag').on('click', function()
+{
+    tagSearch($(this).attr('tag'));
+});
 
 function populateAllEntries()
 {
@@ -241,14 +276,6 @@ function applySettings(s)
         }
         $('#keyword-box').val(kwString);
     }
-    // TODO
-    /*
-    if (s.tags)
-    {
-        tags = s.tags;
-
-    }
-    */
 }
 
 function saveSettings()
