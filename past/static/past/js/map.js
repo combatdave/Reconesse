@@ -144,6 +144,7 @@ function loadData()
 function populateAllEntries()
 {
     var node = $('.all-entries');
+    node.empty();
     for (var key in articlesByCountry)
     {
         if (articlesByCountry.hasOwnProperty(key))
