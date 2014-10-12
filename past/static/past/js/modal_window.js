@@ -42,15 +42,18 @@ var ModalEffects = (function() {
 
 })();
 
-var scrollWrappers, smallScrollWrappers, articleContent, relatedArticles;
+var scrollWrappers, smallScrollWrappers, articleContent, relatedArticles,
+	articleInfo;
 function resizeScrollWrappers()
 {
 	var height = $(document).height();
 	var bodyheight = height / 2 + 20;
-	scrollWrappers.height(bodyheight);
-	smallScrollWrappers.height(bodyheight - 140);
+	var bh2 = height * 0.7;
+	scrollWrappers.height(bh2 - 150);
+	smallScrollWrappers.height(bh2 - 288);
 
-	articleContent.height(height * 0.8 - 210);
+	articleContent.height(height * 0.8 - 132);
+	articleInfo.height(height * 0.8 - 100);
 	relatedArticles.height(height * 0.8 - 466);
 }
 
@@ -60,6 +63,7 @@ $(window).resize(function() {
 });
 
 $(document).ready(function() {
+	articleInfo = $('.article-info');
 	scrollWrappers = $('.md-scroll-wrapper');
 	smallScrollWrappers = $('.md-scroll-wrapper-small');
 	articleContent = $('.article-content');

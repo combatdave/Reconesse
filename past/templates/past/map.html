@@ -159,8 +159,9 @@
                 </div>
             </div>
             <div class="row content-row">
-                <div class="col-sm-3">
-                    <h2>{{ article.title }}</h2>
+                <div class="col-sm-3 article-info">
+                    <div>
+                    <h4 style="text-transform: uppercase;">{{ article.title }}</h2>
                 <h4>
                     {% if article.deathYear %}
                     <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
@@ -168,6 +169,7 @@
                     {{ article.birthYear }}-present
                     {% endif %}
                 </h4>
+                <div class="delimiter"></div>
                     <div class="profilepictures">
                         {% if images|length_is:"0" %}
                         <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
@@ -193,25 +195,26 @@
 
 
                     <div class="delimiter" style="margin: 1.5em 0 0 0;"></div>
-                    <div class="related-articles">
+
                         <div class="related">
                             {% if relatedArticles %}
                             <div id="title">You might also be interested in:</div>
                             {% for relatedArticle in relatedArticles %}
-                            <span><a href="/past/{{ relatedArticle.slug }}">{{ relatedArticle.title }}</a></span>
+                            <span><a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a></span>
                             {% endfor %}
                         </br>
                         {% endif %}
 
                         <div id="title">Also in "{{ article.category }}":</div>
                         {% for sameCategoryArticle in sameCategoryArticles %}
-                        <span><a href="/past/{{ sameCategoryArticle.slug }}/">{{ sameCategoryArticle.title }}</a></span>
+                        <span><a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a></span>
                         {% endfor %}
-                    </div>
+
                 </div>
+            </div>
 
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9" style="padding-right: 0;">
                 <!--
                 <div id="sharecontainer" style="display:block;">
                     <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
@@ -234,7 +237,7 @@
                     {% for reference in references %}
                     <div class="row" id="reference-{{forloop.counter}}">
                         {% if reference.url and reference.url.strip %}
-                        [{{ forloop.counter }}] <a href="{{reference.url}}" target="_blank">{{ reference.text }}</a>
+                        <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
                         {% else %}
                         [{{ forloop.counter }}] {{ reference.text }}
                         {% endif %}

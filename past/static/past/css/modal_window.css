@@ -103,6 +103,11 @@
 	-webkit-overflow-scrolling: touch;
 }
 
+.article-content {
+	background: #FFF;
+	color: #555;
+}
+
 .related-articles {
 	border: none;
 }
@@ -113,6 +118,7 @@
 
 .content-row {
 	margin: 0.2em;
+	margin-top: 1em !important;
 	padding: 1em;
 }
 
@@ -245,29 +251,6 @@
 	color: #999;
 	display: inline-block;
 }
-
-/*
-@media screen and (max-width: 32em) {
-	body { font-size: 75%; }
-}
-*/
-/*
-.mod {
-	border: none;
-	background: #FF8675;
-	color: #fff;
-	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
-	/*font-size: 1em;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	cursor: pointer;
-	display: inline-block;
-	margin-top: 0;
-	margin-right: 10px;*/
-	/*border-radius: 2px;*/
-/*}
-*/
-
 
 .bookmark-tag,
 .search-tag {
