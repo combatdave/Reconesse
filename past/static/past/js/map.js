@@ -441,11 +441,6 @@ $('.md-close-button').on('click', function()
     $('.md-overlay').click();
 });
 
-$('.close-dot').on('click', function()
-{
-    $('.md-overlay').click();
-});
-
 
 function parseKeywords(kw)
 {

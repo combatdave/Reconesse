@@ -3,11 +3,8 @@
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: 50%;
-	max-width: 80%;
-	min-width: 60%;
-	height: 50%;
-	max-height: 60%;
+	width: 65%;
+	height: 70%;
 	z-index: 2000;
 	visibility: hidden;
 	/*-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
@@ -54,6 +51,9 @@
 		max-width: 50%;
 		min-height: 70%;
 		max-height: 70%;
+	}
+	.md-modal {
+		width: 90%;
 	}
 }
 
@@ -206,19 +206,22 @@
 
 .md-top-bar {
 	height: 1.5em;
-	padding: 6px 0 0 6px !important;
+	padding: 4px 0 0 6px !important;
 	width: 100%;
 	background-color: #CCC;
 }
 
 .md-close-button {
+	display: inline-block;
 	width: 12px;
 	height: 12px;
 	border-radius: 6px;
 	background-color: #FF8675;
 }
 
-.md-close-button:hover {
+.md-close-button:hover,
+.md-back-button:hover,
+.md-forward-button {
 	cursor: pointer;
 }
 
@@ -235,6 +238,12 @@
 
 .md-close-button:hover + .close-dot {
     display: block;
+}
+
+.md-back-button,
+.md-forward-button {
+	color: #999;
+	display: inline-block;
 }
 
 /*
