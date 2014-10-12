@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load past_extras %}
 
 
 <!DOCTYPE html>
@@ -30,6 +31,7 @@
 </head>
 
 <body>
+    {% include "GoogleAnalytics.html" %}
 
     <div class="menu-container">
         <div class="mod md-trigger search-tag" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span></div>
@@ -220,12 +222,22 @@
                     <div class="profiletext">
                         <ul>
                             {% for summaryLine in summary %}
-                            <li>{{ summaryLine }}</li>
+                            <li>{{ summaryLine}}</li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="delimiter"></div>
-                    {{ article.content|linebreaks }}
+                    {{ article.content|addReferences|linebreaks }}
+                    <div class="delimiter"></div>
+                    {% for reference in references %}
+                    <div class="row" id="reference-{{forloop.counter}}">
+                        {% if reference.url and reference.url.strip %}
+                        [{{ forloop.counter }}] <a href="{{reference.url}}" target="_blank">{{ reference.text }}</a>
+                        {% else %}
+                        [{{ forloop.counter }}] {{ reference.text }}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -347,5 +359,6 @@ $(document).ready(function() {
     SetupSliderBar(minYear, maxYear);
 });
 </script>
+
 </body>
 </html>

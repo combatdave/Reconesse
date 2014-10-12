@@ -2,8 +2,10 @@ from django.contrib import admin
 from django import forms
 from django.utils.html import conditional_escape, mark_safe
 from django.utils.encoding import smart_text
+from django.forms import TextInput, Textarea
+from django.db import models
 
-from past.models import Article, PastImage, Category
+from past.models import Article, PastImage, Category, PastReference
 
 
 class NestedModelChoiceField(forms.ModelChoiceField):
@@ -16,6 +18,7 @@ class NestedModelChoiceField(forms.ModelChoiceField):
         self.label_field = label_field
         self._populate_choices()
 
+
     def _populate_choices(self):
         # This is *hackish* but simpler than subclassing ModelChoiceIterator
         choices = [(u"", self.empty_label)]
@@ -23,16 +26,34 @@ class NestedModelChoiceField(forms.ModelChoiceField):
         queryset = self.queryset.filter(**kwargs).prefetch_related(self.related_name)
 
         for parent in queryset:
-            choices.append((self.prepare_value(parent), self.label_from_instance(parent)))
-            choices.extend([(self.prepare_value(children), self.label_from_instance(children)) for children in
-                            getattr(parent, self.related_name).all()])
+            parentEntry = (self.prepare_value(parent), self.label_from_instance(parent))
+            choices.append(parentEntry)
+
+            choices.extend(self.get_child_list(parent))
 
         self.choices = choices
 
+
+    def get_child_list(self, parent):
+        choices = []
+        children = getattr(parent, self.related_name).all()
+        for child in children:
+            choice = (self.prepare_value(child), self.label_from_instance(child))
+            choices.append(choice)
+
+            childChoices = self.get_child_list(child)
+            choices.extend(childChoices)
+
+        return choices
+
+
     def label_from_instance(self, obj):
         level_indicator = ""
-        if getattr(obj, self.parent_field):
-            level_indicator = "--- "
+
+        parent = getattr(obj, self.parent_field, None)
+        while parent is not None:
+            level_indicator += "--- "
+            parent = getattr(parent, self.parent_field, None)
 
         return mark_safe(level_indicator + conditional_escape(smart_text(getattr(obj, self.label_field))))
 
@@ -44,6 +65,12 @@ class ArticleAdminForm(forms.ModelForm):
         super(ArticleAdminForm, self).__init__(*args, **kwargs)
         self.fields["category"] = NestedModelChoiceField(queryset=Category.objects.all(), related_name="parentcategory",
                                                          parent_field="parent", label_field="name")
+
+    def clean_category(self):
+        category = self.cleaned_data['category']
+        if category.parent is None:
+            raise forms.ValidationError("You can't select a top-level category! For example instead of \"arts\", try \"painter\".")
+        return category
 
     class Meta:
         model = Article
@@ -62,17 +89,32 @@ class CategoryToCategoryInline(admin.TabularInline):
 class RelatedArticlesInline(admin.TabularInline):
     fk_name = "from_article"
     model = Article.relatedArticles.through
+    verbose_name = "Related article"
+    verbose_name_plural = "Related articles"
+
+
+class PastReferenceToArticleInline(admin.TabularInline):
+    fk_name = "article"
+    model = PastReference
+
+    formfield_overrides = {
+            models.TextField: {'widget': TextInput(attrs={'size': '100'})},
+        }
 
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
 
     readonly_fields = ("slug", )
-    inlines = [PastImageToArticleInline, RelatedArticlesInline, ]
+    inlines = [PastReferenceToArticleInline, PastImageToArticleInline, RelatedArticlesInline, ]
     exclude = ("relatedArticles", )
 
 
 class PastImageAdmin(admin.ModelAdmin):
+    pass
+
+
+class PastReferenceAdmin(admin.ModelAdmin):
     pass
 
 
