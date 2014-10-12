@@ -31,7 +31,7 @@ except:
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "thysja.reconesse.org", "reconesse.org"]
+ALLOWED_HOSTS = ["localhost", "reconesse.org", ".reconesse.org"]
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
