@@ -25,6 +25,14 @@ li {
     background-color: #FFF;
 }
 
+.grey {
+    background-color: #555;
+}
+
+.red {
+    background-color: #FF7364;
+}
+
 #mapdiv {
     width: 100%;
     height: 100%;

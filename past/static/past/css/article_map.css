@@ -115,3 +115,7 @@ hr.green {
 .reference:hover {
     color: #FF7364;
 }
+
+.reference-container {
+    padding-left: 1em;
+}

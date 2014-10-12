@@ -72,7 +72,7 @@
             </div>
         </div>
             
-            <div class="row content-row" style="margin-top: 2em !important;">
+            <div class="row content-row" style="margin-top: 1.5em !important;">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="md-scroll-wrapper">
                         <h4>Categories</h4>
@@ -231,11 +231,11 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="delimiter"></div>
+                    <div class="delimiter grey"></div>
                     {{ article.content|addReferences|linebreaks }}
-                    <div class="delimiter"></div>
+                    <div class="delimiter red" style="width: 50%; margin-bottom: 1.5em;"></div>
                     {% for reference in references %}
-                    <div class="row" id="reference-{{forloop.counter}}">
+                    <div class="row reference-container" id="reference-{{forloop.counter}}">
                         {% if reference.url and reference.url.strip %}
                         <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
                         {% else %}
