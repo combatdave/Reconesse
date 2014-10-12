@@ -22,13 +22,11 @@ def get_all_countries():
 
 def index(request, slug = None):
     yearData = GetArticleYearRanges()
-    
-    categories = Category.objects.GetTree()
 
     context = {}
     context["minYear"] = yearData[0]
     context["maxYear"] = yearData[1]
-    context["categories"] = categories
+    context["categories"] = Category.objects.GetTree()
     context["countries"] = get_all_countries()
 
     if slug:
@@ -162,6 +160,16 @@ def GetCountryArticles(request, countryCode):
     return render(request, "past/articlelist.html", context)
 
 
+def _ArticleListToListOfDicts(profiles):
+    return [dict(name=m.title,
+                slug=m.slug,
+                country=m.country.code,
+                birth=m.birthYear,
+                death=m.deathYear,
+                tags=[str(t) for t in m.tags.all()]) for m in profiles]
+
+
+
 def Search(request):
     categories = json.loads(request.POST.get("category", []))
     countrycodes = json.loads(request.POST.get("countrycode", []))
@@ -202,7 +210,6 @@ def Search(request):
         categoryQuery = Q()
         for category in categories:
             categoryQuery = categoryQuery | Q(category__name__iexact=category)
-            #print(Article.objects.filter(categoryQuery.count()))
         fullQuery = fullQuery & categoryQuery
 
     if tags != ['']:
@@ -214,13 +221,7 @@ def Search(request):
     #fullQuery = timeQuery & textQuery & countryQuery & categoryQuery & tagQuery
 
     matches = Article.objects.filter(fullQuery)
-
-    matches = [dict(name=m.title,
-                    slug=m.slug,
-                    country=m.country.code,
-                    birth=m.birthYear,
-                    death=m.deathYear,
-                    tags=[str(t) for t in m.tags.all()]) for m in matches]
+    matches = _ArticleListToListOfDicts(matches)
  
     numByCountryCode = {}
     articlesByCountryCode = {}
@@ -250,5 +251,18 @@ def Search(request):
         "tags"          : tags,
         "areas"         : areas,
         "articles"      : articlesByCountryCode
+    }
+    return HttpResponse(json.dumps(jsonResponse), content_type="application/json")
+
+
+def TagSearch(request):
+    tag = request.GET.get("tag", '')
+
+    articlesWithThisTag = Article.objects.filter(tags__name__in=[tag, ])
+    articlesWithThisTag = _ArticleListToListOfDicts(articlesWithThisTag)
+
+    jsonResponse = {
+        "tag": tag,
+        "articles": articlesWithThisTag,
     }
     return HttpResponse(json.dumps(jsonResponse), content_type="application/json")

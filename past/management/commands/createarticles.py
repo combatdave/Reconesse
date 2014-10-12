@@ -99,7 +99,7 @@ enim, sit amet ornare lectus justo eu	Raya O. Decker	2014"""
 referenceList = references.replace("\t", " - ").split("\n")
 
 tags = "#money #cash #green #TagsForLikes #dough #bills #crisp #benjamin #benjamins #franklin #franklins #bank #payday #hundreds #twentys #fives #ones #100s #20s #greens #photooftheday #instarich #instagood #capital #stacks #stack #bread #paid"
-tagsList = tags.split()
+tagsList = tags.replace("#", "").split()
 
 categories = Category.objects.all()
 categogies = [c for c in categories if c.parent is not None]
