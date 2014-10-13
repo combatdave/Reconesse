@@ -288,6 +288,11 @@ function applySettings(s)
     }
 }
 
+function applySettings()
+{
+    // Overwrite the other applySettings to turn off the parameter storage
+}
+
 function saveSettings()
 {
     if (storage.support())
