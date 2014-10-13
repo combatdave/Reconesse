@@ -252,7 +252,7 @@
                         {% if reference.url and reference.url.strip %}
                         <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
                         {% else %}
-                        [{{ forloop.counter }}] {{ reference.text }}
+                        <span class="reference">[{{ forloop.counter }}] {{ reference.text }}</span>
                         {% endif %}
                     </div>
                     {% endfor %}
