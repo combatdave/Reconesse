@@ -18,7 +18,7 @@ def get_all_countries():
     codes = set(codes)  # .distinct doesnt work with mysql db
     country_dict = dict(countries)
     return sorted([{'name': unicode(country_dict[c]), 'code': c} for c in codes],
-                  key=lambda k: k['name'])
+                   key=lambda k: k['name'])
 
 
 def index(request, slug = None):
