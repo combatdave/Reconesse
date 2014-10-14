@@ -132,7 +132,7 @@ function loadData()
             articlesByCountry = data.articles;
             populateAllEntries();
             setData(data);
-            saveSettings();
+            //saveSettings();
         },
         error   : function(jqXHR)
         {
@@ -221,6 +221,8 @@ function GetLabelForYear(year) {
     return Math.abs(year).toString() + " " + label
 }
 
+// NOTE:
+// Settings are currently not being used
 function applySettings(s)
 {
     $('input:checkbox').removeAttr('checked');
@@ -293,6 +295,8 @@ function applySettings()
     // Overwrite the other applySettings to turn off the parameter storage
 }
 
+// NOTE:
+// Settings are currently not being used
 function saveSettings()
 {
     if (storage.support())

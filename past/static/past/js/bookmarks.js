@@ -1,5 +1,7 @@
 var storage = {
     bookmarks   : [],
+    // NOTE:
+    // Settings is currently not being used.
     settings    : {},
     support     : function()
     {
