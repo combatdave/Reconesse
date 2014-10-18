@@ -70,6 +70,15 @@ function showCountryArticles(countryCode)
             tags        : ''
         }
 
+        if (articles[i].deathYearUnknown)
+        {
+            argv["yearTo"] = "unknown";
+        }
+        else if (articles[i].death == null)
+        {
+            argv["yearTo"] = "present";
+        }
+
         for (var j = 0; j < articles[i].tags.length; ++j)
         {
             argv.tags += '#' + articles[i].tags[j] + " "

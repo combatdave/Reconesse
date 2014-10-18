@@ -176,7 +176,9 @@
                     <div>
                     <h4 style="text-transform: uppercase;">{{ article.title }}</h2>
                 <h4>
-                    {% if article.deathYear %}
+                    {% if article.deathYearUnknown %}
+                    {{ article.birthYear }}-unknown
+                    {% elif article.deathYear %}
                     <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
                     {% else %}
                     {{ article.birthYear }}-present
@@ -387,7 +389,13 @@ $(document).ready(function() {
 
     {% if article %}
     $("#birthYear").text(GetLabelForYear({{article.birthYear}}));
+    {% if article.deathYearUnknown %}
+    $("#deathYear").text("unknown")
+    {% elif article.deathYear %}
     $("#deathYear").text(GetLabelForYear({{article.deathYear}}));
+    {% else %}
+    $("#deathYear").text("present")
+    {% endif %}
     {% endif %}
 
     SetupSliderBar(minYear, maxYear);

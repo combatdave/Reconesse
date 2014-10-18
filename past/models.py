@@ -59,8 +59,9 @@ class Article(models.Model):
     content = models.TextField()
     summaryLines = models.TextField()
 
-    birthYear = models.IntegerField(default=0);
-    deathYear = models.IntegerField(null=True, blank=True);
+    birthYear = models.IntegerField(default=0)
+    deathYear = models.IntegerField(null=True, blank=True)
+    deathYearUnknown = models.BooleanField(default=False)
 
     country = CountryField()
 
