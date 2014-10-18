@@ -1,8 +1,8 @@
-Django==1.6.5
+Django==1.7
 Pillow==2.5.1
 django-countries==2.1.2
 django-extensions==1.3.8
-django-taggit==0.12
+django-taggit==0.12.2
 dj-database-url==0.3.0
 psycopg2==2.5.3
 git+https://github.com/kreldjarn/urlutils.git@07ce9cd5cd6a3eef9afbcbeba6dd3fabd77a91cd
