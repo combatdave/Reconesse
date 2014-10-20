@@ -367,6 +367,7 @@ function AutoSearch()
 
 $('#categories-list > ol li a').click(function() {
     $(this).parent().children('ol').toggle();
+    $(this).parent().children('a').toggle();
 });
 
 

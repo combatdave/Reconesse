@@ -73,8 +73,8 @@
             <div class="md-close-button" title="Close">
             </div>
         </div>
-            
-            <div class="row content-row" style="margin-top: 1.5em !important;  padding: 0 1em !important;">
+        <div class="md-scroll-wrapper search-result-wrapper light-red">
+            <div class="row light-red">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="md-scroll-wrapper">
                         <div id="categories-list">
@@ -82,8 +82,9 @@
                             <div class="delimiter"></div>
                             <label class="categories-label">
                                 <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" />
-                                All
+                                Select All
                             </label>
+                            <hr style="border-top: dotted 2px;" />
 
                             {% for cat, hasChildren in categories|nestCategories %}
                                 {% if cat == "startli" %}
@@ -95,11 +96,13 @@
                                 {% elif cat == "stopol" %}
                                 </ol>
                                 {% else %}
+                                    
+                                    {% if hasChildren %}<a class="plus-tree"><span class="glyphicon glyphicon-chevron-right" style="line-height: -10px;"></span></a>
+                                    <a class="plus-tree" style="display: none;"><span class="glyphicon glyphicon-chevron-down"></span></a>{% endif %}
                                     <label class="categories-label">
                                         <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
                                         {{ cat }}
                                     </label>
-                                    {% if hasChildren %}<a class="plus-tree">+</a>{% endif %}
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -117,7 +120,7 @@
                                     <input class="test" id="select-all-countries" type="checkbox">
                                     Select All
                                 </label>
-                                <hr style="border-top: dotted 1px;" />
+                                <hr style="border-top: dotted 2px;" />
                             </li>
 
                             {% for c in countries %}
@@ -156,6 +159,7 @@
                 <div id="searchloadingtext"></div>
                 <!--<button class="mod md-close">Close me!</button>-->
             </div>
+        </div>
         </div>
     </div>
     {% if article %}
