@@ -171,10 +171,12 @@
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </div>
             </div>
-            <div class="row content-row">
+            <div class="article-content">
+            <div class="row content-row" style="background-color: #FFF;">
+                
                 <div class="col-sm-3 article-info">
                     <div>
-                    <h4 style="text-transform: uppercase;">{{ article.title }}</h2>
+                    <h4 style="text-transform: uppercase;">{{ article.title }}</h4>
                 <h4>
                     {% if article.deathYear %}
                     <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
@@ -236,7 +238,7 @@
                     <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
                 </div>
                 -->
-                <div class="article-content">
+                
                     <div class="profiletext">
                         <ul>
                             {% for summaryLine in summary %}
