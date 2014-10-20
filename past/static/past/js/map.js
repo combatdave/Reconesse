@@ -211,12 +211,9 @@ function populateAllEntries()
 
 function GetLabelForYear(year) {
     var label = ""
-    if (typeof year == 'number')
+    if (typeof year == 'number' && year < 0)
     {
-        label = "AD";
-        if (year < 0) {
-            label = "BC";
-        }
+        label = "BCE";
     }
     return Math.abs(year).toString() + " " + label
 }
