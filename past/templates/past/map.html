@@ -81,7 +81,7 @@
                             <h4>Categories</h4>
                             <div class="delimiter"></div>
                             <label class="categories-label">
-                                <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" checked />
+                                <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" />
                                 All
                             </label>
 
@@ -96,7 +96,7 @@
                                 </ol>
                                 {% else %}
                                     <label class="categories-label">
-                                        <input class="categories-checkbox" type="checkbox" value="{{ cat }}" checked />
+                                        <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
                                         {{ cat }}
                                     </label>
                                     {% if hasChildren %}<a class="plus-tree">+</a>{% endif %}
@@ -114,7 +114,7 @@
                         <ul>
                             <li>
                                 <label>
-                                    <input class="test" id="select-all-countries" type="checkbox" checked>
+                                    <input class="test" id="select-all-countries" type="checkbox">
                                     Select All
                                 </label>
                                 <hr style="border-top: dotted 1px;" />
@@ -123,7 +123,7 @@
                             {% for c in countries %}
                             <li>
                                 <label>
-                                    <input class="countries-checkbox" type="checkbox" value="{{c.code}}" checked />
+                                    <input class="countries-checkbox" type="checkbox" value="{{c.code}}" />
                                     {{c.name}}
                                 </label>
                             </li>

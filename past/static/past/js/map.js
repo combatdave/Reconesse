@@ -654,7 +654,7 @@ $(document).ready(function()
         }
             
         storage.settings = JSON.parse(localStorage['settings']);
-        applySettings(storage.settings);
+        //applySettings(storage.settings);
     }
     renderBookmarks();
 
