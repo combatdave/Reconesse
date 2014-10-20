@@ -17,8 +17,8 @@ AmCharts.ready(function() {
     map.areasSettings = {
         autoZoom: false,
         selectable: true,
-        color: "#FFCC33",
-        colorSolid: "#FFFFCC",
+        color: "#FFFFCC",
+        colorSolid: "#FFCC33",
         outlineColor: "#33bcff",
         rollOverOutlineColor: "#FFFFFF",
     };
@@ -669,3 +669,9 @@ $(document).ready(function()
 
     $('#categories-list > ol li a').parent().find('ol').hide();
 });
+
+$(document).on('keydown', function(e)
+{
+    if (e.keyCode == 27)
+        $('.md-overlay').click();
+})
