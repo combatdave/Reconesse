@@ -376,6 +376,7 @@ function AutoSearch()
 
 $('#categories-list > ol li a').click(function() {
     $(this).parent().children('ol').toggle();
+    $(this).parent().children('a').toggle();
 });
 
 
@@ -663,7 +664,7 @@ $(document).ready(function()
         }
             
         storage.settings = JSON.parse(localStorage['settings']);
-        applySettings(storage.settings);
+        //applySettings(storage.settings);
     }
     renderBookmarks();
 

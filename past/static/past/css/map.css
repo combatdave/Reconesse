@@ -81,6 +81,14 @@ li {
     background-color: #ffc5bd;
 }
 
+.light-red {
+    background-color: #ffc5bd !important;
+}
+
+.dark-red {
+    background-color: #FF7364 !important;
+}
+
 .barbutton {
     padding: 2px;
     padding-left: 50px;
@@ -179,6 +187,8 @@ li .thumb {
 
 .plus-tree {
     color: #555;
+    font-size: 12px;
+    margin-left: -16px;
 }
 .plus-tree:hover {
     color: #66ffcc;
@@ -190,7 +200,7 @@ li .thumb {
     background-color: #FF7364;
     color: #FFF !important;
     border-radius: 0 !important;
-    border: 1px dotted #FFF;
+    border: 2px dotted #FFF;
 }
 
 .list-group-item h4,
@@ -206,6 +216,10 @@ li .thumb {
 .list-group-item:hover h4,
 .list-group-item:hover small {
     color: #555 !important;
+}
+
+#select-all-categories {
+    margin-top: 9px;
 }
 
 #country_name {

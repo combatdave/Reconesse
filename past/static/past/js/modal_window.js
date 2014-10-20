@@ -51,7 +51,7 @@ function resizeScrollWrappers()
 	searchResultWrappers.height(bh2 - 60);
 	smallScrollWrappers.height(bh2 - 224);
 
-	articleContent.height(height * 0.8 - 132);
+	articleContent.height(height * 0.8 - 52);
 	articleInfo.height(height * 0.8 - 100);
 	relatedArticles.height(height * 0.8 - 466);
 }

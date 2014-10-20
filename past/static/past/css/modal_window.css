@@ -93,7 +93,7 @@
 .md-wrapper,
 .article-content,
 .related-articles {
-	margin: 0;
+	margin-top: 10px;
 	padding: 1em;
 	overflow-y: auto;
 	background: #FF7364;
@@ -101,6 +101,10 @@
 	/* iOS inertia */
 	/*border: 1px solid #777;*/
 	-webkit-overflow-scrolling: touch;
+}
+
+.search-result-wrapper {
+	margin-top: 10px !important;
 }
 
 .article-content {
@@ -145,7 +149,7 @@
 }
 
 .md-content > div {
-	padding: 15px 40px 30px;
+	padding: 7px 20px 20px;
 	margin: 0;
 	font-weight: 300;
 	font-size: 1.15em;

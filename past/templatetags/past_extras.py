@@ -37,7 +37,9 @@ def _UnwravelCategories(categories):
             output.append(["startli", None])
             startedli = True
 
-            hasChildren = i+1 < len(categories) and type(categories[i+1]) is list
+            hasChildren = i+1 < len(categories) and\
+                          type(categories[i+1]) is list and\
+                          categories[i+1] != []
             output.append([cat.name, hasChildren])
 
     if startedli:
