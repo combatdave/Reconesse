@@ -5,10 +5,10 @@ AmCharts.ready(function() {
     // create AmMap object
     map = new AmCharts.AmMap();
     // set path to images
-    map.pathToImages = "/static/ammap/images/"; //"http://www.ammap.com/lib/images/";
+    map.pathToImages = '/static/ammap/images/'; //'http://www.ammap.com/lib/images/';
 
     var dataProvider = {
-        map: "worldLow",
+        map: 'worldLow',
         getAreasFromMap: true,          
     }; 
     // pass data provider to the map object
@@ -17,29 +17,29 @@ AmCharts.ready(function() {
     map.areasSettings = {
         autoZoom: false,
         selectable: true,
-        color: "#FFFFCC",
-        colorSolid: "#FFCC33",
-        outlineColor: "#33bcff",
-        rollOverOutlineColor: "#FFFFFF",
+        color: '#FFFFCC',
+        colorSolid: '#FFCC33',
+        outlineColor: '#33bcff',
+        rollOverOutlineColor: '#FFFFFF',
     };
 
-    var zoomColor = "#FFFF00";
+    var zoomColor = '#FFFF00';
     map.zoomControl.buttonColor = zoomColor;
     map.zoomControl.buttonFillColor = zoomColor;
-    map.zoomControl.buttonIconColor = "#000000";
-    map.zoomControl.gridColor = "#000000";
-    map.zoomControl.homeIconColor = "#000000";
+    map.zoomControl.buttonIconColor = '#000000';
+    map.zoomControl.gridColor = '#000000';
+    map.zoomControl.homeIconColor = '#000000';
     map.zoomControl.zoomControlEnabled = false;
     map.zoomControl.panControlEnabled = false;
 
     map.colorSteps = 3;
-    map.height = "100%";
+    map.height = '100%';
     map.mouseWheelZoomEnabled = true;
 
-    map.balloon.color = "#000000";
+    map.balloon.color = '#000000';
 
     map.allowClickOnSelectedObject = true;
-    map.addListener("clickMapObject", function (e) {
+    map.addListener('clickMapObject', function (e) {
         map.selectObject(null);
         showCountryArticles(e.mapObject.id);
         //ShowMenu(e);
@@ -52,7 +52,7 @@ AmCharts.ready(function() {
     map.dataProvider.zoomLevel = 1.2;
     
     // write the map to container div
-    map.write("mapdiv");
+    map.write('mapdiv');
 });
 
 function showCountryArticles(countryCode)
@@ -95,7 +95,7 @@ function setData(data) {
     map.dataProvider.areas = data.areas;
     map.validateData();
 
-    $("#searchloadingtext").text("");
+    $('#searchloadingtext').text('');
 }
 
 
@@ -219,12 +219,12 @@ function populateAllEntries()
 }
 
 function GetLabelForYear(year) {
-    var label = ""
+    var label = '';
     if (typeof year == 'number' && year < 0)
     {
-        label = "BCE";
+        label = 'BCE';
     }
-    return Math.abs(year).toString() + " " + label
+    return Math.abs(year).toString() + ' ' + label;
 }
 
 // NOTE:
@@ -234,7 +234,7 @@ function applySettings(s)
     $('input:checkbox').removeAttr('checked');
     if (s.minYear && s.maxYear)
     {
-        $(".sliderbar").slider("values", [s.minYear, s.maxYear]);
+        $('.sliderbar').slider('values', [s.minYear, s.maxYear]);
         searchMinYear = s.minYear;
         searchMaxYear = s.maxYear;
     }
@@ -243,7 +243,7 @@ function applySettings(s)
         selectedCategories = s.categories;
         for (var i = 0; i < selectedCategories.length; ++i)
         {
-            $(":checkbox[value='" + selectedCategories[i] + "']").prop("checked","true");
+            $(':checkbox[value=' + selectedCategories[i] + ']').prop('checked','true');
         }
     }
     if (s.countries)
@@ -251,7 +251,7 @@ function applySettings(s)
         selectedCountries = s.countries;
         for (var i = 0; i < selectedCountries.length; ++i)
         {
-            $(":checkbox[value='" + selectedCountries[i] + "']").prop("checked","true");
+            $(':checkbox[value=' + selectedCountries[i] + ']').prop('checked','true');
         }
         var allChecked = true;
         $('.countries-checkbox').each(function() {
@@ -270,11 +270,11 @@ function applySettings(s)
         selectedCategories = s.categories;
         for (var i = 0; i < selectedCategories.length; ++i)
         {
-            $(":checkbox[value='" + selectedCategories[i] + "']").prop("checked","true");
+            $(':checkbox[value=' + selectedCategories[i] + ']').prop('checked','true');
         }
         var allChecked = true;
         $('.categories-checkbox').each(function() {
-            if ($(this).attr("id") != "select-all-categories" && !this.checked)
+            if ($(this).attr('id') != 'select-all-categories' && !this.checked)
             {
                 allChecked = false;
             }
@@ -287,7 +287,7 @@ function applySettings(s)
     if (s.keywords)
     {
         keywords = s.keywords;
-        var kwString = "";
+        var kwString = '';
         for (var i = 0; i < keywords.lenght; ++i)
         {
             kwString += (keywords[i] + ', ');
@@ -325,14 +325,14 @@ function saveSettings()
 
 function SetupSliderBar(minYear, maxYear)
 {
-    $(".sliderbar").each(function() {
+    $('.sliderbar').each(function() {
         $(this).empty().slider({
             values: [minYear, maxYear],
             min: minYear,
             max: maxYear,
             step: 100,
             range: true,
-            orientation: "horizontal",
+            orientation: 'horizontal',
             slide: updateSliders,
             change: updateSliders
         });
@@ -346,7 +346,7 @@ function SetupSliderBar(minYear, maxYear)
         $('.minYear').text(GetLabelForYear(range[0]));
         $('.maxYear').text(GetLabelForYear(range[1]));
         var activeSlider = this;
-        $(".sliderbar").slider("values", range);
+        $('.sliderbar').slider('values', range);
         if (searchTimeout != null)
         {
             window.clearTimeout(searchTimeout);
@@ -354,10 +354,10 @@ function SetupSliderBar(minYear, maxYear)
         searchTimeout = window.setTimeout(AutoSearch, 500);
     };
 
-    $('.ui-slider .ui-slider-handle').eq(0).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-    $('.ui-slider .ui-slider-handle').eq(1).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
-    $('.ui-slider .ui-slider-handle').eq(2).append("<img src='/static/images/sliderhandleleft.png' class='ui-slider-handle-left'/>");
-    $('.ui-slider .ui-slider-handle').eq(3).append("<img src='/static/images/sliderhandleright.png' class='ui-slider-handle-right'/>");
+    $('.ui-slider .ui-slider-handle').eq(0).append('<img src=\'/static/images/sliderhandleleft.png\' class=\'ui-slider-handle-left\'/>');
+    $('.ui-slider .ui-slider-handle').eq(1).append('<img src=\'/static/images/sliderhandleright.png\' class=\'ui-slider-handle-right\'/>');
+    $('.ui-slider .ui-slider-handle').eq(2).append('<img src=\'/static/images/sliderhandleleft.png\' class=\'ui-slider-handle-left\'/>');
+    $('.ui-slider .ui-slider-handle').eq(3).append('<img src=\'/static/images/sliderhandleright.png\' class=\'ui-slider-handle-right\'/>');
 }
 
 
@@ -381,11 +381,11 @@ function DoCategorySearch()
 {
     // Save selected categories
     newSelectedCategories = []
-    $(".categories-checkbox").each( function(event) {
-        if ($(this).attr("id") != "select-all-categories")
+    $('.categories-checkbox').each( function(event) {
+        if ($(this).attr('id') != 'select-all-categories')
         {
-            var categoryName = $(this).attr("value");
-            var checked = $(this).is(":checked");
+            var categoryName = $(this).attr('value');
+            var checked = $(this).is(':checked');
             if (checked) {
                 newSelectedCategories.push(categoryName);
             }
@@ -399,7 +399,7 @@ function DoCategorySearch()
         window.clearTimeout(searchTimeout);
     }
     searchTimeout = window.setTimeout(AutoSearch, 500);
-    $("#searchloadingtext").text("Please wait...");
+    $('#searchloadingtext').text('Please wait...');
 }
 
 
@@ -408,13 +408,13 @@ function CheckParent(checkbox)
     // Called when a checkbox has changed, so we can see if the parent needs to change state.
     // If this *does* cause a state change, then we call this function again to check the next parent up.
 
-    var parentLabel = $(checkbox).parent().parent().parent().siblings(".categories-label")[0];
-    var parentCheckbox = $(parentLabel).children(".categories-checkbox")[0];
+    var parentLabel = $(checkbox).parent().parent().parent().siblings('.categories-label')[0];
+    var parentCheckbox = $(parentLabel).children('.categories-checkbox')[0];
 
     if (parentCheckbox)
     {
         var allChecked = true;
-        $(parentCheckbox).parent().parent().find(".categories-checkbox").each(function() {
+        $(parentCheckbox).parent().parent().find('.categories-checkbox').each(function() {
             if (this != parentCheckbox)
             {
                 allChecked = allChecked && this.checked;
@@ -436,7 +436,7 @@ function CheckParent(checkbox)
 $('.categories-checkbox').on('click', function(e)
 {
     var modified = this;
-    $(this).parent().parent().find(".categories-checkbox").each(function() {
+    $(this).parent().parent().find('.categories-checkbox').each(function() {
         
         this.checked = modified.checked;
     });
@@ -488,8 +488,8 @@ function saveCheckboxes()
 {
     var newSelectedCountries = []
     $('.countries-checkbox').each(function() {
-        var countryCode = $(this).attr("value");
-        var checked = $(this).is(":checked");
+        var countryCode = $(this).attr('value');
+        var checked = $(this).is(':checked');
         if (checked) {
             newSelectedCountries.push(countryCode);
         }
