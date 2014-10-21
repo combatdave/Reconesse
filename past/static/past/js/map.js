@@ -68,11 +68,11 @@ function showCountryArticles(countryCode)
             yearFrom    : GetLabelForYear(articles[i].birth),
             yearTo      : GetLabelForYear(articles[i].death),
             tags        : ''
-        }
+        };
 
         for (var j = 0; j < articles[i].tags.length; ++j)
         {
-            argv.tags += '#' + articles[i].tags[j] + " "
+            argv.tags += '#' + articles[i].tags[j] + ' ';
         }
         articleList.append(person_template(argv));   
     }
@@ -92,7 +92,7 @@ function setData(data) {
 
 function SetYearDisplayText(minYear, maxYear)
 {
-    $("#yearDisplay").text(GetLabelForYear(minYear) + " - " + GetLabelForYear(maxYear));
+    $('#yearDisplay').text(GetLabelForYear(minYear) + ' - ' + GetLabelForYear(maxYear));
 }
 
 
