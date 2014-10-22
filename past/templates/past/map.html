@@ -199,6 +199,7 @@
                         {% if forloop.first %}
                         <img src={{ image.imageField.url }} class="mainimage"></img>
                         {% else %}
+                        <!-- TODO: Style additional thumbnails -->
                         <img src={{ image.imageField.url }} class="thumbnail"></img>
                         {% endif %}
                         {% endfor %}
@@ -328,6 +329,7 @@
 
 
 <!-- Underscore templates -->
+<!-- Single person -->
 <script type="text/template" id="person-list-entry">
 <a href="/past/<%- slug %>" class="list-group-item">
 <div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>","name":"<%- name %>","birth":"<%- yearFrom %>","death":"<%- yearTo %>"}'>
@@ -337,7 +339,7 @@
 <p class="list-group-item-text"><%- tags %></p>
 </a>
 </script>
-
+<!-- Single bookmark -->
 <script type="text/template" id="bookmark">
 <a href="/past/<%- slug %>" class="list-group-item">
 <div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>"}' style="margin-top: -0.7em;">
@@ -381,6 +383,7 @@
 <!-- Business logic -->
 <script type="text/javascript" src="{% static 'past/js/map.js' %}"></script>
 
+<!-- Grab variables passed into template -->
 <script>
 var maxYear, minYear, minRange, maxRange, article = '{{article.slug}}';
 var countries;
