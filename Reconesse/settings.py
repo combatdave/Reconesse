@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     "django_extensions",
     "taggit",
+    "tinymce",
     "past",
     "present",
     "future",
@@ -107,12 +108,14 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 STATIC_ROOT = None
 try:
-    STATIC_ROOT = os.getenv("STATIC_ROOT")
+    STATIC_ROOT = os.getenv("STATIC_ROOT", "")
 except:
     pass
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, MEDIA_URL))
+
+TINYMCE_DEFAULT_CONFIG = {"theme": "advanced", "relative_urls": False, "skin": "o2k7"}
 
 
 LOGGING = {

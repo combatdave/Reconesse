@@ -13,7 +13,7 @@
 <center>
     {% for entry in entries %}
     <h1>{{ entry.title }}</h1>
-    {{ entry.content }}
+    {{ entry.content | safe }}
     </br>
     <small>Submitted by {{ entry.submittedBy }} on {{ entry.submittedTime }}</small>
     </br>

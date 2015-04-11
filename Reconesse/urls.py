@@ -15,6 +15,8 @@ urlpatterns = patterns('',
                        url(r'^past/', include('past.urls')),
                        url(r'^present/', include('present.urls')),
                        url(r'^future/', include('future.urls')),
+
+                       (r'^tinymce/', include('tinymce.urls')),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
