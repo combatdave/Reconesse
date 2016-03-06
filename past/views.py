@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from django.db.models import Q, Max, Min
 import json
 import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 from django_countries import countries
 from past.models import Article, PastImage, Category, PastReference
@@ -171,15 +172,7 @@ def _ArticleListToListOfDicts(profiles):
                 tags=[str(t) for t in m.tags.all()]) for m in profiles]
 
 
-
-def Search(request):
-    categories = json.loads(request.POST.get("category", []))
-    countrycodes = json.loads(request.POST.get("countrycode", []))
-    keywords = json.loads(request.POST.get("keyword", []))
-    tags = json.loads(request.POST.get("tag", []))
-    minYear = request.POST.get("minyear", '')
-    maxYear = request.POST.get("maxyear", '')
-
+def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex=0, numToReturn=0):
     earliestPossible, latestPossible = GetArticleYearRanges()
     if not minYear:
         minYear = earliestPossible
@@ -220,10 +213,47 @@ def Search(request):
             tagQuery = tagQuery | Q(tags__name__iexact=tag)
         fullQuery = fullQuery & tagQuery
 
-    #fullQuery = timeQuery & textQuery & countryQuery & categoryQuery & tagQuery
-
     matches = Article.objects.filter(fullQuery)
-    matches = _ArticleListToListOfDicts(matches)
+
+    matches = matches[startIndex:]
+    if numToReturn > 0:
+        matches = matches[:numToReturn]
+
+    return _ArticleListToListOfDicts(matches)
+
+
+@csrf_exempt
+def GetArticles(request):
+    searchJSON = request.POST.get("query", "{}")
+    searchParams = json.loads(searchJSON)
+
+    categories = searchParams.get("categories", [])
+    countrycodes = searchParams.get("countrycodes", [])
+    keywords = searchParams.get("keywords", [])
+    tags = searchParams.get("tags", [])
+    minYear = searchParams.get("minyear", "")
+    maxYear = searchParams.get("maxyear", "")
+    startIndex = searchParams.get("startindex", 0)
+    numToReturn = searchParams.get("num", 0)
+
+    matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
+
+    response = {}
+    response["query"] = searchParams
+    response["results"] = matches
+
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+def Search(request):
+    categories = json.loads(request.POST.get("category", []))
+    countrycodes = json.loads(request.POST.get("countrycode", []))
+    keywords = json.loads(request.POST.get("keyword", []))
+    tags = json.loads(request.POST.get("tag", []))
+    minYear = request.POST.get("minyear", '')
+    maxYear = request.POST.get("maxyear", '')
+
+    matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear)
  
     numByCountryCode = {}
     articlesByCountryCode = {}
@@ -249,7 +279,6 @@ def Search(request):
         "keywords"      : keywords,
         "minYear"       : minYear,
         "maxYear"       : maxYear,
-        #"matches"       : matches,
         "tags"          : tags,
         "areas"         : areas,
         "articles"      : articlesByCountryCode
