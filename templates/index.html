@@ -37,6 +37,10 @@
         transition: all .25s ease-in-out;
       }
 
+      .title img {
+        margin: 100px 50px;
+      }
+
       .hidden {
         opacity: 0;
       }
@@ -45,7 +49,6 @@
         width: calc(100% / 3);
         height: 100%;
         float: left;
-        border: 1px solid #F00;
         box-sizing: border-box;
       }
 
@@ -74,6 +77,21 @@
         background-size: cover;
       }
 
+      .title-image .image.image-left {
+        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat left center;
+        background-size:cover;
+      }
+
+      .title-image .image.image-mid {
+        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat center center;
+        background-size:cover;
+      }
+
+      .title-image .image.image-right {
+        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat right center;
+        background-size:cover;
+      }
+
       .title-image .image p {
         position: absolute;
         bottom: 0;
@@ -94,7 +112,7 @@
         -webkit-transition: -webkit-transform .15s ease-in-out;
         -webkit-transform: translateX(-100%) translateY(-100%);
         transition: -webkit-transform .15s ease-in-out;
-        transform: translateX(-100%) translateY(-100%);
+        transform: translateX(-101%) translateY(-100%);
       }
 
       .title-image:hover .cover-card {
@@ -137,8 +155,7 @@
     <div class="main-container">
       <div class="title-container">
         <div class="title">
-          <h1>Reconesse</h1>
-          <h2>Database</h2>
+          <img src="{% static 'images/reconesse_database_yellow.svg' %}" />
         </div>
         <div class="title-image">
           <div class="image" id="past" style="z-index: 10">
@@ -182,10 +199,25 @@
           <h2>Become a Reconesse.</h2>
         </div>
         <div class="title-image">
+          <div class="image image-left" style="z-index: 10;">
+          </div>
+          <div class="cover-card past" style="z-index: 11;">
+
+          </div>
         </div>
         <div class="title-image">
+          <div class="image image-mid" style="z-index: 8;">
+          </div>
+          <div class="cover-card present" style="z-index: 9;">
+
+          </div>
         </div>
         <div class="title-image">
+          <div class="image image-right" style="z-index: 6;">
+          </div>
+          <div class="cover-card future" style="z-index: 7;">
+
+          </div>
         </div>
       </div>
     </div>
@@ -193,9 +225,9 @@
   <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
   <script>
     $(document).on('mouseenter', '.title-container', function () {
-      $('.title').toggleClass('hidden');
+      $('.title').addClass('hidden');
     }).on('mouseleave', '.title-container', function () {
-      $('.title').toggleClass('hidden');
+      $('.title').removeClass('hidden');
     });
   </script>
 </html>
