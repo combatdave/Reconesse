@@ -10,7 +10,6 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale   = 1.0, user-scalable=no">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
 
     <style>
@@ -77,21 +76,6 @@
         background-size: cover;
       }
 
-      .title-image .image.image-left {
-        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat left center;
-        background-size:cover;
-      }
-
-      .title-image .image.image-mid {
-        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat center center;
-        background-size:cover;
-      }
-
-      .title-image .image.image-right {
-        background: transparent url({% static 'images/join-us.jpg' %}) no-repeat right center;
-        background-size:cover;
-      }
-
       .title-image .image p {
         position: absolute;
         bottom: 0;
@@ -137,11 +121,26 @@
         position: relative;
         width: 100%;
         height: 600px;
+      }
+
+      .call-to-action-container .title-image .image {
         background: url({% static 'images/join-us.jpg' %}) no-repeat center center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+      }
+
+      .call-to-action-container .title-image .image-left {
+        background-image: url({% static 'images/join_us_slice_1.png' %});
+      }
+
+      .call-to-action-container .title-image .image-mid {
+        background-image: url({% static 'images/join_us_slice_2.png' %});
+      }
+
+      .call-to-action-container .title-image .image-right {
+        background-image: url({% static 'images/join_us_slice_3.png' %});
       }
 
       .call-to-action {
@@ -202,21 +201,21 @@
           <div class="image image-left" style="z-index: 10;">
           </div>
           <div class="cover-card past" style="z-index: 11;">
-
+            DRASL
           </div>
         </div>
         <div class="title-image">
           <div class="image image-mid" style="z-index: 8;">
           </div>
           <div class="cover-card present" style="z-index: 9;">
-
+            DRASL
           </div>
         </div>
         <div class="title-image">
           <div class="image image-right" style="z-index: 6;">
           </div>
           <div class="cover-card future" style="z-index: 7;">
-
+            DRASL
           </div>
         </div>
       </div>
