@@ -124,7 +124,8 @@
         background-color: #F0646A;
       }
 
-      .title-image .cover-card h3 {
+      .title-image .cover-card h3,
+      .call-to-action-container .call-to-action-card h3 {
         margin: 0;
         padding: 0;
         text-transform: uppercase;
@@ -166,6 +167,7 @@
       }
 
       .call-to-action-container .call-to-action-card {
+        position: relative;
         width: calc(100% / 3);
         height: 100%;
         float: left;
@@ -236,6 +238,24 @@
         margin-top: -15px;
         padding-top: 0;
       }
+
+      .goto-link {
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #FFF;
+        position: absolute;
+        bottom: 40px;
+        left: 35px;
+      }
+
+      .goto-link img {
+        width: 40px;
+        display: inline-block;
+      }
+
+      .goto-link span {
+        display: inline-block;
+      }
     </style>
   </head>
 
@@ -255,7 +275,10 @@
             <p>
               Most history books taught at the primary and high-school level in the United States name only 8 women for every 100 men. Other countries display similar numbers. Our database will record stories of amazing women of the past and present who have not gotten their share in history.
             </p>
-            <a href="/past/" class="card-link">Go to past</a>
+            <a href="/past/" class="goto-link">
+              <span>Go to past</span>
+              <img src="{% static 'images/white_forward_arrow.svg' %}"  />
+            </a>
           </div>
         </div>
         <div class="title-image" id="present">
@@ -270,7 +293,10 @@
             <p>
               By crowdsourcing content from around the world, we are able to share stories that might otherwise have gone unnoticed.
             </p>
-            <a href="/present/" class="card-link">Go to present</a>
+            <a href="/present/" class="goto-link" style="color: #000;">
+              <span>Go to present</span>
+              <img src="{% static 'images/black_forward_arrow.svg' %}"  />
+            </a>
           </div>
         </div>
         <div class="title-image" id="future">
@@ -282,7 +308,10 @@
             <p>
               Research has shown that when we invest in a future for women, all of humanity benefits. Reconesse seeks to offer women from around the world a vast network of opportunities.
             </p>
-            <a href="/future/" class="card-link">Go to future</a>
+            <a href="/future/" class="goto-link">
+              <span>Go to future</span>
+              <img src="{% static 'images/white_forward_arrow.svg' %}"  />
+            </a>
           </div>
         </div>
       </div>
@@ -295,34 +324,43 @@
           <h2>Become a Reconesse.</h2>
         </div>
         <div class="call-to-action-card past">
-          Contribute to the Story
+          <h3>Contribute to the Story</h3>
           <p>
             Reconesse is an open source platform about and for women who change history.
           </p>
           <p>
             Women are underrepresented both in media and education. Help us fix that by contributing — you can alert us to ignored Reconesses past &amp; present, send us news from your communities, or you can start writing your own articles!
           </p>
-          <a>Get in touch</a>
+          <a class="goto-link">
+            <span>Get in touch</span>
+            <img src="{% static 'images/white_forward_arrow.svg' %}"  />
+          </a>
         </div>
         <div class="call-to-action-card present">
-          Collaborate with us
+          <h3>Collaborate with us</h3>
           <p>
-            Do you represent a company, non-prot or NGO that is dedicaded to female empowerment?
+            Do you represent a company, non-profit or NGO that is dedicaded to female empowerment?
           </p>
           <p>
             Do you have conferences, programs or funds you want to connect with our audience?  We would love to collaborate with you.
           </p>
-          <a>Get in touch</a>
+          <a class="goto-link" style="color: #000;">
+            <span>Get in touch</span>
+            <img src="{% static 'images/black_forward_arrow.svg' %}"  />
+          </a>
         </div>
         <div class="call-to-action-card future">
-          Donate to our cause
+          <h3>Donate to our cause</h3>
           <p>
             Reconesse is a non-prot. We give our work to reach a simple goal: inspire tomorrow’s women by providing easy access to role models, past and present.
           </p>
           <p>
             You can support that cause with a single or monthly donation.
           </p>
-          <a>Donate</a>
+          <a class="goto-link">
+            <span>Donate</span>
+            <img src="{% static 'images/white_forward_arrow.svg' %}"  />
+          </a>
         </div>
       </div>
     </div>
