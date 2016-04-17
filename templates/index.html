@@ -10,12 +10,13 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale   = 1.0, user-scalable=no">
 
-    <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
-
+    <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/webfonts.css' %}" />
     <style>
       body {
         margin: 0;
         padding: 0;
+        font-family: UniversLTStd;
       }
 
       .title-container {
@@ -61,6 +62,8 @@
 
       h4.tagline {
         text-align: center;
+        font-size: 2em;
+        margin: 1.5em 0;
       }
 
       .title-image .image {
@@ -121,6 +124,11 @@
         position: relative;
         width: 100%;
         height: 600px;
+        background: url({% static 'images/join-us.jpg' %}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
 
       .call-to-action-container .title-image .image {
@@ -132,19 +140,90 @@
       }
 
       .call-to-action-container .title-image .image-left {
-        background-image: url({% static 'images/join_us_slice_1.png' %});
+        background-image: url({% static 'images/join_us_slice_1.jpg' %});
       }
 
       .call-to-action-container .title-image .image-mid {
-        background-image: url({% static 'images/join_us_slice_2.png' %});
+        background-image: url({% static 'images/join_us_slice_2.jpg' %});
       }
 
       .call-to-action-container .title-image .image-right {
-        background-image: url({% static 'images/join_us_slice_3.png' %});
+        background-image: url({% static 'images/join_us_slice_3.jpg' %});
       }
 
       .call-to-action {
         text-align: center;
+      }
+
+      .call-to-action-container .call-to-action-card {
+        width: calc(100% / 3);
+        height: 100%;
+        float: left;
+        box-sizing: border-box;
+        background-color: #353DF4;
+        color: #FFF;
+        opacity: 0;
+        -webkit-transition: opacity .15s ease-in-out;
+        transition: opacity .15s ease-in-out;
+      }
+
+      .call-to-action-container .call-to-action-card.present {
+        background-color: #FDFC55;
+        color: #000;
+      }
+
+      .call-to-action-container .call-to-action-card.future {
+        background-color: #F0646A;
+        color: #FFF;
+      }
+
+      .call-to-action-container .call-to-action-card:hover {
+        opacity: 1;
+      }
+
+      .social-container {
+        width: 100%;
+        margin-bottom: 40px;
+      }
+
+      .social-icons {
+        width: 220px;
+        margin: auto;
+      }
+
+      .social-icon {
+        vertical-align: middle;
+      }
+
+      .social-icon#twitter {
+        height: 25px;
+        margin-right: 45px;
+      }
+
+      .social-icon#facebook {
+        height: 35px;
+        margin-right: 45px;
+      }
+
+      .social-icon#email {
+        height: 70px;
+      }
+
+      .call-to-action h1 {
+        text-transform: uppercase;
+        color: #F0646A;
+        font-size: 5em;
+        margin-top: 200px;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .call-to-action h2 {
+        text-transform: uppercase;
+        color: #FFF;
+        font-size: 5em;
+        margin-top: -15px;
+        padding-top: 0;
       }
     </style>
   </head>
@@ -174,6 +253,12 @@
           </div>
           <div class="cover-card present" style="z-index: 9">
             <h3>Present</h3>
+
+            The GMMP's latest five-year study of women's representation in media found that females still made up less than a quarter of the people "heard, read about or seen in newspaper, television and radio news.” Furthermore, only 26% of stories in online mediums featured women as subjects.
+
+            By crowdsourcing content from around the world, we are able to share stories that might otherwise have gone unnoticed
+
+            <a href="/present/" class="card-link">Go to present</a>
           </div>
         </div>
         <div class="title-image" id="future">
@@ -197,27 +282,48 @@
           <h1>Join the Movement.</h1>
           <h2>Become a Reconesse.</h2>
         </div>
-        <div class="title-image">
-          <div class="image image-left" style="z-index: 10;">
-          </div>
-          <div class="cover-card past" style="z-index: 11;">
-            DRASL
-          </div>
+        <div class="call-to-action-card past">
+          Contribute to the Story
+          <p>
+            Reconesse is an open source platform about and for women who change history.
+          </p>
+          <p>
+            Women are underrepresented both in media and education. Help us fix that by contributing — you can alert us to ignored Reconesses past &amp; present, send us news from your communities, or you can start writing your own articles!
+          </p>
+          <a>Get in touch</a>
         </div>
-        <div class="title-image">
-          <div class="image image-mid" style="z-index: 8;">
-          </div>
-          <div class="cover-card present" style="z-index: 9;">
-            DRASL
-          </div>
+        <div class="call-to-action-card present">
+          Collaborate with us
+          <p>
+            Do you represent a company, non-prot or NGO that is dedicaded to female empowerment?
+          </p>
+          <p>
+            Do you have conferences, programs or funds you want to connect with our audience?  We would love to collaborate with you.
+          </p>
+          <a>Get in touch</a>
         </div>
-        <div class="title-image">
-          <div class="image image-right" style="z-index: 6;">
-          </div>
-          <div class="cover-card future" style="z-index: 7;">
-            DRASL
-          </div>
+        <div class="call-to-action-card future">
+          Donate to our cause
+          <p>
+            Reconesse is a non-prot. We give our work to reach a simple goal: inspire tomorrow’s women by providing easy access to role models, past and present.
+          </p>
+          <p>
+            You can support that cause with a single or monthly donation.
+          </p>
+          <a>Donate</a>
         </div>
+      </div>
+    </div>
+
+    <h4 class="tagline">
+      Other ways you can help? Let us know!
+    </h4>
+
+    <div class="social-container">
+      <div class="social-icons">
+        <img id="twitter" class="social-icon" src="{% static 'images/twitter_black.svg' %}" />
+        <img id="facebook" class="social-icon" src="{% static 'images/facebook_black.svg' %}"  />
+        <img id="email" class="social-icon" src="{% static 'images/email_black_fill.svg' %}"  />
       </div>
     </div>
   </body>
@@ -228,5 +334,11 @@
     }).on('mouseleave', '.title-container', function () {
       $('.title').removeClass('hidden');
     });
+
+    $(document).on('mouseenter', '.call-to-action-container', function () {
+      $('.call-to-action').addClass('hidden');
+    }).on('mouseleave', '.call-to-action-container', function () {
+      $('.call-to-action').removeClass('hidden');
+    })
   </script>
 </html>
