@@ -4,181 +4,353 @@
 
 <html lang="en">
 
-<head>
+  <head>
     <title>Reconesse Database</title>
 
     <meta charset=utf-8>
-    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale   = 1.0, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fonts.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'tooltipster/tooltipster.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/webfonts.css' %}" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: UniversLTStd;
+      }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}">
-</head>
+      .title-container {
+        width: 100%;
+        height: 600px;
+      }
 
-<body>
-{% include "GoogleAnalytics.html" %}
+      .title,
+      .call-to-action {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        pointer-events: none;
+        text-align: center;
+        transition: all .25s ease-in-out;
+      }
 
-<div class="testouter">
-    <div class="testheader">
-        <div class="button-area" id="top">
-            <!--
-                                <div class="button-container">
-                                    <div class="navbutton">
-                                        about
-                                        <a href="/about/">
-                                            <span class="link-spanner"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="button-container">
-                                    <div class="navbutton">
-                                        help
-                                        <a href="/help/">
-                                            <span class="link-spanner"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="button-container">
-                                    <div class="navbutton">
-                                        shop
-                                        <a href="/shop/">
-                                            <span class="link-spanner"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="button-container">
-                                    <div class="navbutton">
-                                        contact
-                                        <a href="/contact/">
-                                            <span class="link-spanner"></span>
-                                        </a>
-                                    </div>
-                                </div>
-            -->
+      .title img {
+        margin: 100px 50px;
+      }
+
+      .hidden {
+        opacity: 0;
+      }
+
+      .title-image {
+        width: calc(100% / 3);
+        height: 100%;
+        float: left;
+        box-sizing: border-box;
+      }
+
+      #present {
+        background-image: url({% static 'images/present.jpg' %});
+      }
+
+      #future {
+        background-image: url({% static 'images/future.jpg' %});
+      }
+
+      h4.tagline {
+        text-align: center;
+        font-size: 2em;
+        margin: 1.5em 0;
+      }
+
+      .title-image .image {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url({% static 'images/past.jpg' %}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      .title-image .image p {
+        position: absolute;
+        bottom: 0;
+        color: #FFF;
+        margin: 0;
+        margin-left: 15px;
+        padding: 0;
+        text-transform: uppercase;
+        font-size: 3em;
+      }
+
+      .title-image .cover-card {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #353DF4;
+        box-sizing: border-box;
+        color: white;
+        -webkit-transition: -webkit-transform .15s ease-in-out;
+        -webkit-transform: translateX(-100%) translateY(-100%);
+        transition: -webkit-transform .15s ease-in-out;
+        transform: translateX(-101%) translateY(-100%);
+        padding: 2em;
+      }
+
+      .title-image .cover-card p,
+      .call-to-action-container .call-to-action-card p {
+        font-family: UniversLTStd-Obl;
+      }
+
+      .title-image:hover .cover-card {
+        transform: translateX(0) translateY(-100%);
+      }
+
+      .title-image .cover-card.present {
+        background-color: #FDFC55;
+        color: #000;
+      }
+
+      .title-image .cover-card.future {
+        background-color: #F0646A;
+      }
+
+      .title-image .cover-card h3 {
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+      }
+
+      .call-to-action-container {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        background: url({% static 'images/join-us.jpg' %}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      .call-to-action-container .title-image .image {
+        background: url({% static 'images/join-us.jpg' %}) no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+
+      .call-to-action-container .title-image .image-left {
+        background-image: url({% static 'images/join_us_slice_1.jpg' %});
+      }
+
+      .call-to-action-container .title-image .image-mid {
+        background-image: url({% static 'images/join_us_slice_2.jpg' %});
+      }
+
+      .call-to-action-container .title-image .image-right {
+        background-image: url({% static 'images/join_us_slice_3.jpg' %});
+      }
+
+      .call-to-action {
+        text-align: center;
+      }
+
+      .call-to-action-container .call-to-action-card {
+        width: calc(100% / 3);
+        height: 100%;
+        float: left;
+        box-sizing: border-box;
+        background-color: #353DF4;
+        color: #FFF;
+        opacity: 0;
+        -webkit-transition: opacity .15s ease-in-out;
+        transition: opacity .15s ease-in-out;
+        padding: 2em;
+      }
+
+      .call-to-action-container .call-to-action-card.present {
+        background-color: #FDFC55;
+        color: #000;
+      }
+
+      .call-to-action-container .call-to-action-card.future {
+        background-color: #F0646A;
+        color: #FFF;
+      }
+
+      .call-to-action-container .call-to-action-card:hover {
+        opacity: 1;
+      }
+
+      .social-container {
+        width: 100%;
+        margin-bottom: 60px;
+      }
+
+      .social-icons {
+        width: 220px;
+        margin: auto;
+      }
+
+      .social-icon {
+        vertical-align: middle;
+      }
+
+      .social-icon#twitter {
+        height: 25px;
+        margin-right: 45px;
+      }
+
+      .social-icon#facebook {
+        height: 35px;
+        margin-right: 45px;
+      }
+
+      .social-icon#email {
+        height: 70px;
+      }
+
+      .call-to-action h1 {
+        text-transform: uppercase;
+        color: #F0646A;
+        font-size: 5em;
+        margin-top: 200px;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .call-to-action h2 {
+        text-transform: uppercase;
+        color: #FFF;
+        font-size: 5em;
+        margin-top: -15px;
+        padding-top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    {% include "GoogleAnalytics.html" %}
+    <div class="main-container">
+      <div class="title-container">
+        <div class="title">
+          <img src="{% static 'images/reconesse_database_yellow.svg' %}" />
         </div>
+        <div class="title-image">
+          <div class="image" id="past" style="z-index: 10">
+            <p>Past</p>
+          </div>
+          <div class="cover-card past" style="z-index: 11">
+            <h3>Past</h3>
+            <p>
+              Most history books taught at the primary and high-school level in the United States name only 8 women for every 100 men. Other countries display similar numbers. Our database will record stories of amazing women of the past and present who have not gotten their share in history.
+            </p>
+            <a href="/past/" class="card-link">Go to past</a>
+          </div>
+        </div>
+        <div class="title-image" id="present">
+          <div class="image" id="present" style="z-index: 8">
+            <p>Present</p>
+          </div>
+          <div class="cover-card present" style="z-index: 9">
+            <h3>Present</h3>
+            <p>
+              The GMMP's latest five-year study of women's representation in media found that females still made up less than a quarter of the people "heard, read about or seen in newspaper, television and radio news.” Furthermore, only 26% of stories in online mediums featured women as subjects.
+            </p>
+            <p>
+              By crowdsourcing content from around the world, we are able to share stories that might otherwise have gone unnoticed.
+            </p>
+            <a href="/present/" class="card-link">Go to present</a>
+          </div>
+        </div>
+        <div class="title-image" id="future">
+          <div class="image" id="future" style="z-index: 6">
+            <p>Future</p>
+          </div>
+          <div class="cover-card future" style="z-index: 7">
+            <h3>Future</h3>
+            <p>
+              Research has shown that when we invest in a future for women, all of humanity benefits. Reconesse seeks to offer women from around the world a vast network of opportunities.
+            </p>
+            <a href="/future/" class="card-link">Go to future</a>
+          </div>
+        </div>
+      </div>
+      <h4 class="tagline">
+        Stories of Amazing Women of the Past and Present
+      </h4>
+      <div class="call-to-action-container">
+        <div class="call-to-action">
+          <h1>Join the Movement.</h1>
+          <h2>Become a Reconesse.</h2>
+        </div>
+        <div class="call-to-action-card past">
+          Contribute to the Story
+          <p>
+            Reconesse is an open source platform about and for women who change history.
+          </p>
+          <p>
+            Women are underrepresented both in media and education. Help us fix that by contributing — you can alert us to ignored Reconesses past &amp; present, send us news from your communities, or you can start writing your own articles!
+          </p>
+          <a>Get in touch</a>
+        </div>
+        <div class="call-to-action-card present">
+          Collaborate with us
+          <p>
+            Do you represent a company, non-prot or NGO that is dedicaded to female empowerment?
+          </p>
+          <p>
+            Do you have conferences, programs or funds you want to connect with our audience?  We would love to collaborate with you.
+          </p>
+          <a>Get in touch</a>
+        </div>
+        <div class="call-to-action-card future">
+          Donate to our cause
+          <p>
+            Reconesse is a non-prot. We give our work to reach a simple goal: inspire tomorrow’s women by providing easy access to role models, past and present.
+          </p>
+          <p>
+            You can support that cause with a single or monthly donation.
+          </p>
+          <a>Donate</a>
+        </div>
+      </div>
     </div>
 
-    <div class="testcontent">
-        <div class="button-area" id="main">
-            <div class="button-container" onlick="/past">
-                <div class="navbutton" id="past">
-                    past
-                    <a href="/past/">
-                        <span class="link-spanner"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="button-container">
-                <div class="navbutton" id="present">
-                    present
-                    <a href="/present/">
-                        <span class="link-spanner"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="button-container">
-                <div class="navbutton" id="future">
-                    future
-                    <a href="/future/">
-                        <span class="link-spanner"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
+    <h4 class="tagline">
+      Other ways you can help? Let us know!
+    </h4>
+
+    <div class="social-container">
+      <div class="social-icons">
+        <img id="twitter" class="social-icon" src="{% static 'images/twitter_black.svg' %}" />
+        <img id="facebook" class="social-icon" src="{% static 'images/facebook_black.svg' %}"  />
+        <img id="email" class="social-icon" src="{% static 'images/email_black_fill.svg' %}"  />
+      </div>
     </div>
+  </body>
+  <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+  <script>
+    $(document).on('mouseenter', '.title-container', function () {
+      $('.title').addClass('hidden');
+    }).on('mouseleave', '.title-container', function () {
+      $('.title').removeClass('hidden');
+    });
 
-    <div class="testfooter">
-        <div><a href="/admin">ADMIN LOGIN</a></div>
-        <div class="byline-section">
-            <div class="footer-block">
-                <h4>Want to get in touch?</h4>
-                <a href="mailto:info@reconesse.org">Drop us a line!</a>
-            </div>
-            <div class="footer-spacer"></div>
-            <div class="footer-block-middle">
-                <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i
-                        class="fa fa-fw fa-twitter"></i></a>
-                <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i
-                        class="fa fa-fw fa-facebook"></i></a>
-                <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i
-                        class="fa fa-fw fa-pinterest"></i></a>
-                <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i
-                        class="fa fa-fw fa-instagram"></i></a>
-            </div>
-            <div class="footer-spacer"></div>
-            <div class="footer-block copyright-byline">
-                &copy; Copyright 2014 Reconesse Database
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
-<script type="text/javascript" src="{% static 'tooltipster/jquery.tooltipster.min.js' %}"></script>
-<script type="text/javascript">
-			$(document).ready(function() {
-	            $('#past').tooltipster({
-	            	content: $('<span class="tooltip-content"><h4>The past</h4>Something something databasey it\'s so big and full of knowledge about <strong>8 women for every 100 men</strong>. Other things do a thing with numbers. <p>&diams;<p> Our database will record stories of amazing women of the past and present who have not gotten their share in history.</span>'),
-	            	position: 'bottom',
-	            	maxWidth: 400,
-	            	arrowColor: '#0996ce',
-	            	interactive: true,
-	            });
-	            
-	            $('#present').tooltipster({
-	            	content: $('<span class="tooltip-content"><h4>Women are the untapped resource of the world</h4>Goldman Sachs has estimated that eliminating the gender gap in employment could boost GDP by a total of <strong>9%</strong> in the United States; <strong>13%</strong> in the Euro zone; and <strong>16%</strong> in Japan.<p>&diams;<p>When we invest in a future for women, all of humanity benefits. Reconesse seeks to offer women from around the world a vast network of opportunities.</span>'),
-	            	position: 'bottom',
-	            	maxWidth: 400,
-	            	arrowColor: '#0996ce',
-	            	interactive: true,
-	            });
-	            
-	            $('#future').tooltipster({
-	            	content: $('<span class="tooltip-content"><h4>We want our database to be a truly global platform</h4>By <strong>crowdsourcing</strong> content from around the world, we are able to share stories that might otherwise have gone unnoticed. <p>&diams;<p>That’s where you come in. You can write a profile on a woman forgotten by history, send us a suggestion or share opportunities and networks you know about.</span>'),
-	            	position: 'bottom',
-	            	maxWidth: 400,
-	            	arrowColor: '#0996ce',
-	            	interactive: true,
-	            });
-	        });
-            
-			function UpdateSizes() {
-                
-				if ($('.wrapper').width() > 1400) {
-					$('.testheader').css('background-size', '100% auto');
-				}
-				else {
-					var headerHeight = 'auto ' + $('.header-section').height() + 'px';
-					$('.testheader').css('background-size', headerHeight);
-				}
-				
-				var wholeHeight = $('.testouter').height();
-                var outerHeights = $('.testheader').height() + $('.testfooter').height();
-                $('.testcontent').height(wholeHeight - outerHeights);
-                
-                $(".button-area#main").each(function( index ) {
-                    var totalMinWidth=0;
-                    $(this).children().each(function( index ) { 
-                        totalMinWidth += parseInt($(this).css('min-width'));
-                    });
-                    
-                    var percentSize = 100.0;
-                    if ($(this).width() > 400)
-                    {
-                        var numChildren = $(this).children(".button-container").length;
-                        percentSize = 100.0 / numChildren;
-                    }
-                    $(this).children(".button-container").css("width", percentSize.toString() + "%");
-                });
-			};
-            
-            $(window).load(UpdateSizes);
-            $(window).resize(UpdateSizes);
-
-</script>
-</body>
+    $(document).on('mouseenter', '.call-to-action-container', function () {
+      $('.call-to-action').addClass('hidden');
+    }).on('mouseleave', '.call-to-action-container', function () {
+      $('.call-to-action').removeClass('hidden');
+    })
+  </script>
 </html>
