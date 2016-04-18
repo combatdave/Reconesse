@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load past_extras %}
 
 <!DOCTYPE html>
 
@@ -92,7 +93,17 @@
         {% endif %}
       </div>
     <div class="profile-body">
+      {{ article.content|addReferences|linebreaks }}
 
+      {% for reference in references %}
+      <div class="reference-container" id="reference-{{forloop.counter}}">
+        {% if reference.url and reference.url.strip %}
+          <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
+        {% else %}
+          <span class="reference">[{{ forloop.counter }}] {{ reference.text }}</span>
+        {% endif %}
+      </div>
+      {% endfor %}
     </div>
   </div>
 </body>
