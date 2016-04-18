@@ -14,97 +14,102 @@
 </head>
 
 <body>
-  <nav>
+  <nav class="navigation">
     <p>
       TODO
     </p>
+    <p>
+      Test
+    </p>
   </nav>
-  <h1>{{ article.title }}</h1>
-  <h2 id="lifespan">
-    (
-    {% if article.deathYearUnknown %}
-      {{ article.birthYear }}—unknown
-    {% elif article.deathYear %}
-      {{ article.birthYear }}—{{ article.deathYear }}
-    {% else %}
-      {{ article.birthYear }}—present
-    {% endif %}
-    )
-  </h2>
-  <div class="profile-container">
-    <div class="profile-metadata">
-      <div class="profile-pictures">
-        {% if images|length_is:"0" %}
-          <img src="{% static 'images/blank.gif' %}" class="main-image"></img>
-        {% else %}
-          {% for image in images %}
-            {% if forloop.first %}
-              <img src={{ image.imageField.url }} class="main-image"></img>
-            {% else %}
-              <img src={{ image.imageField.url }} class="thumbnail"></img>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      </div>
-      <div class="meta-item name">
-        {{ article.title }}
-      </div>
-      <div class="meta-item">
-        {% if article.deathYearUnknown %}
-          {{ article.birthYear }}—unknown
+  <div class="main">
+    <h1>{{ article.title }}</h1>
+    <h2 id="lifespan">
+      (
+      {% if article.deathYearUnknown %}
+        {{ article.birthYear }}—unknown
         {% elif article.deathYear %}
-          {{ article.birthYear }}—{{ article.deathYear }}
+        {{ article.birthYear }}—{{ article.deathYear }}
         {% else %}
-          {{ article.birthYear }}—present
+        {{ article.birthYear }}—present
         {% endif %}
-      </div>
-      <div class="meta-item">
-        {{ article.country.name }}
-      </div>
-      <div class="meta-item">
-        {% for summary_line in summary %}
-        <span class="summary-line">
-          {{ summary_line }}
-        </span>
-        {% endfor %}
-      </div>
-      <div class="hashtag-container">
-        {% for tag in article.getTagNames %}
-          <span class="hashtag" tag="{{tag}}">
-            #{{ tag }}
-          </span>
-        {% endfor %}
-      </div>
+        )
+      </h2>
+      <div class="profile-container">
+        <div class="profile-metadata">
+          <div class="profile-pictures">
+            {% if images|length_is:"0" %}
+            <img src="{% static 'images/blank.gif' %}" class="main-image"></img>
+            {% else %}
+            {% for image in images %}
+              {% if forloop.first %}
+                <img src={{ image.imageField.url }} class="main-image"></img>
+                {% else %}
+                <img src={{ image.imageField.url }} class="thumbnail"></img>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+              </div>
+              <div class="meta-item name">
+                {{ article.title }}
+              </div>
+              <div class="meta-item">
+                {% if article.deathYearUnknown %}
+                {{ article.birthYear }}—unknown
+                {% elif article.deathYear %}
+                {{ article.birthYear }}—{{ article.deathYear }}
+                {% else %}
+                {{ article.birthYear }}—present
+                {% endif %}
+              </div>
+              <div class="meta-item">
+                {{ article.country.name }}
+              </div>
+              <div class="meta-item">
+                {% for summary_line in summary %}
+                <span class="summary-line">
+                  {{ summary_line }}
+                </span>
+                {% endfor %}
+              </div>
+              <div class="hashtag-container">
+                {% for tag in article.getTagNames %}
+                <span class="hashtag" tag="{{tag}}">
+                  #{{ tag }}
+                </span>
+                {% endfor %}
+              </div>
 
-      <div class="related">
-        {% if relatedArticles %}
-          <div id="title">You might also be interested in:</div>
-          {% for relatedArticle in relatedArticles %}
-            <a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a>
-          {% endfor %}
-        {% endif %}
+              <div class="related">
+                {% if relatedArticles %}
+                <div id="title">You might also be interested in:</div>
+                {% for relatedArticle in relatedArticles %}
+                <a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a>
+                {% endfor %}
+                {% endif %}
 
-        {% if sameCategoryArticles %}
-          <div id="title">Also in category {{ article.category }}:</div>
-          {% for sameCategoryArticle in sameCategoryArticles %}
-            <a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a>
-          {% endfor %}
+                {% if sameCategoryArticles %}
+                <div id="title">Also in category {{ article.category }}:</div>
+                {% for sameCategoryArticle in sameCategoryArticles %}
+                <a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="profile-body">
+              {{ article.content|addReferences|linebreaks }}
+
+              {% for reference in references %}
+              <div class="reference-container" id="reference-{{forloop.counter}}">
+                {% if reference.url and reference.url.strip %}
+                <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
+                {% else %}
+                <span class="reference">[{{ forloop.counter }}] {{ reference.text }}</span>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
           </div>
-        {% endif %}
-      </div>
-    <div class="profile-body">
-      {{ article.content|addReferences|linebreaks }}
-
-      {% for reference in references %}
-      <div class="reference-container" id="reference-{{forloop.counter}}">
-        {% if reference.url and reference.url.strip %}
-          <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
-        {% else %}
-          <span class="reference">[{{ forloop.counter }}] {{ reference.text }}</span>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
   </div>
 </body>
 </html>

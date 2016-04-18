@@ -1,0 +1,48 @@
+$blue: #353DF4;
+$yellow: #FDFC55;
+$pink: #F0646A;
+
+$white: #FFF;
+$black: #000;
+
+$nav_width: 150px;
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.navigation {
+  width: $nav_width;
+  min-height: 100%;
+  background-color: $blue;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.main {
+  display: inline-block;
+  top: 0;
+  margin-left: $nav_width;
+  width: calc(100% - #{$nav_width});
+  padding: 50px;
+  box-sizing: border-box;
+
+  h1 {
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .profile-container {
+
+    .profile-metadata {
+      width: 250px;
+      float: left;
+    }
+  }
+}
