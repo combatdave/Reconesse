@@ -61,13 +61,17 @@
         {{ article.country.name }}
       </div>
       <div class="meta-item">
-        {{ article.summaryLines }}
+        {% for summary_line in summary %}
+        <span class="summary-line">
+          {{ summary_line }}
+        </span>
+        {% endfor %}
       </div>
       <div class="hashtag-container">
         {% for tag in article.getTagNames %}
-          <div class="hashtag" tag="{{tag}}">
+          <span class="hashtag" tag="{{tag}}">
             #{{ tag }}
-          </div>
+          </span>
         {% endfor %}
       </div>
 
@@ -80,7 +84,7 @@
         {% endif %}
 
         {% if sameCategoryArticles %}
-          <div id="title">Also in "{{ article.category }}":</div>
+          <div id="title">Also in category {{ article.category }}:</div>
           {% for sameCategoryArticle in sameCategoryArticles %}
             <a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a>
           {% endfor %}
