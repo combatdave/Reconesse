@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^search/$', views.Search, name="Search"),
     url(r'^articles/$', views.GetArticles, name="Articles"),
     url(r'^tagsearch/$', views.TagSearch, name="TagSearch"),
-    url(r'^(?P<slug>[^/]+)/$', views.index, name='index_article'),
+    url(r'^(?P<slug>[^/]+)/$', views.profile, name='profile'),
 )

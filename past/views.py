@@ -48,6 +48,24 @@ def index(request, slug = None):
         context['article'] = ''
     return render(request, 'past/map.html', context)
 
+def profile(request, slug):
+    context = {}
+    try:
+        context['article'] = Article.objects.get(slug = slug)
+        context['images'] = PastImage.objects\
+                                     .filter(article=context['article'])
+        context['references'] = PastReference.objects\
+                                             .filter(article=context['article'])\
+                                             .order_by('id')
+        context['summary'] = context['article'].summaryLines.split('\n')
+        relatedArticles = context['article'].relatedArticles.all().order_by('?')[:3]
+        if len(relatedArticles) != 0:
+            context['relatedArticles'] = relatedArticles
+        context['sameCategoryArticles'] = Article.objects.filter(Q(category__id=context['article'].category.id), ~Q(id=context['article'].id)).order_by('?')[:3]
+    except Exception as e:
+        context['article'] = 'failed'
+    return render(request, 'past/profile.html', context)
+
 
 def ViewArticle(request, slug):
     try:
@@ -184,7 +202,7 @@ def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, star
     diedInTimePeriod = Q(deathYear__gte=minYear) & Q(deathYear__lte=maxYear)
     overlappedTimePeriod = Q(birthYear__lt=minYear) & Q(deathYear__gt=maxYear)
     timeQuery = bornInTimePeriod | diedInTimePeriod | overlappedTimePeriod
-    
+
     fullQuery = timeQuery
 
     if keywords != ['']:
@@ -254,7 +272,7 @@ def Search(request):
     maxYear = request.POST.get("maxyear", '')
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear)
- 
+
     numByCountryCode = {}
     articlesByCountryCode = {}
     for article in matches:
@@ -265,7 +283,7 @@ def Search(request):
         if country not in articlesByCountryCode:
             articlesByCountryCode[country] = []
         articlesByCountryCode[country].append(article)
-    
+
     areas = []
     for country, num in numByCountryCode.iteritems():
         countryData = {}
