@@ -1,0 +1,95 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Reconesse Database - {{ article.title }}</title>
+
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'past/css/profile.css' %}"  />
+</head>
+
+<body>
+  <nav>
+    <p>
+      TODO
+    </p>
+  </nav>
+  <h1>{{ article.title }}</h1>
+  <h2 id="lifespan">
+    (
+    {% if article.deathYearUnknown %}
+      {{ article.birthYear }}—unknown
+    {% elif article.deathYear %}
+      {{ article.birthYear }}—{{ article.deathYear }}
+    {% else %}
+      {{ article.birthYear }}—present
+    {% endif %}
+    )
+  </h2>
+  <div class="profile-container">
+    <div class="profile-metadata">
+      <div class="profile-pictures">
+        {% if images|length_is:"0" %}
+          <img src="{% static 'images/blank.gif' %}" class="main-image"></img>
+        {% else %}
+          {% for image in images %}
+            {% if forloop.first %}
+              <img src={{ image.imageField.url }} class="main-image"></img>
+            {% else %}
+              <img src={{ image.imageField.url }} class="thumbnail"></img>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="meta-item name">
+        {{ article.title }}
+      </div>
+      <div class="meta-item">
+        {% if article.deathYearUnknown %}
+          {{ article.birthYear }}—unknown
+        {% elif article.deathYear %}
+          {{ article.birthYear }}—{{ article.deathYear }}
+        {% else %}
+          {{ article.birthYear }}—present
+        {% endif %}
+      </div>
+      <div class="meta-item">
+        {{ article.country.name }}
+      </div>
+      <div class="meta-item">
+        {{ article.summaryLines }}
+      </div>
+      <div class="hashtag-container">
+        {% for tag in article.getTagNames %}
+          <div class="hashtag" tag="{{tag}}">
+            #{{ tag }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="related">
+        {% if relatedArticles %}
+          <div id="title">You might also be interested in:</div>
+          {% for relatedArticle in relatedArticles %}
+            <a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a>
+          {% endfor %}
+        {% endif %}
+
+        {% if sameCategoryArticles %}
+          <div id="title">Also in "{{ article.category }}":</div>
+          {% for sameCategoryArticle in sameCategoryArticles %}
+            <a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a>
+          {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    <div class="profile-body">
+
+    </div>
+  </div>
+</body>
+</html>
