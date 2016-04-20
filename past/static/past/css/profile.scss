@@ -18,16 +18,6 @@ body {
   font-family: $sans_serif;
 }
 
-.navigation {
-  width: $nav_width;
-  min-height: 100%;
-  background-color: $blue;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-}
-
 .main {
   display: inline-block;
   top: 0;
