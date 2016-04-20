@@ -9,7 +9,7 @@ $sans_serif_italics: UniversLTStd-Obl;
 $sans_serif: UniversLTStd;
 
 $nav_width: 200px;
-$metadata_width: 20%;
+$metadata_width: 25%;
 $padding: 50px;
 
 body {
@@ -20,9 +20,7 @@ body {
 
 .main {
   display: inline-block;
-  top: 0;
-  margin-left: $nav_width;
-  width: calc(100% - #{$nav_width});
+  width: 100%;
   padding: $padding;
   box-sizing: border-box;
   position: relative;
@@ -36,12 +34,15 @@ body {
   }
 
   .profile-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: auto;
 
     .profile-metadata {
       width: $metadata_width;
-      position: absolute;
       top: calc(4 * $padding);
-      left: $padding;
+
+      float: left;
 
       .profile-pictures {
 
@@ -76,9 +77,11 @@ body {
     }
 
     .profile-body {
-      display: inline-block;
-      margin-left: calc(#{$metadata_width} + #{$padding});
-      width: calc(100% - #{$metadata_width});
+
+      // margin-left: calc(#{$metadata_width} + #{$padding});
+      margin-left: $padding;
+      width: calc(100% - #{$metadata_width} - #{$padding});
+      float: left;
     }
   }
 }
