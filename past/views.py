@@ -263,9 +263,14 @@ def GetArticles(request):
     minYear = searchParams.get("minyear", "")
     maxYear = searchParams.get("maxyear", "")
     startIndex = searchParams.get("startindex", 0)
+    # Default to 25 articles
     numToReturn = searchParams.get("num", 25)
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
+
+    # Attach an image to each article
+    for m in matches:
+        m['image'] = PastImage.objects.filter(article=m)[:1]
 
     response = {}
     response["query"] = searchParams
