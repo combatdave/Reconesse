@@ -372,12 +372,12 @@ function AutoSearch()
     loadData();
 }
 
-
 $('#categories-list > ol li a').click(function() {
     $(this).parent().children('ol').toggle();
-    $(this).parent().children('a').toggle();
+    $(this).parent().children('a').children('img').toggleClass('rotate');
 });
 
+$('.plus-tree').click();
 
 function DoCategorySearch()
 {
@@ -557,4 +557,9 @@ $(document).ready(function() {
 $(document).on('keydown', function(e) {
   if (e.keyCode == 27)
     $('.md-overlay').click();
+});
+
+$('#filter-search').on('click', function () {
+  $('#grid').toggleClass('center');
+  $('#filter').toggleClass('hide');
 });
