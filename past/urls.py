@@ -5,7 +5,7 @@ from past import views
 
 urlpatterns = patterns('',
     url(r'^$', views.feed, name='feed'),
-	url(r'map/^$', views.index, name='index'),
+	url(r'^map/$', views.index, name='index'),
     url(r'^feed/$', views.feed, name='feed'),
     url(r'^/perma/(?P<slug>[^/]+)/$', views.ViewArticle, name='ViewArticle'),
     url('mapdata.json', views.GetMapData, name='GetMapData'),

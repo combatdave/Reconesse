@@ -19,7 +19,7 @@ var ModalEffects = (function() {
 			}
 
 			function removeModalHandler() {
-				removeModal( classie.has( el, 'md-setperspective' ) ); 
+				removeModal( classie.has( el, 'md-setperspective' ) );
 			}
 
 			el.addEventListener( 'click', function( ev ) {
@@ -47,8 +47,8 @@ function resizeScrollWrappers()
 	var height = $(document).height();
 	var bodyheight = height / 2 + 20;
 	var bh2 = height * 0.7;
-	scrollWrappers.height(bh2 - 120);
-	searchResultWrappers.height(bh2 - 60);
+	scrollWrappers.height(bh2);
+	searchResultWrappers.height(bh2);
 	smallScrollWrappers.height(bh2 - 224);
 
 	articleContent.height(height * 0.8 - 52);

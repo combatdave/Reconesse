@@ -96,10 +96,9 @@
 	margin-top: 10px;
 	padding: 1em;
 	overflow-y: auto;
-	background: #FF7364;
-	color: #FFF;
+	background: #FFF;
+	color: #000;
 	/* iOS inertia */
-	/*border: 1px solid #777;*/
 	-webkit-overflow-scrolling: touch;
 }
 
@@ -117,7 +116,7 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #ffc5bd;
+    background: #FFF;
 }
 
 .content-row {
@@ -130,7 +129,7 @@
 .md-content {
 	color: #000;
 	/*background: #e74c3c;*/
-	background: #ffc5bd;
+	background: #FFF;
 	position: relative;
 	/*border-radius: 3px;*/
 	margin: 0 auto;
@@ -145,7 +144,6 @@
 	font-weight: 300;
 	opacity: 0.8;
 	/*background: #66ffcc;*/
-	border-radius: 3px 3px 0 0;
 }
 
 .md-content > div {
@@ -226,7 +224,7 @@
 	width: 12px;
 	height: 12px;
 	border-radius: 6px;
-	background-color: #FF8675;
+	background-color: #FFF;
 }
 
 .md-close-button:hover,
@@ -259,7 +257,7 @@
 .bookmark-tag,
 .search-tag {
     border: none;
-	background: #FF7364;
+	background: #FFF;
 	color: #fff;
 	/*font-family: 'Lato', Calibri, Arial, sans-serif;*/
 	font-size: 1em;
@@ -268,21 +266,21 @@
 	cursor: pointer;
 	display: inline-block;
 	margin-right: 20px;
-  
+
     width: 48px;
     height: 48px;
-    
+
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
-    
+
     border-bottom: 1px solid #FF7364;
 
     /* This makes room for the triangle */
 
-    
+
     position: relative;
-    
+
     color: white;
     font-weight: 300;
     font-size: 22px;
@@ -384,7 +382,7 @@
 		width: 100%;
 		min-width: auto;
 		min-height: auto;
-		padding: 1em; 
+		padding: 1em;
 	}
 
 	.column p {
