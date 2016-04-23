@@ -7,11 +7,20 @@
   // Setup
   window.onscroll = function(ev) {
     if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-      loadArticles(offset, pageSize);
+      loadArticles(function (res) {
+        if (!atEnd) {
+          offset += res.length;
+        }
+        if (res.length < pageSize) {
+          atEnd = true;
+        }
+      });
     }
   };
 
-  var searchTimeout = null;
+  var searchTimeout = null,
+      selectedCategories = [],
+      selectedCountries = [];
 
   // Pagination vars
   var offset = 0,
@@ -51,6 +60,8 @@
         $('#select-all-countries').prop('checked', true);
       }
     }
+
+    checkboxSearch();
   });
 
   $('#categories-list > ol li a').click(function() {
@@ -63,7 +74,7 @@
 
   function categorySearch() {
     // Save selected categories
-    newSelectedCategories = [];
+    var newSelectedCategories = [];
     $('.categories-checkbox').each( function(event) {
       if ($(this).attr('id') != 'select-all-categories') {
         var categoryName = $(this).attr('value');
@@ -80,12 +91,31 @@
       window.clearTimeout(searchTimeout);
     }
     searchTimeout = window.setTimeout(autoSearch, 500);
-    $('#searchloadingtext').text('Please wait...');
+  }
+
+  function checkboxSearch() {
+    var newSelectedCountries = [];
+    $('.countries-checkbox').each(function() {
+      var countryCode = $(this).attr('value');
+      var checked = $(this).is(':checked');
+      if (checked) {
+        newSelectedCountries.push(countryCode);
+      }
+    });
+    selectedCountries = newSelectedCountries;
+    if (searchTimeout !== null) {
+      window.clearTimeout(searchTimeout);
+    }
+    searchTimeout = window.setTimeout(autoSearch, 500);
   }
 
   function autoSearch () {
+    offset = 0;
+    atEnd = false;
+    $('#grid').empty();
+    salvattore.init();
     searchTimeout = null;
-    loadArticles();
+    loadArticles(function () { return; });
   }
 
 
@@ -110,10 +140,7 @@
         checkParent(parentCheckbox);
       }
     }
-
-    categorySearch();
   }
-
 
   $('.categories-checkbox').on('click', function(e) {
     var modified = this;
@@ -122,6 +149,7 @@
     });
 
     checkParent(this);
+    categorySearch();
   });
 
   function renderCards(cards) {
@@ -138,26 +166,24 @@
     }));
   }
 
-  function loadArticles() {
+  function loadArticles(callback) {
     $.ajax({
       url: '/past/articles/',
       method: 'POST',
       data: {
         query: JSON.stringify({
           startindex: offset,
-          num: pageSize
+          num: pageSize,
+          categories: selectedCategories,
+          countrycodes: selectedCountries
         })
       },
       success: function (data) {
-        offset += pageSize;
-        console.log(offset);
-        if (data.results.length < pageSize) {
-          atEnd = true;
-        }
         renderCards(data.results);
+        callback(data.results);
       }
     });
   }
 
-  loadArticles();
+  loadArticles(function () { return; });
 })();

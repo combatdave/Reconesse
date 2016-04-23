@@ -38,6 +38,9 @@ nav#filter {
   ol {
     margin-top: 0;
     margin-bottom: 10px;
+    li {
+      margin-bottom: 6px;
+    }
   }
 
   li {
@@ -45,7 +48,7 @@ nav#filter {
     margin-left: -40px;
 
     &.cat-li {
-      margin-bottom: -10px;
+      margin-bottom: -4px;
     }
 
     label {
@@ -142,6 +145,10 @@ a.plus-tree img {
   &.rotate {
     transform: rotate(0);
   }
+}
+
+.categories-checkbox {
+  margin-top: 10px;
 }
 
 @media screen and (max-width: 480px){
