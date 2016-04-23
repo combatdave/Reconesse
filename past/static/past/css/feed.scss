@@ -54,6 +54,14 @@ nav.filter {
 #grid {
   margin-left: $nav_width;
   width: calc(100$ - #{$nav_width});
+
+  div {
+    padding: 15px;
+    box-sizing: border-box;
+    img {
+      width: 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 480px){
@@ -78,7 +86,6 @@ nav.filter {
 		content: '4 .column.size-1of4';
 	}
 }
-
 
 .column { float: left; }
 .size-1of1 { width: 100%; }
