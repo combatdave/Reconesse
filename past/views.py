@@ -66,7 +66,7 @@ def profile(request, slug):
         context['article'] = 'failed'
     return render(request, 'past/profile.html', context)
 
-def wall(request):
+def feed(request):
     yearData = GetArticleYearRanges()
 
     context = {}
@@ -75,7 +75,7 @@ def wall(request):
     context["categories"] = Category.objects.GetTree()
     context["countries"] = get_all_countries()
 
-    return render(request, 'past/wall.html', context)
+    return render(request, 'past/feed.html', context)
 
 
 def ViewArticle(request, slug):
@@ -263,9 +263,14 @@ def GetArticles(request):
     minYear = searchParams.get("minyear", "")
     maxYear = searchParams.get("maxyear", "")
     startIndex = searchParams.get("startindex", 0)
-    numToReturn = searchParams.get("num", 0)
+    # Default to 25 articles
+    numToReturn = searchParams.get("num", 25)
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
+
+    # Attach an image to each article
+    for m in matches:
+        m['image'] = PastImage.objects.filter(article=m)[:1]
 
     response = {}
     response["query"] = searchParams
