@@ -199,6 +199,7 @@ def _ArticleListToListOfDicts(profiles):
                 birth=m.birthYear,
                 death=m.deathYear,
                 deathYearUnknown=m.deathYearUnknown,
+                summary=m.summaryLines,
                 tags=[str(t) for t in m.tags.all()]) for m in profiles]
 
 
