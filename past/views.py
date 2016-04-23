@@ -66,7 +66,7 @@ def profile(request, slug):
         context['article'] = 'failed'
     return render(request, 'past/profile.html', context)
 
-def wall(request):
+def feed(request):
     yearData = GetArticleYearRanges()
 
     context = {}
@@ -75,7 +75,7 @@ def wall(request):
     context["categories"] = Category.objects.GetTree()
     context["countries"] = get_all_countries()
 
-    return render(request, 'past/wall.html', context)
+    return render(request, 'past/feed.html', context)
 
 
 def ViewArticle(request, slug):
