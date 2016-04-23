@@ -1,0 +1,52 @@
+$blue: #353DF4;
+$yellow: #FDFC55;
+$pink: #F0646A;
+
+$white: #FFF;
+$black: #000;
+
+$sans_serif_italics: UniversLTStd-Obl;
+$sans_serif: UniversLTStd;
+
+$nav_width: 300px;
+
+body {
+  font-family: $sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+nav.filter {
+  background-color: $blue;
+  color: $white;
+  width: $nav_width;
+  padding: 35px;
+  box-sizing: border-box;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: scroll;
+
+  h3 {
+    margin-top: 45px;
+    text-transform: uppercase;
+  }
+
+  ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  li {
+    list-style:none;
+    margin-left: -40px;
+
+    &.cat-li {
+      margin-bottom: -10px;
+    }
+
+    label {
+    }
+  }
+}
