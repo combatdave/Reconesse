@@ -66,6 +66,17 @@ def profile(request, slug):
         context['article'] = 'failed'
     return render(request, 'past/profile.html', context)
 
+def wall(request):
+    yearData = GetArticleYearRanges()
+
+    context = {}
+    context["minYear"] = yearData[0]
+    context["maxYear"] = yearData[1]
+    context["categories"] = Category.objects.GetTree()
+    context["countries"] = get_all_countries()
+
+    return render(request, 'past/wall.html', context)
+
 
 def ViewArticle(request, slug):
     try:
