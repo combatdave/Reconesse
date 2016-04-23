@@ -266,7 +266,6 @@ def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, star
 
 @csrf_exempt
 def GetArticles(request):
-
     searchJSON = request.POST.get("query", "{}")
     searchParams = json.loads(searchJSON)
 

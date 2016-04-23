@@ -128,6 +128,10 @@ div#grid {
   }
 }
 
+.select-all {
+  margin-bottom: $grid_margin;
+}
+
 @media screen and (max-width: 480px){
 	#grid[data-columns]::before {
 		content: '1 .column.size-1of1';
