@@ -20,29 +20,32 @@
     <img src="{% static 'logo_svg/white_logo.svg' %}" />
 
     <h3>Categories</h3>
-    <label class="categories-label">
-      <input class="select-all" id="select-all-categories" type="checkbox" value="All" />
-      Select All
-    </label>
-    {% for cat, hasChildren in categories|nestCategories %}
-      {% if cat == "startli" %}
-        <li class="cat-li">
-      {% elif cat == "stopli" %}
-        </li>
-      {% elif cat == "startol" %}
-        <ol>
-      {% elif cat == "stopol" %}
-        </ol>
-      {% else %}
+    <div id="categories-list">
+      <label class="categories-label">
+        <input class="select-all" id="select-all-categories" type="checkbox" value="All" />
+        Select All
+      </label>
+      {% for cat, hasChildren in categories|nestCategories %}
+        {% if cat == "startli" %}
+          <li class="cat-li">
+        {% elif cat == "stopli" %}
+          </li>
+        {% elif cat == "startol" %}
+          <ol>
+        {% elif cat == "stopol" %}
+          </ol>
+        {% else %}
 
-        {% if hasChildren %}<a class="plus-tree"><span class="glyphicon glyphicon-chevron-right" style="line-height: -10px;"></span></a>
-          <a class="plus-tree" style="display: none;"><span class="glyphicon glyphicon-chevron-down"></span></a>{% endif %}
+          {% if hasChildren %}
+            <a class="plus-tree"><img src="{% static 'images/filter_menu_arrow_white.svg' %}"></img></a>
+          {% endif %}
           <label class="categories-label">
             <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
             {{ cat }}
           </label>
         {% endif %}
-    {% endfor %}
+      {% endfor %}
+    </div>
 
     <h3>Countries</h3>
     <ol>

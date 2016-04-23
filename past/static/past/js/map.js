@@ -9,8 +9,8 @@ AmCharts.ready(function() {
 
     var dataProvider = {
         map: 'worldLow',
-        getAreasFromMap: true,          
-    }; 
+        getAreasFromMap: true,
+    };
     // pass data provider to the map object
     map.dataProvider = dataProvider;
 
@@ -44,13 +44,13 @@ AmCharts.ready(function() {
         showCountryArticles(e.mapObject.id);
         //ShowMenu(e);
     });
-    
+
     loadData();
 
     map.dataProvider.zoomLongitude = 0;
     map.dataProvider.zoomLatitude = 24;
     map.dataProvider.zoomLevel = 1.2;
-    
+
     // write the map to container div
     map.write('mapdiv');
 });
@@ -83,7 +83,7 @@ function showCountryArticles(countryCode)
         {
             argv.tags += '#' + articles[i].tags[j] + ' ';
         }
-        articleList.append(person_template(argv));   
+        articleList.append(person_template(argv));
     }
     $('#country_name').text(countries[countryCode]);
     $('#article-list-button').click();
@@ -197,11 +197,11 @@ function populateAllEntries()
             keys.push(key);
         }
     }
-    
+
     keys.sort();
-    
+
     len = keys.length;
-    
+
     for (var j = 0; j < keys.length; ++j)
     {
         var obj = articlesByCountry[keys[j]];
@@ -288,7 +288,7 @@ function applySettings(s)
     {
         keywords = s.keywords;
         var kwString = '';
-        for (var i = 0; i < keywords.lenght; ++i)
+        for (var i = 0; i < keywords.length; ++i)
         {
             kwString += (keywords[i] + ', ');
         }
@@ -392,7 +392,7 @@ function DoCategorySearch()
         }
     });
     selectedCategories = newSelectedCategories;
-    
+
     // Now do the search
     if (searchTimeout != null)
     {
@@ -437,7 +437,7 @@ $('.categories-checkbox').on('click', function(e)
 {
     var modified = this;
     $(this).parent().parent().find('.categories-checkbox').each(function() {
-        
+
         this.checked = modified.checked;
     });
 
@@ -445,16 +445,16 @@ $('.categories-checkbox').on('click', function(e)
 });
 
 
-$('#select-all-countries').on('click', function(e) { 
+$('#select-all-countries').on('click', function(e) {
     if(this.checked) {
         $('.countries-checkbox').each(function() {
-            this.checked = true;                        
+            this.checked = true;
         });
     }
     else
     {
         $('.countries-checkbox').each(function() {
-            this.checked = false;                        
+            this.checked = false;
         });
     }
     saveCheckboxes();
@@ -659,7 +659,7 @@ $(document).ready(function()
         {
             saveSettings();
         }
-            
+
         storage.settings = JSON.parse(localStorage['settings']);
         //applySettings(storage.settings);
     }

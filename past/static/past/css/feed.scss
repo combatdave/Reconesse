@@ -132,6 +132,18 @@ div#grid {
   margin-bottom: $grid_margin;
 }
 
+a.plus-tree img {
+  height: 12px;
+  margin-left: -11px;
+  cursor: pointer;
+  transform: translateY(2px);
+  transform: rotate(90deg);
+  transition: transform .15s ease-in-out;
+  &.rotate {
+    transform: rotate(0);
+  }
+}
+
 @media screen and (max-width: 480px){
 	#grid[data-columns]::before {
 		content: '1 .column.size-1of1';
