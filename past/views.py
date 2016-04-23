@@ -263,7 +263,7 @@ def GetArticles(request):
     minYear = searchParams.get("minyear", "")
     maxYear = searchParams.get("maxyear", "")
     startIndex = searchParams.get("startindex", 0)
-    numToReturn = searchParams.get("num", 0)
+    numToReturn = searchParams.get("num", 25)
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
 
