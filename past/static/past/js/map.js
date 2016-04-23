@@ -9,18 +9,18 @@ AmCharts.ready(function() {
 
     var dataProvider = {
         map: 'worldLow',
-        getAreasFromMap: true,          
-    }; 
+        getAreasFromMap: true,
+    };
     // pass data provider to the map object
     map.dataProvider = dataProvider;
 
     map.areasSettings = {
         autoZoom: false,
         selectable: true,
-        color: '#FFFFCC',
-        colorSolid: '#FFCC33',
-        outlineColor: '#33bcff',
-        rollOverOutlineColor: '#FFFFFF',
+        color: '#FFFFFF',
+        colorSolid: '#777777',
+        outlineColor: '#353DF4',
+        rollOverOutlineColor: '#000000',
     };
 
     var zoomColor = '#FFFF00';
@@ -44,13 +44,13 @@ AmCharts.ready(function() {
         showCountryArticles(e.mapObject.id);
         //ShowMenu(e);
     });
-    
+
     loadData();
 
     map.dataProvider.zoomLongitude = 0;
     map.dataProvider.zoomLatitude = 24;
     map.dataProvider.zoomLevel = 1.2;
-    
+
     // write the map to container div
     map.write('mapdiv');
 });
@@ -63,6 +63,7 @@ function showCountryArticles(countryCode)
     for (var i = 0; i < articles.length; ++i)
     {
         var argv = {
+            img_url     : articles[i].image,
             slug        : articles[i].slug,
             name        : articles[i].name,
             yearFrom    : GetLabelForYear(articles[i].birth),
@@ -83,7 +84,7 @@ function showCountryArticles(countryCode)
         {
             argv.tags += '#' + articles[i].tags[j] + ' ';
         }
-        articleList.append(person_template(argv));   
+        articleList.append(person_template(argv));
     }
     $('#country_name').text(countries[countryCode]);
     $('#article-list-button').click();
@@ -197,17 +198,18 @@ function populateAllEntries()
             keys.push(key);
         }
     }
-    
+
     keys.sort();
-    
+
     len = keys.length;
-    
+
     for (var j = 0; j < keys.length; ++j)
     {
         var obj = articlesByCountry[keys[j]];
         for (var i = 0; i < obj.length; ++i)
         {
             var argv = {
+                img_url: obj[i].image,
                 slug: obj[i].slug,
                 name: obj[i].name,
                 yearFrom: GetLabelForYear(obj[i].birth),
@@ -288,7 +290,7 @@ function applySettings(s)
     {
         keywords = s.keywords;
         var kwString = '';
-        for (var i = 0; i < keywords.lenght; ++i)
+        for (var i = 0; i < keywords.length; ++i)
         {
             kwString += (keywords[i] + ', ');
         }
@@ -392,7 +394,7 @@ function DoCategorySearch()
         }
     });
     selectedCategories = newSelectedCategories;
-    
+
     // Now do the search
     if (searchTimeout != null)
     {
@@ -437,7 +439,7 @@ $('.categories-checkbox').on('click', function(e)
 {
     var modified = this;
     $(this).parent().parent().find('.categories-checkbox').each(function() {
-        
+
         this.checked = modified.checked;
     });
 
@@ -445,16 +447,16 @@ $('.categories-checkbox').on('click', function(e)
 });
 
 
-$('#select-all-countries').on('click', function(e) { 
+$('#select-all-countries').on('click', function(e) {
     if(this.checked) {
         $('.countries-checkbox').each(function() {
-            this.checked = true;                        
+            this.checked = true;
         });
     }
     else
     {
         $('.countries-checkbox').each(function() {
-            this.checked = false;                        
+            this.checked = false;
         });
     }
     saveCheckboxes();
@@ -502,81 +504,6 @@ function saveCheckboxes()
     searchTimeout = window.setTimeout(AutoSearch, 500);
 }
 
-// =================
-// BOOKMARK HANDLING
-// =================
-
-$('#list-country-articles').on('click', '.bookmark-container', function(e)
-{
-    e.preventDefault();
-    e.stopPropagation();
-    var data = $(this).attr('bookmark-data');
-    var obj = JSON.parse(data);
-    saveBookmarks(obj);
-});
-
-$('#list-bookmark-entries').on('click', '.bookmark-container', function(e)
-{
-    e.preventDefault();
-    e.stopPropagation();
-    var data = $(this).attr('bookmark-data');
-    var obj = JSON.parse(data);
-    removeBookmark(obj.slug);
-});
-
-function saveBookmarks(obj)
-{
-    if (obj)
-    {
-        if (!slugInBookmarks(obj.slug)) storage.bookmarks.push(obj);
-    }
-    if (storage.support())
-        localStorage['bookmarks'] = JSON.stringify(storage.bookmarks);
-    renderBookmarks();
-}
-
-function removeBookmark(slug)
-{
-    for (var i = 0; i < storage.bookmarks.length; ++i)
-    {
-        if (storage.bookmarks[i].slug == slug)
-        {
-            storage.bookmarks.splice(i, 1);
-            saveBookmarks();
-        }
-    }
-    renderBookmarks();
-}
-
-function slugInBookmarks(slug)
-{
-    for (var i = 0; i < storage.bookmarks.length; ++i)
-    {
-        if (storage.bookmarks[i].slug == slug)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-function renderBookmarks()
-{
-    var node = $('#list-bookmark-entries');
-    node.empty();
-    for (var i = 0; i < storage.bookmarks.length; ++i)
-    {
-        var obj = storage.bookmarks[i];
-        var argv = {
-            name: obj.name,
-            yearFrom: obj.birth,
-            yearTo: obj.death,
-            slug: obj.slug
-        };
-        node.append(bookmark_template(argv));
-    }
-}
-
 // ========
 // KEYWORDS
 // ========
@@ -603,11 +530,6 @@ $('.md-close-button').on('click', function()
     $('.md-overlay').click();
 });
 
-$('.md-back-button').on('click', function()
-{
-    window.history.go(-1);
-});
-
 $('.md-forward-button').on('click', function()
 {
     window.history.go(1);
@@ -616,60 +538,23 @@ $('.md-forward-button').on('click', function()
 function parseKeywords(kw)
 {
     keywords = kw.split(/(?:,| |;)+/);
-    if (searchTimeout != null)
+    if (searchTimeout !== null)
     {
         window.clearTimeout(searchTimeout);
     }
     searchTimeout = window.setTimeout(AutoSearch, 500);
 }
 
-// ============================
-// SINGLE ARTICLE VIEW SPECIFIC
-// ============================
-// If we are looking at a single article, we open the corresponding modal window
-(function()
-{
-    var btn = $('#article-button');
-    if (btn)
-    {
-        btn.click();
-    }
-})();
-
 // ===================
 // TEMPLATES AND SETUP
 // ===================
-var person_template, bookmark_template;
-$(document).ready(function()
-{
-    person_template = _.template($('#person-list-entry').html());
-    bookmark_template = _.template($('#bookmark').html());
-
-    // BOOKMARKS
-    if (storage.support())
-    {
-        // If localStorage is supported by client browser
-        if (typeof localStorage['bookmarks'] === 'undefined')
-            localStorage['bookmarks'] = JSON.stringify([]);
-
-        storage.bookmarks = JSON.parse(localStorage['bookmarks']);
-
-
-        if (typeof localStorage['settings'] === 'undefined')
-        {
-            saveSettings();
-        }
-            
-        storage.settings = JSON.parse(localStorage['settings']);
-        //applySettings(storage.settings);
-    }
-    renderBookmarks();
-
-    $('#categories-list > ol li a').parent().find('ol').hide();
+var person_template;
+$(document).ready(function() {
+  person_template = _.template($('#person-list-entry').html());
+  $('#categories-list > ol li a').parent().find('ol').hide();
 });
 
-$(document).on('keydown', function(e)
-{
-    if (e.keyCode == 27)
-        $('.md-overlay').click();
-})
+$(document).on('keydown', function(e) {
+  if (e.keyCode == 27)
+    $('.md-overlay').click();
+});

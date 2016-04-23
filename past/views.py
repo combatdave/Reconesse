@@ -266,19 +266,20 @@ def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, star
 
 @csrf_exempt
 def GetArticles(request):
-
     searchJSON = request.POST.get("query", "{}")
     searchParams = json.loads(searchJSON)
 
     categories = searchParams.get("categories", [])
     countrycodes = searchParams.get("countrycodes", [])
+
+    print(categories)
+    print(countrycodes)
     keywords = searchParams.get("keywords", [])
     tags = searchParams.get("tags", [])
     minYear = searchParams.get("minyear", "")
     maxYear = searchParams.get("maxyear", "")
     startIndex = searchParams.get("startindex", 0)
-    # Default to 25 articles
-    numToReturn = searchParams.get("num", 25)
+    numToReturn = searchParams.get("num", 0)
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
 

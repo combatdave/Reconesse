@@ -1,0 +1,95 @@
+{% load staticfiles %}
+{% load past_extras %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>Reconesse Database - Article Feed</title>
+
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+  <link rel="icon" type="image/png" href="{% static 'images/faviconlogo.png' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'fonts/webfonts.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'past/css/feed.css' %}"  />
+</head>
+
+<body>
+  <nav id="filter" class="hide">
+    <img src="{% static 'logo_svg/white_logo.svg' %}" />
+
+    <h3>Categories</h3>
+    <div id="categories-list">
+      <label class="categories-label">
+        <input class="select-all" id="select-all-categories" type="checkbox" value="All" />
+        Select All
+      </label>
+      {% for cat, hasChildren in categories|nestCategories %}
+        {% if cat == "startli" %}
+          <li class="cat-li">
+        {% elif cat == "stopli" %}
+          </li>
+        {% elif cat == "startol" %}
+          <ol>
+        {% elif cat == "stopol" %}
+          </ol>
+        {% else %}
+
+          {% if hasChildren %}
+            <a class="plus-tree"><img src="{% static 'images/filter_menu_arrow_white.svg' %}"></img></a>
+          {% endif %}
+          <label class="categories-label">
+            <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
+            {{ cat }}
+          </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <h3>Countries</h3>
+    <ol>
+      <li>
+        <label>
+          <input class="select-all" id="select-all-countries" type="checkbox">
+          Select All
+        </label>
+      </li>
+    {% for c in countries %}
+      <li>
+        <label>
+          <input class="countries-checkbox" type="checkbox" value="{{c.code}}" />
+          {{c.name}}
+        </label>
+      </li>
+    {% endfor %}
+    </ol>
+  </nav>
+
+  <nav id="top">
+    <img src="{% static 'logo_svg/blue_logo.svg' %}" />
+    <span class="active" id="filter-search">Filter Search</span>
+    <span><a href="/past/map/" class="active" id="map">Map</a></span>
+    <span id="slash-from-guns-n-roses">&nbsp;/&nbsp;</span>
+    <span id="feed">Feed</span>
+  </nav>
+
+  <div id="grid" class="center" data-columns>
+  </div>
+
+  <!-- Templates -->
+  <script type="text/template" id="profile-card-template">
+    <img src="<%- image %>" />
+    <h4><%- name %></h4>
+    <p>
+      <%- summary %>
+      <a href="<%- url %>">[Read more]</a>
+    </p>
+  </script>
+  <!-- Dependencies -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
+  <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'salvattore/salvattore.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'past/js/feed.js' %}"></script>
+</body>
+</html>

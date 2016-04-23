@@ -11,7 +11,7 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">-->
     <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css'>
 
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"/>
@@ -20,6 +20,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bonsai/jquery.bonsai.css' %}" />
 
     <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/webfonts.css' %}" />
 
     <link rel="stylesheet" type="text/css" href="{% static 'past/css/map.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'past/css/modal_window.css' %}" />
@@ -32,290 +34,27 @@
 
 <body>
     {% include "GoogleAnalytics.html" %}
-
-    <div class="menu-container">
-        <div class="mod md-trigger search-tag" data-modal="search-panel"><span class="glyphicon glyphicon-search"></span></div>
-        <div class="mod md-trigger bookmark-tag" data-modal="bookmark-list"><span class="glyphicon glyphicon-plus-sign"></span></div>
-    </div>
     <div id="mapdiv"></div>
 
-    <div class="barfloat">
-        <div class="container" style="position: relative;">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="barcontent yearcontainer minYear"></div>
-                    <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
-                    <div class="barcontent yearcontainer maxYear"></div>
-                </div>
-                <!--
-                <div class="col-md-4">
-                    <div style="display: block; margin-left: auto; margin-right: auto; width:330px;">
-                        <div class="barcontent barbuttoncontainer">
-                            <div class="barbutton" id="present">
-                                PRESENT
-                            </div>
-                        </div>
-                        <div class="barcontent barbuttoncontainer">
-                            <div class="barbutton" id="future">
-                                FUTURE
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                -->
-            </div>
-        </div>
-        <!-- <center><div id="yearDisplay">All years</div></center> -->
-    </div>
-    <div class="md-modal md-effect-1" id="search-panel">
-        <div class="md-content">
-            <div class="md-top-bar">
-            <div class="md-close-button" title="Close">
-            </div>
-        </div>
-        <div class="md-scroll-wrapper search-result-wrapper light-red">
-            <div class="row light-red">
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="md-scroll-wrapper">
-                        <div id="categories-list">
-                            <h4>Categories</h4>
-                            <div class="delimiter"></div>
-                            <label class="categories-label">
-                                <input class="categories-checkbox" id="select-all-categories" type="checkbox" value="All" />
-                                Select All
-                            </label>
-                            <hr style="border-top: dotted 2px;" />
-
-                            {% for cat, hasChildren in categories|nestCategories %}
-                                {% if cat == "startli" %}
-                                <li>
-                                {% elif cat == "stopli" %}
-                                </li>
-                                {% elif cat == "startol" %}
-                                <ol>
-                                {% elif cat == "stopol" %}
-                                </ol>
-                                {% else %}
-
-                                    {% if hasChildren %}<a class="plus-tree"><span class="glyphicon glyphicon-chevron-right" style="line-height: -10px;"></span></a>
-                                    <a class="plus-tree" style="display: none;"><span class="glyphicon glyphicon-chevron-down"></span></a>{% endif %}
-                                    <label class="categories-label">
-                                        <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
-                                        {{ cat }}
-                                    </label>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-
-                    <div class="md-scroll-wrapper">
-                        <div>
-                            <h4>Countries</h4>
-                            <div class="delimiter"></div>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input class="test" id="select-all-countries" type="checkbox">
-                                    Select All
-                                </label>
-                                <hr style="border-top: dotted 2px;" />
-                            </li>
-
-                            {% for c in countries %}
-                            <li>
-                                <label>
-                                    <input class="countries-checkbox" type="checkbox" value="{{c.code}}" />
-                                    {{c.name}}
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-
-                    <div class="md-wrapper">
-                        <div>
-                            <div class="barcontent yearcontainer"></div>
-                            <div class="barcontent" id="slidercontainer"><div class="sliderbar"></div></div>
-                            <div class="barcontent yearcontainer"></div>
-                        </div>
-                        <div class="text-center">
-                            <span class="minYear"></span> - <span class="maxYear"></span>
-                        </div>
-
-                    </div>
-                    <div class="md-scroll-wrapper-small" style="margin-top: 30px;">
-                        <input type="text" class="form-control pink-input" id="keyword-box" placeholder="Keywords, comma separated"></input>
-                        <div class="delimiter" style="margin: 1em 0;"></div>
-                        <div class="all-entries">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="searchloadingtext"></div>
-                <!--<button class="mod md-close">Close me!</button>-->
-            </div>
-        </div>
-        </div>
-    </div>
-    {% if article %}
-    <div class="md-modal md-effect-1 article-modal" id="article-panel">
-        <div class="md-content">
-            <div class="md-top-bar">
-                <div class="md-close-button" title="Close">
-                </div>
-                <div class="md-back-button" title="Back">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </div>
-                <div class="md-forward-button" title="Forward">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-            </div>
-            <div class="article-content">
-            <div class="row content-row" style="background-color: #FFF;">
-
-                <div class="col-sm-3 article-info">
-                    <div>
-                    <h4 style="text-transform: uppercase;">{{ article.title }}</h4>
-                <h4>
-                    {% if article.deathYearUnknown %}
-                    {{ article.birthYear }}-unknown
-                    {% elif article.deathYear %}
-                    <span id="birthYear">{{ article.birthYear }}</span>-<span id="deathYear">{{ article.deathYear }}</span>
-                    {% else %}
-                    {{ article.birthYear }}-present
-                    {% endif %}
-                </h4>
-                <div class="delimiter"></div>
-                    <div class="profilepictures">
-                        {% if images|length_is:"0" %}
-                        <img src="{% static 'images/blank.gif' %}" class="mainimage"></img>
-                        {% else %}
-                        {% for image in images %}
-                        {% if forloop.first %}
-                        <img src={{ image.imageField.url }} class="mainimage"></img>
-                        {% else %}
-                        <!-- TODO: Style additional thumbnails -->
-                        <img src={{ image.imageField.url }} class="thumbnail"></img>
-                        {% endif %}
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="country">{{ article.country.name }}</div>
-
-                    {% for tag in article.getTagNames %}
-                    <div class="hashtag-container">
-                        <div class="hashtag" tag="{{tag}}">
-                            #{{ tag }}
-                        </div>
-                    </div>
-                    {% endfor %}
-
-
-                    <div class="delimiter" style="margin: 1.5em 0 0 0;"></div>
-
-                        <div class="related">
-                            {% if relatedArticles %}
-                            <div id="title">You might also be interested in:</div>
-                            {% for relatedArticle in relatedArticles %}
-                              <a href="/past/{{ relatedArticle.slug }}" class="related-article">{{ relatedArticle.title }}</a>
-                            {% endfor %}
-                        </br>
-                        {% endif %}
-
-                        {% if sameCategoryArticles %}
-                          <div id="title">Also in "{{ article.category }}":</div>
-                          {% for sameCategoryArticle in sameCategoryArticles %}
-                            <a href="/past/{{ sameCategoryArticle.slug }}/" class="related-article">{{ sameCategoryArticle.title }}</a>
-                          {% endfor %}
-                        {% endif %}
-
-                      </div>
-            </div>
-
-            </div>
-            <div class="col-sm-9" style="padding-right: 0;">
-                <!--
-                <div id="sharecontainer" style="display:block;">
-                    <a href="https://twitter.com/Reconesse" target="_blank" class="social-icon social-twitter"><i class="fa fa-fw fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/reconesse" target="_blank" class="social-icon social-facebook"><i class="fa fa-fw fa-facebook"></i></a>
-                    <a href="http://www.pinterest.com/reconesse/" target="_blank" class="social-icon social-pinterest"><i class="fa fa-fw fa-pinterest"></i></a>
-                    <a href="http://instagram.com/reconessed" target="_blank" class="social-icon social-instagram"><i class="fa fa-fw fa-instagram"></i></a>
-                </div>
-                -->
-
-                    <div class="profiletext">
-                        <ul>
-                            {% for summaryLine in summary %}
-                            <li class="summary-line">{{ summaryLine}}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="delimiter grey"></div>
-                    {{ article.content|addReferences|linebreaks }}
-                    <div class="delimiter red" style="width: 50%; margin-bottom: 1.5em;"></div>
-                    {% for reference in references %}
-                    <div class="row reference-container" id="reference-{{forloop.counter}}">
-                        {% if reference.url and reference.url.strip %}
-                        <span class="reference">[{{ forloop.counter }}]</span> <a href="{{reference.url}}" class="reference" target="_blank">{{ reference.text }}</a>
-                        {% else %}
-                        <span class="reference">[{{ forloop.counter }}] {{ reference.text }}</span>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<button id="article-button" class="md-trigger" style="display:none;" data-modal="article-panel"></button>
-{% endif %}
-
 <div class="md-modal md-effect-1 small-list" id="article-list">
-    <div class="md-content">
-        <div class="md-top-bar">
-            <div class="md-close-button" title="Close">
-            </div>
+  <div class="md-content">
+
+    <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #FFF;">
+      <div class="scroll-list-modal">
+
+        <h2 id="country_name"></h2>
+
+        <div class="delimiter" style="margin-bottom: 1em;"></div>
+        <div class="list-group entries" id="list-country-articles" style="border: none;">
+
         </div>
-
-            <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
-                <div class="scroll-list-modal">
-
-            <h2 id="country_name"></h2>
-
-            <div class="delimiter" style="margin-bottom: 1em;"></div>
-            <div class="list-group entries" id="list-country-articles">
-
-            </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <button id="article-list-button" class="md-trigger" style="display:none;" data-modal="article-list"></button>
 
-<div class="md-modal md-effect-1 small-list" id="bookmark-list">
-    <div class="md-content">
-        <div class="md-top-bar">
-            <div class="md-close-button" title="Close">
-            </div>
-        </div>
-        <div class="md-scroll-wrapper search-result-wrapper" style="background-color: #ffc5bd;">
-                <div class="scroll-list-modal">
-
-        <h2 style="margin-top: 0;">Bookmarks</h2>
-        <div class="delimiter" style="margin-bottom: 1em;"></div>
-        <div class="list-group entries" id="list-bookmark-entries">
-
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
 
 <div class="md-overlay"></div>
 
@@ -333,23 +72,14 @@
 <!-- Underscore templates -->
 <!-- Single person -->
 <script type="text/template" id="person-list-entry">
-<a href="/past/<%- slug %>" class="list-group-item">
-<div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>","name":"<%- name %>","birth":"<%- yearFrom %>","death":"<%- yearTo %>"}'>
-<span class="glyphicon glyphicon-bookmark"></span>
-</div>
-<h4 class="list-group-item-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
-<p class="list-group-item-text"><%- tags %></p>
+<a href="/past/<%- slug %>" class="results-item">
+  <hr style="border-top: 1px solid #000;"/>
+  <div class="results-image" style="background: url('<%- img_url %>') no-repeat center center"></div>
+  <h4 class="results-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
+  <p class="results-text"><%- tags %></p>
 </a>
 </script>
-<!-- Single bookmark -->
-<script type="text/template" id="bookmark">
-<a href="/past/<%- slug %>" class="list-group-item">
-<div class="bookmark-container" bookmark-data='{"slug":"<%- slug %>"}' style="margin-top: -0.7em;">
-    <span class="glyphicon glyphicon-remove-sign"></span>
-</div>
-<h4 class="list-group-item-heading"><%- name %> <small><%- yearFrom %> - <%- yearTo %></small></h4>
-</a>
-</script>
+
 
 <!-- jquery-->
 <script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
