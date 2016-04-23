@@ -192,12 +192,14 @@ def GetCountryArticles(request, countryCode):
 
 
 def _ArticleListToListOfDicts(profiles):
-    return [dict(name=m.title,
+    return [dict(id=m.id,
+                name=m.title,
                 slug=m.slug,
                 country=m.country.code,
                 birth=m.birthYear,
                 death=m.deathYear,
                 deathYearUnknown=m.deathYearUnknown,
+                summary=m.summaryLines,
                 tags=[str(t) for t in m.tags.all()]) for m in profiles]
 
 
@@ -248,11 +250,23 @@ def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, star
     if numToReturn > 0:
         matches = matches[:numToReturn]
 
-    return _ArticleListToListOfDicts(matches)
+    matches = _ArticleListToListOfDicts(matches)
+
+    # Attach an image to each article
+    for m in matches:
+        try:
+            img = PastImage.objects.filter(article_id=m['id'])
+            if img.exists():
+                m['image'] = str(img.get().imageField)
+        except Exception as e:
+            print(e)
+
+    return matches
 
 
 @csrf_exempt
 def GetArticles(request):
+
     searchJSON = request.POST.get("query", "{}")
     searchParams = json.loads(searchJSON)
 
@@ -267,10 +281,6 @@ def GetArticles(request):
     numToReturn = searchParams.get("num", 25)
 
     matches = _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, startIndex, numToReturn)
-
-    # Attach an image to each article
-    for m in matches:
-        m['image'] = PastImage.objects.filter(article=m)[:1]
 
     response = {}
     response["query"] = searchParams
@@ -331,3 +341,24 @@ def TagSearch(request):
         "articles": articlesWithThisTag,
     }
     return HttpResponse(json.dumps(jsonResponse), content_type="application/json")
+
+
+# Don't mind me
+def GenerateImage(request):
+    import random
+    women = [
+        'http://www.howtogetthewomanofyourdreams.com/wp-content/uploads/2013/03/womanslide21.png',
+        'http://reneemullingslewis.com/wp-content/uploads/2014/08/woman-smiling.png',
+        'http://dreamatico.com/data_images/woman/woman-2.jpg',
+        'http://www.wonderslist.com/wp-content/uploads/2015/10/Doutzen-Kroes-Most-Beautiful-Dutch-Woman.jpg',
+        'http://dreamatico.com/data_images/woman/woman-3.jpg',
+        'http://womensbusiness.info/wp-content/uploads/2014/10/v1-woman.png',
+        'http://neimandermatology.com/wp-content/uploads/2014/11/Cosmetic-Woman.png'
+    ]
+
+    articles = Article.objects.all()
+
+    for a in articles:
+        PastImage.objects.create(article_id = a.id, imageField = random.choice(women))
+
+    return HttpResponse('Images generated')

@@ -50,3 +50,45 @@ nav.filter {
     }
   }
 }
+
+#grid {
+  margin-left: $nav_width;
+  width: calc(100$ - #{$nav_width});
+
+  div {
+    padding: 15px;
+    box-sizing: border-box;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 480px){
+	#grid[data-columns]::before {
+		content: '1 .column.size-1of1';
+	}
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+	#grid[data-columns]::before {
+		content: '2 .column.size-1of2';
+	}
+}
+@media screen and (min-width: 769px) and (max-width: 1280px) {
+	#grid[data-columns]::before {
+		content: '3 .column.size-1of3';
+	}
+}
+
+@media screen and (min-width: 1280px) {
+	#grid[data-columns]::before {
+		content: '4 .column.size-1of4';
+	}
+}
+
+.column { float: left; }
+.size-1of1 { width: 100%; }
+.size-1of2 { width: calc(100% / 2); }
+.size-1of3 { width: calc(100% / 3); }
+.size-1of4 { width: calc(100% / 4); }
