@@ -45,3 +45,10 @@ venv
 .env
 .idea
 *.log
+.sass-cache
+*.css.map
+past/static/past/past
+past/static/past/css/feed.css
+past/static/past/css/profile.css
+static/css/index.css
+static/font-awesome/scss/font-awesome.css

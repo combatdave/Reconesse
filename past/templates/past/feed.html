@@ -79,8 +79,11 @@
 
   <!-- Templates -->
   <script type="text/template" id="profile-card-template">
-    <img src="<%- image %>" />
-    <h4><%- name %></h4>
+    <a href="<%- url %>">
+      <img src="<%- image %>" />
+
+      <h4><%- name %></h4>
+    </a>  
     <p>
       <%- summary %>
       <a href="<%- url %>">[Read more]</a>
