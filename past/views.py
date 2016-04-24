@@ -257,7 +257,8 @@ def _GetMatches(categories, countrycodes, keywords, tags, minYear, maxYear, star
         try:
             img = PastImage.objects.filter(article_id=m['id'])
             if img.exists():
-                m['image'] = str(img.get().imageField)
+                m['image'] = str(img.get().imageField.url)
+                print m['image']
         except Exception as e:
             print(e)
 

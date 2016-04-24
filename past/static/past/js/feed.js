@@ -156,8 +156,13 @@
     var grid = document.querySelector('#grid');
     salvattore.appendElements(grid, _.map(cards, function (c) {
       var item = document.createElement('div');
+      var imgUrl = c.image;
+      if (!imgUrl)
+      {
+        imgUrl = '/static/images/blank.gif'
+      }
       item.innerHTML = (profileCard({
-        image: c.image,
+        image: imgUrl,
         name: c.name,
         summary: c.summary,
         url: '/past/' + c.slug + '/'
