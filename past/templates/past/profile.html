@@ -34,13 +34,13 @@
         <div class="profile-metadata">
           <div class="profile-pictures">
             {% if images|length_is:"0" %}
-            <div class="image" style="background: url({% static 'images/blank.gif' %}) no-repeat center center; background-size: 100%;"></div>
+            <div class="image" style="background: url({% static 'images/blank.gif' %}); background-size: 100%;background-repeat: no-repeat;background-position: center;"></div>
             {% else %}
               {% for image in images %}
                 {% if forloop.first %}
-                  <div class="image" style="background: url({{ image.imageField.url }}); no-repeat center center; background-size: 100%;"></div>
+                  <div class="image" style="background: url({{ image.imageField.url }}); background-size: 100%;background-repeat: no-repeat;background-position: center;"></div>
                 {% else %}
-                  <div class="thumbnail" style="background: url({{ image.imageField.url }}) no-repeat center center; background-size: 100%;"></div>
+                  <div class="thumbnail" style="background: url({{ image.imageField.url }});background-size: 100%;background-repeat: no-repeat;background-position: center;"></div>
                 {% endif %}
               {% endfor %}
             {% endif %}
