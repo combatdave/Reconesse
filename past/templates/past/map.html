@@ -34,6 +34,61 @@
 
 <body>
     {% include "GoogleAnalytics.html" %}
+    <nav id="filter" class="hide">
+      <h3>Categories</h3>
+      <div id="categories-list">
+        <label class="categories-label">
+          <input class="select-all categories-checkbox" id="select-all-categories" type="checkbox" value="All" />
+          Select All
+        </label>
+        {% for cat, hasChildren in categories|nestCategories %}
+          {% if cat == "startli" %}
+            <li class="cat-li">
+          {% elif cat == "stopli" %}
+            </li>
+          {% elif cat == "startol" %}
+            <ol>
+          {% elif cat == "stopol" %}
+            </ol>
+          {% else %}
+
+            {% if hasChildren %}
+              <a class="plus-tree"><img src="{% static 'images/filter_menu_arrow_black.svg' %}"></img></a>
+            {% endif %}
+            <label class="categories-label">
+              <input class="categories-checkbox" type="checkbox" value="{{ cat }}" />
+              {{ cat }}
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <h3>Countries</h3>
+      <ol>
+        <li>
+          <label>
+            <input class="select-all" id="select-all-countries" type="checkbox">
+            Select All
+          </label>
+        </li>
+      {% for c in countries %}
+        <li>
+          <label>
+            <input class="countries-checkbox" type="checkbox" value="{{c.code}}" />
+            {{c.name}}
+          </label>
+        </li>
+      {% endfor %}
+      </ol>
+    </nav>
+
+    <nav id="top">
+      <img src="{% static 'logo_svg/blue_logo.svg' %}" />
+      <span class="active" id="filter-search">Filter Search</span>
+      <span id="map">Map</span>
+      <span id="slash-from-guns-n-roses">&nbsp;/&nbsp;</span>
+      <span class="active"><a href="/past/" id="feed">Feed</a></span>
+    </nav>
     <div id="mapdiv"></div>
 
 <div class="md-modal md-effect-1 small-list" id="article-list">
@@ -74,9 +129,11 @@
 <script type="text/template" id="person-list-entry">
 <a href="/past/<%- slug %>" class="results-item">
   <hr style="border-top: 1px solid #000;"/>
-  <div class="results-image" style="background: url('<%- img_url %>') no-repeat center center"></div>
-  <h4 class="results-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
-  <p class="results-text"><%- tags %></p>
+  <div class="results-image" style="background-image: url('<%- img_url %>')"></div>
+  <div class="results-text">
+    <h4 class="results-heading"><%- name %><br/><small><%- yearFrom %> - <%- yearTo %></small></h4>
+    <p class="results-tags"><%- tags %></p>
+  </div>
 </a>
 </script>
 

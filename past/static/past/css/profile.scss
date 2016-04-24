@@ -7,6 +7,7 @@ $black: #000;
 
 $sans_serif_italics: UniversLTStd-Obl;
 $sans_serif: UniversLTStd;
+$serif: ArnhemPro;
 
 $nav_width: 200px;
 $metadata_width: 25%;
@@ -26,11 +27,16 @@ body {
   position: relative;
 
   h1 {
+    font-family: $serif;
     text-align: center;
+    color: $blue;
+    font-size: 3.5em;
   }
 
   h2 {
+    font-family: $serif;
     text-align: center;
+    font-size: 2em;
   }
 
   .profile-container {
